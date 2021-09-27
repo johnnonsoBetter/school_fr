@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ScoreReport from '../score_report/ScoreReport';
+import BillContainer from '../bill/BillContainer';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,13 +61,13 @@ export default function Section() {
         <ScoreReport />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+       item fixe
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item four
+      <BillContainer />
       </TabPanel>
     </>
   );
