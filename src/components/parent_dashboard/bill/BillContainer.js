@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import React from 'react'
 import Bill from './Bill'
-import TheDate from './TheDate'
+
 
 
 export default function BillContainer(){
@@ -9,9 +9,7 @@ export default function BillContainer(){
 
     return (
         <Box >
-           <Box display="flex" justifyContent="flex-end"  >
-                <TheDate />
-            </Box>
+    
             <Box
                 sx={{
                     width: '100%',

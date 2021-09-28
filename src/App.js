@@ -1,15 +1,19 @@
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createMuiTheme, createTheme, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import './App.css';
 import Homepage from './pages/Homepage';
 
+
+
 const theme = createTheme({
-  fontFamily: [
-    'Kanit', 'sans-serif'
-    ,
-  ].join(','),
+  typography: {
+    fontFamily: [
+      'Kanit', 'sans-serif',
+    ].join(','),
+  },
 });
+
 
 
 function App() {

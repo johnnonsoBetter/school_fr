@@ -1,39 +1,51 @@
-import { Box, Paper, Stack, Typography } from '@mui/material'
+import { Box, IconButton, Paper, Skeleton, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { styled } from '@mui/material/styles';
+import ScoreReportDetail from './ScoreReportDetail';
 
-const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.h3,
+const Max = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
     padding: theme.spacing(1),
     margin: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: "rgb(52 183 0 / 93%)"
 }));
 
-
-
-
-
+const Score = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
+    textAlign: 'center',
+    color: "rgb(183 0 0 / 93%)"
+}));
 
 
 export default  function ScoreReportItem (){
 
 
     return (
+       
+
         <Box sx={{width: '100%', padding: "5px"}} >
             <Paper elevation={3} >
-                <Box sx={{width: '100%', padding: "10px"}}  >
-                    <Typography >Homework</Typography>
-                    <Box  display="flex" justifyContent="center">
-                    <Stack direction={{ xs: 'row' }} >
-                        <Item> 10</Item>
-                        <Item> 20</Item>
+                <Box display="flex" justifyContent="space-between" alignItems="center" sx={{width: '100%', padding: "10px"}}  >
+                   
+                    <Typography sx={{fontWeight: "bold"}}> HomeWork </Typography>
+
                     
-                    </Stack>
+                    <Box display="flex" alignItems="center" >
+                       
+                        <Score >30</Score>
+                        <Max>40</Max>
+
+                    
+                        <ScoreReportDetail />
 
                     </Box>
-                    <Typography >Poor</Typography>
+                    
+                  
                 </Box>
+
             </Paper>
         </Box>
     )

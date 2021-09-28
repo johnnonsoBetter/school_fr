@@ -1,5 +1,6 @@
 import { Box, List, ListSubheader } from '@mui/material'
 import React from 'react'
+import Loader from '../../utilities/Loader'
 import ScoreReports from './ScoreReports'
 import TheDate from './TheDate'
 
@@ -9,7 +10,9 @@ function ScoreReport(){
         <Box  >
             <Box display="flex" justifyContent="flex-end"  >
                 <TheDate />
+
             </Box>
+            {/* <Loader /> */}
 
             <List
                 sx={{
@@ -25,7 +28,7 @@ function ScoreReport(){
                 {["Mathematics", "English", "Physics"].map((sectionId) => (
                     <li key={`section-${sectionId}`}>
                     <ul>
-                        <ListSubheader>{`${sectionId}`}</ListSubheader>
+                        <ListSubheader sx={{fontWeight: "bold", letterSpacing: "0.1em"}}>{`${sectionId}`}</ListSubheader>
                         <ScoreReports />
                     </ul>
                     </li>

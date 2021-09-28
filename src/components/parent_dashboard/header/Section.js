@@ -4,8 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import ScoreReport from '../score_report/ScoreReport';
+import ScoreReport from '../score_report/ScoreReportContainer';
 import BillContainer from '../bill/BillContainer';
+import BehaviourReportContainer from '../behaviour_report/BehaviourReportContainer';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,21 +54,18 @@ export default function Section() {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable" >
           <Tab label="Score Report" {...a11yProps(0)} />
           <Tab label="Behaviour Report" {...a11yProps(1)} />
-          <Tab label="Attendance Report" {...a11yProps(2)} />
-          <Tab label="Bills" {...a11yProps(3)} />
+          <Tab label="Bills" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
         <ScoreReport />
       </TabPanel>
       <TabPanel value={value} index={1}>
-       item fixe
+        <BehaviourReportContainer />
       </TabPanel>
+  
       <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-      <BillContainer />
+        <BillContainer />
       </TabPanel>
     </>
   );

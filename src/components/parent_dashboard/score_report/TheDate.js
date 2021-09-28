@@ -14,6 +14,7 @@ export default function TheDate() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
                 value={new Date()}
+                renderLoading={() => <span data-mui-test="loading-progress"></span>}
                 renderInput={(params) => <TextField {...params} />}
             />
 

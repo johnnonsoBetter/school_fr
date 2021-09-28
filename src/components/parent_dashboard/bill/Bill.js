@@ -1,5 +1,8 @@
 import { Box, Button, Chip, Paper, Typography } from '@mui/material'
+import { blue, red } from '@mui/material/colors'
 import React from 'react'
+import BillDetail from './BillDetail'
+
 
 export default function Bill(){
 
@@ -7,26 +10,17 @@ export default function Bill(){
         <Box sx={{width: '100%', padding: "5px"}} >
             <Paper elevation={3} >
                 <Box display="flex" justifyContent="space-between" alignItems="center" sx={{width: '100%', padding: "10px"}}  >
-                    <Chip label="Paid" variant="outlined" />
-                    <Typography> Food Practical </Typography>
-                </Box>
-
-                <Box display="flex" justifyContent="space-around" alignItems="center" sx={{width: '100%', padding: "10px"}}  >
-                    <Box >
-                        <Typography> ₦4,000</Typography>
-                        <Typography> amount </Typography>
+                   
+                    <Typography > Food Practical </Typography>
+                    <Box display="flex" >
+                        
+                       
+                       <Chip  color="primary" variant="outlined" label="₦3,600" />
+                       <Chip label="Not Paid" sx={{color: red[300]}} variant="outlined" />
+                       <BillDetail />
+                       
                     </Box>
-                    <Box >
-                        <Typography> ₦4,000</Typography>
-                        <Typography> amount </Typography>
-                    </Box>
-                </Box>
-
-                <Box display="flex" justifyContent="flex-end" sx={{width: '100%', padding: "10px"}} >
-                    <Typography> 2 days ago  </Typography>
-                </Box>
-                <Box >
-                    <Button fullWidth > Payment Info </Button>
+                    
                 </Box>
 
             </Paper>
