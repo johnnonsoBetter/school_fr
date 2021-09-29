@@ -1,17 +1,14 @@
 
 import React from 'react'
 import Tooltip from '@mui/material/Tooltip';
-
-import Logout from '@mui/icons-material/Logout';
-import {  BarChartRounded, GppGoodRounded, SmsRounded } from '@mui/icons-material';
+import {  BarChartRounded, GppGoodRounded } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
+
 
 import IconButton from '@mui/material/IconButton';
-import { Avatar, Divider, Paper, Stack, Typography } from '@mui/material';
+import { Avatar, Divider, Paper, Rating, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/styles';
 import { blue } from '@mui/material/colors';
 
@@ -33,7 +30,7 @@ const Score = styled(Paper)(({ theme }) => ({
 
 
 
-export default function ScoreReportDetail() {
+export default function ScoreReportDetail({theScore}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -42,6 +39,11 @@ export default function ScoreReportDetail() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const {max, score_type, remark, score, teacher} = theScore
+
+
+  console.log(teacher)
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -57,7 +59,7 @@ export default function ScoreReportDetail() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
+        
         PaperProps={{
           elevation: 0,
           style: {
@@ -95,26 +97,26 @@ export default function ScoreReportDetail() {
        
        <Box p={1} >
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
-                <Typography > Assignment</Typography>
-                
+                <Typography > {score_type}</Typography>
+                <Rating name="read-only" value={  remark === "Poor" ? 2 : remark === "Excellent" ? 5 : 0  } readOnly />
             </Box>
             
             <Box p={1} display="flex" justifyContent="center"  > 
                 <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} >
-                    <Score> 30 </Score>
-                    <Max > 40 </Max>
+                    <Score> {score} </Score>
+                    <Max > {max} </Max>
                 </Stack>
             </Box>
 
         
             
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
-                <Typography > Excellent</Typography>
-                <Avatar sx={{ bgcolor: blue[500] }} > <GppGoodRounded /></Avatar>
+                <Typography > {remark}</Typography>
+                <Avatar sx={{ bgcolor: blue[500] }} >  <GppGoodRounded /></Avatar>
             </Box>
 
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
-                <Typography > Mr John Paul</Typography>
+                <Typography > {teacher}</Typography>
                 <Avatar  src="/images/nonso.png" />
             </Box>
 

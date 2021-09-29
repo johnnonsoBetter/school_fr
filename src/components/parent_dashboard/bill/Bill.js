@@ -1,5 +1,5 @@
-import { Box, Button, Chip, Paper, Typography } from '@mui/material'
-import { blue, red } from '@mui/material/colors'
+import { Box,Chip, Paper, Typography } from '@mui/material'
+import { red } from '@mui/material/colors'
 import React from 'react'
 import BillDetail from './BillDetail'
 
@@ -11,7 +11,7 @@ export default function Bill(){
             <Paper elevation={3} >
                 <Box display="flex" justifyContent="space-between" alignItems="center" sx={{width: '100%', padding: "10px"}}  >
                    
-                    <Typography > Food Practical </Typography>
+                    <Typography > Exam Fee </Typography>
                     <Box display="flex" >
                         
                        

@@ -1,4 +1,4 @@
-import { Box, IconButton, Paper, Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Paper, Typography } from '@mui/material'
 import React from 'react'
 import { styled } from '@mui/material/styles';
 import ScoreReportDetail from './ScoreReportDetail';
@@ -20,9 +20,9 @@ const Score = styled(Paper)(({ theme }) => ({
 }));
 
 
-export default  function ScoreReportItem (){
+export default  function ScoreReportItem (props){
 
-
+    const {score} = props
     return (
        
 
@@ -30,16 +30,16 @@ export default  function ScoreReportItem (){
             <Paper elevation={3} >
                 <Box display="flex" justifyContent="space-between" alignItems="center" sx={{width: '100%', padding: "10px"}}  >
                    
-                    <Typography sx={{fontWeight: "bold"}}> HomeWork </Typography>
+                    <Typography sx={{fontWeight: "bold"}}> {score.score_type} </Typography>
 
                     
                     <Box display="flex" alignItems="center" >
                        
-                        <Score >30</Score>
-                        <Max>40</Max>
+                        <Score >{score.score}</Score>
+                        <Max>{score.max}</Max>
 
                     
-                        <ScoreReportDetail />
+                        <ScoreReportDetail theScore={score} />
 
                     </Box>
                     

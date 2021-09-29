@@ -3,11 +3,12 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box, Container } from '@mui/material';
+import { Box, Chip, Container } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Children from './Children';
 import Notification from './Notification';
 import Profile from './Profile';
+import { ParentContext } from '../../../context/parent/ParentContext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
     const classes = useStyles()
 
+    
+
 
   return (
     <React.Fragment>
@@ -34,7 +37,10 @@ export default function Header(props) {
             <Container >
                 
                 <Box display="flex" justifyContent="space-between" alignItems="center" >
-                  <Children />
+                  <Box>
+                    <Children />
+                  </Box>
+                 
 
                   <Box display="flex" alignItems="center"  >
                     <Notification />

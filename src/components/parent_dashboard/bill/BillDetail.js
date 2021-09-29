@@ -1,17 +1,12 @@
 
 import React from 'react'
 import Tooltip from '@mui/material/Tooltip';
-
-import Logout from '@mui/icons-material/Logout';
-import {  GppGoodRounded, MoreVertRounded, SmsRounded } from '@mui/icons-material';
+import {  MoreVertRounded } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-
 import IconButton from '@mui/material/IconButton';
-import { Avatar, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 
 export default function BillDetail() {
@@ -38,7 +33,7 @@ export default function BillDetail() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
+      
         PaperProps={{
           elevation: 0,
           style: {
@@ -83,7 +78,7 @@ export default function BillDetail() {
                 </Box>
                 
             
-                <Box p={1} display="flex" p={1} justifyContent="space-around" alignItems="center"  > 
+                <Box p={1} display="flex"  justifyContent="space-around" alignItems="center"  > 
                     <Paper elevation={2} >
                       <Box textAlign="center" p={1} >
                         <Typography>₦2,000</Typography>

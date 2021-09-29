@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import ScoreReport from '../score_report/ScoreReportContainer';
 import BillContainer from '../bill/BillContainer';
 import BehaviourReportContainer from '../behaviour_report/BehaviourReportContainer';
+import { Link, Route, Switch } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,13 +52,13 @@ export default function Section() {
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable" >
-          <Tab label="Score Report" {...a11yProps(0)} />
-          <Tab label="Behaviour Report" {...a11yProps(1)} />
-          <Tab label="Bills" {...a11yProps(2)} />
+        <Tabs value={value}  onChange={handleChange} aria-label="basic tabs example" variant="scrollable" >
+          <Tab label="Score Report" component={Link} to="/dashboard/" {...a11yProps(0)} />
+          <Tab label="Behaviour Report" component={Link} to="/dashboard/behaviour_reports" {...a11yProps(1)} />
+          <Tab label="Bills" component={Link} to="/dashboard/bills" {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      {/* <TabPanel value={value} index={0}>
         <ScoreReport />
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -66,7 +67,24 @@ export default function Section() {
   
       <TabPanel value={value} index={2}>
         <BillContainer />
-      </TabPanel>
+      </TabPanel> */}
+        <Switch >
+          <Route exact path="/dashboard/" >
+              <ScoreReport />
+          </Route>
+          <Route exact path="/dashboard/behaviour_reports" >
+              <BehaviourReportContainer />
+          </Route>
+          <Route exact path="/dashboard/bills" >
+            <BillContainer />
+          </Route>
+
+
+        </Switch>
+        
+
+    
+      
     </>
   );
 }

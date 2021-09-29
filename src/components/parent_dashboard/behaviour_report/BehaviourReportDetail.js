@@ -1,14 +1,11 @@
 
 import React from 'react'
 import Tooltip from '@mui/material/Tooltip';
-
-import Logout from '@mui/icons-material/Logout';
 import {  GppGoodRounded, SmsRounded } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
+
 
 import IconButton from '@mui/material/IconButton';
 import { Avatar, Typography } from '@mui/material';
@@ -38,7 +35,7 @@ export default function BehaviourReportDetail() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        onClick={handleClose}
+        
         PaperProps={{
           elevation: 0,
           style: {
