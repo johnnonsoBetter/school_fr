@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  const logout = () => {
+  const logUserOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
     localStorage.removeItem('expiresAt');
@@ -67,7 +67,7 @@ const AuthProvider = ({ children }) => {
       value={{
         authState,
         setAuthState: authInfo => setAuthInfo(authInfo),
-        logout,
+        logUserOut,
         isAuthenticated,
         
       }}

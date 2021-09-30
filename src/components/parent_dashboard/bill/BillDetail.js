@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Tooltip from '@mui/material/Tooltip';
 import {  MoreVertRounded } from '@mui/icons-material';
 import Box from '@mui/material/Box';
@@ -7,17 +7,46 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { Paper, Typography } from '@mui/material';
+import { FetchContext } from '../../../context/FetchContext';
+import { ParentContext } from '../../../context/parent/ParentContext';
 
 
-export default function BillDetail() {
+export default function BillDetail({id}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {authAxios} = useContext(FetchContext)
+  const {student_id} = useContext(ParentContext)
   const open = Boolean(anchorEl);
+  const [loading, setLoading] = useState(true)
+  const [failed, setFailed] = useState(false)
+
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+
+    authAxios.get( `api/v1/guidance_bills/${id}` , {params: {student_id: student_id}}).then((res) => {
+
+            
+      const {data} = res
+      console.log(data)
+     
+      setLoading(false)
+
+  }).catch(err => {
+      console.log(err)
+      setLoading(false)
+      setFailed(true)
+  })
+
+  }, [])
+
+
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

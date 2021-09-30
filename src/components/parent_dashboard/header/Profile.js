@@ -12,21 +12,52 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { PersonRounded } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import { FetchContext } from '../../../context/FetchContext';
+import { AuthContext } from '../../../context/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [loading, setLoading] = React.useState(false)
+  const {logUserOut} = React.useContext(AuthContext)
+  const {authAxios} = React.useContext(FetchContext)
+  const history = useHistory()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+
+
+  const logout = () => {
+
+    setLoading(true)
+    authAxios.delete('api/v1/guidance_auth/sign_out').then((res) => {
+
+            logUserOut()
+            history.push('/login')
+      
+    }).catch(err => {
+        
+        setLoading(false)
+        
+    })
+
+
+
+  }
+
+
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
        
-        <Tooltip title="Account settings">
+        <Tooltip title="Account">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
          
             <PersonRounded />
@@ -36,8 +67,7 @@ export default function Profile() {
       <Menu
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
-        onClick={handleClose}
+        
         PaperProps={{
           elevation: 0,
           sx: {
@@ -76,10 +106,7 @@ export default function Profile() {
           Settings
         </MenuItem>
         <MenuItem>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
+          <LoadingButton loading={loading} onClick={logout} sx={{color: "inherit"}} startIcon={<Logout fontSize="small" />} > Logout</LoadingButton>
         </MenuItem>
       </Menu>
     </React.Fragment>

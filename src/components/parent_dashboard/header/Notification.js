@@ -11,6 +11,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 import Logout from '@mui/icons-material/Logout';
 import { NotificationsRounded } from '@mui/icons-material';
+import { Typography } from '@mui/material';
 
 export default function Notification() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -25,7 +26,7 @@ export default function Notification() {
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
        
-        <Tooltip title="Account settings">
+        <Tooltip title="Notifications">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
            
             <NotificationsRounded />
@@ -68,16 +69,9 @@ export default function Notification() {
       >
        
       
-        <MenuItem>
-         
-          Settings Please
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+       <Box p={2}>
+         <Typography> Notifications </Typography>
+       </Box>
       </Menu>
     </React.Fragment>
   );
