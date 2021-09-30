@@ -1,7 +1,7 @@
 
 import React from 'react'
 import Tooltip from '@mui/material/Tooltip';
-import {  GppGoodRounded, SmsRounded } from '@mui/icons-material';
+import {  GppBadRounded, GppGoodRounded, SmsRounded } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 
 import Menu from '@mui/material/Menu';
@@ -9,9 +9,10 @@ import Menu from '@mui/material/Menu';
 
 import IconButton from '@mui/material/IconButton';
 import { Avatar, Typography } from '@mui/material';
+import { green, red } from '@mui/material/colors';
 
 
-export default function BehaviourReportDetail() {
+export default function BehaviourReportDetail({behaviourReport}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -20,6 +21,9 @@ export default function BehaviourReportDetail() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const {behaviour_type, title, description} = behaviourReport 
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -74,23 +78,26 @@ export default function BehaviourReportDetail() {
        <Box p={2} >
 
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
-                <Typography > Noise</Typography>
-                    <IconButton > <GppGoodRounded /> </IconButton>
+                <Typography > {title}</Typography>
+                    
+                    <Avatar sx={{width: 30, height: 30, bgcolor: behaviour_type === "Good" ? green[500] :  red[500] }} > {behaviour_type === "Good" ? <GppGoodRounded /> :  <GppBadRounded /> } </Avatar>
                 </Box>
             
                 <Box p={1}  > 
                     <Typography variant="body1" >
-                        Please get me and you to the same timer and the same people that we are going to add some little value 
-                        and get me to the same places that we
+                        {description}
                         
                     </Typography>
                 </Box>
 
+               
+
             
                 <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
-                <Typography > Mr John Paul</Typography>
-                <Avatar  src="/images/nonso.png" />
-            </Box>
+                  <Typography > Mr John Paul</Typography>
+                  <Avatar  src="/images/nonso.png" />
+                </Box>
+            
        </Box>
       </Menu>
     </React.Fragment>

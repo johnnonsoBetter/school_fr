@@ -1,16 +1,95 @@
 import { Box } from '@mui/material'
-import React from 'react'
-import TheDate from '../score_report/TheDate'
+import React, { useContext, useEffect, useState } from 'react'
+import TheDate from './TheDate'
 import BehaviourReportList from './BehaviourReportList'
+import Badge from '@mui/material';
+import {Chip, Avatar} from '@mui/material';
+import { ParentContext } from '../../../context/parent/ParentContext';
+import { blue } from '@mui/material/colors';
+import FailedFetch from '../../utilities/FailedFetch';
+import Loader from '../../utilities/Loader';
+import Empty from '../../utilities/Empty';
+import { useLocation } from 'react-router-dom';
+import { FetchContext } from '../../../context/FetchContext';
+import queryString from 'query-string'
+
+
+
+
 
 export default function BehaviourReportContainer(){
+    const {student_id, student} = useContext(ParentContext)
+    const child = student()
+    const [behaviourReports, setBehaviourReports] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [failed, setFailed] = useState(false)
+    const location = useLocation()
+    const {authAxios} = useContext(FetchContext)
+    const value = queryString.parse(location.search)
+
+    console.log(behaviourReports)
+
+    useEffect(() => {
+       
+        authAxios.get('api/v1/guidance_behaviour_reports', {params: {student_id: student_id, date: new Date().toDateString()}}).then((res) => {
+
+            
+            const {data} = res
+            setBehaviourReports(data)
+            setLoading(false)
+
+        }).catch(err => {
+            console.log(err)
+            setLoading(false)
+            setFailed(true)
+        })
+    }, [])
+
+    useEffect(() => {
+       setLoading(true)
+       console.log("my student ", student_id)
+       console.log("my student ", value.date)
+        authAxios.get('api/v1/guidance_behaviour_reports', {params: {student_id: student_id, date: Object.keys(value).length === 0 ? new Date().toDateString() : value.date}}).then((res) => {
+
+            
+            const {data} = res
+            setBehaviourReports(data)
+            setLoading(false)
+
+        }).catch(err => {
+            console.log(err)
+            setLoading(false)
+            setFailed(true)
+        })
+    }, [location.search, student_id])
 
     return (
         <Box >
-            <Box display="flex" justifyContent="flex-end"  >
+            
+          
+
+            {
+                
+                loading ? <Loader /> :
+                failed ? <FailedFetch message="Something Went Wrong" height="calc(90vh - 200px)" />  :
+
+            <>
+            <Box display="flex" justifyContent="space-between" alignItems="center" p={2}  >
+                <Chip sx={{bgcolor: blue[300], color: "white", fontWeight: "bold", textTransform: "capitalize"}} avatar={<Avatar   src="/images/nonso.png" />} label={`${child.first_name} ${child.last_name}`}  />
                 <TheDate />
-            </Box>
-            <BehaviourReportList />
+
+            </Box> 
+               {
+                    behaviourReports.length === 0 ?
+                    <Empty message="No Behaviour Report Found" height="calc(90vh - 200px)" /> :
+                    <BehaviourReportList behaviourReports={behaviourReports} /> 
+               }
+
+            </>
+
+            }
+            
+       
 
         </Box>
     )

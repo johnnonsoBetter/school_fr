@@ -49,7 +49,7 @@ export default function Login(){
 
       // console.log(values)
 
-      // setLoginLoading(true)
+      setLoginLoading(true)
         
       publicFetch.post(
         `api/v1/guidance_auth/sign_in`,
@@ -64,8 +64,7 @@ export default function Login(){
         
         setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
         setRedirectOnLogin(true)
-        history.push('/dashboard')
-  
+       
           
       }).catch((err) => {                                             
         
@@ -89,7 +88,7 @@ export default function Login(){
 
     return (
         <>
-        {redirectOnLogin && <Redirect to="/dashboard" />}
+    
         <Container maxWidth="sm" >
             <Box  sx={{ display: "flex", justifyContent: "center", alignItems: "center"}} >
             <form onSubmit={formik.handleSubmit}> 

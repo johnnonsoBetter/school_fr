@@ -3,20 +3,14 @@ import Box from '@mui/material/Box';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-
-import IconButton from '@mui/material/IconButton';
-
 import Tooltip from '@mui/material/Tooltip';
-
-import Logout from '@mui/icons-material/Logout';
-import { NotificationsRounded, PeopleRounded } from '@mui/icons-material';
+import { PeopleRounded } from '@mui/icons-material';
 import { Avatar, Chip, Typography } from '@mui/material';
 import { ParentContext } from '../../../context/parent/ParentContext';
 
 export default function Notification() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const {children} = React.useContext(ParentContext)
+  const {children, setStudentId} = React.useContext(ParentContext)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -81,7 +75,12 @@ export default function Notification() {
           children.map((child) => {
 
             return (
-              <MenuItem key={child.id}>
+              <MenuItem key={child.id}
+                onClick={() => {
+                  console.log(child.id)
+                  setStudentId(child.id)
+                }}
+              >
          
                 <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
                     <Typography sx={{textTransform: "capitalize"}}> {child.first_name} </Typography>

@@ -15,19 +15,18 @@ export default function ParentView(){
 
     return (
             <FetchProvider> 
-                <Switch >
-                        <Route  exact path="/login" render={()=> 
+                
+                        <Route   path="/login" render={()=> 
                             
-                            isAuthenticated() ?  ( <Redirect to="/dashboard" />)   : ( <Login />)   
+                            ( <Login />) 
                             
                         } />
                         <Route   path="/dashboard" render={()=>
-                            isAuthenticated() ?  ( <ParentDashboard />) :
-                            ( <Redirect to="/login" />)
+                         ( <ParentDashboard />)
                         
                         } />
 
-                </Switch>
+               
             </FetchProvider>
        
     )

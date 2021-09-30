@@ -54,7 +54,7 @@ export default function Section() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value}  onChange={handleChange} aria-label="basic tabs example" variant="scrollable" >
           <Tab label="Score Report" component={Link} to="/dashboard/" {...a11yProps(0)} />
-          <Tab label="Behaviour Report" component={Link} to="/dashboard/behaviour_reports" {...a11yProps(1)} />
+          <Tab label="Behaviour Report" component={Link} to="/dashboard/behaviour_reports/" {...a11yProps(1)} />
           <Tab label="Bills" component={Link} to="/dashboard/bills" {...a11yProps(2)} />
         </Tabs>
       </Box>
@@ -72,7 +72,7 @@ export default function Section() {
           <Route exact path="/dashboard/" >
               <ScoreReport />
           </Route>
-          <Route exact path="/dashboard/behaviour_reports" >
+          <Route exact path="/dashboard/behaviour_reports/" >
               <BehaviourReportContainer />
           </Route>
           <Route exact path="/dashboard/bills" >

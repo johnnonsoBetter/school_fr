@@ -1,15 +1,11 @@
 import axios from 'axios'
-import React, { createContext, useContext } from 'react'
-import { AuthContext } from './AuthContext'
-
-
+import React, { createContext } from 'react'
 const FetchContext = createContext()
 
 const {Provider} = FetchContext
 
 const FetchProvider = ({children}) => {
-    const {authState} = useContext(AuthContext)
-
+    
     const authAxios = axios.create({
         baseURL: 'http://localhost:3001/' 
     })
@@ -25,9 +21,8 @@ const FetchProvider = ({children}) => {
                 'uid': `${localStorage.getItem('uid')}`
             
             }
-          )
+        )
 
-       
           config.headers = JSON.parse(userHeaders)
           return config;
         },

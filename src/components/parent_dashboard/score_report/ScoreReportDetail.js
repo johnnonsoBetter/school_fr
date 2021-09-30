@@ -1,7 +1,7 @@
 
 import React from 'react'
 import Tooltip from '@mui/material/Tooltip';
-import {  BarChartRounded, GppGoodRounded } from '@mui/icons-material';
+import {  BarChartRounded, GppBadRounded, GppGoodRounded } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 
 import Menu from '@mui/material/Menu';
@@ -10,7 +10,7 @@ import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { Avatar, Divider, Paper, Rating, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/styles';
-import { blue } from '@mui/material/colors';
+import { blue, red} from '@mui/material/colors';
 
 const Max = styled(Paper)(({ theme }) => ({
     ...theme.typography.body1,
@@ -112,7 +112,7 @@ export default function ScoreReportDetail({theScore}) {
             
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
                 <Typography > {remark}</Typography>
-                <Avatar sx={{ bgcolor: blue[500] }} >  <GppGoodRounded /></Avatar>
+                <Avatar sx={{bgcolor: remark === "Excellent" ? blue[500] : remark === "Poor" ? red[500] : null}} > {remark === "Poor" ? <GppBadRounded /> : remark === "Excellent" ? <GppGoodRounded />: null } </Avatar>
             </Box>
 
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
