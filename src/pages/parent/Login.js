@@ -29,6 +29,7 @@ export default function Login(){
     const {setAuthState} = useContext(AuthContext)
     const [checked, setChecked] = useState(false)
     const history = useHistory()
+    const {isAuthenticated} = useContext(AuthContext)
 
     const formik = useFormik({
         initialValues: {
@@ -61,20 +62,19 @@ export default function Login(){
         const client = response.headers['client']
         const uid = response.headers['uid']
         const userInfo = response.data['data']
-        
+        console.log(token)
         setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
         setRedirectOnLogin(true)
+     
+       //history.push('/muller')
        
           
       }).catch((err) => {                                             
         
-      //   if (err.response.status === 401 ) {
-      //     setLoginError(true)
-      //   }
-      //   setLoginLoading(false)
+       
+        setLoginLoading(false)
 
-      console.log(err.response.status)
-        
+       
       })
     }
 
@@ -88,7 +88,7 @@ export default function Login(){
 
     return (
         <>
-    
+        {redirectOnLogin && <Redirect to="/dashboard" /> }
         <Container maxWidth="sm" >
             <Box  sx={{ display: "flex", justifyContent: "center", alignItems: "center"}} >
             <form onSubmit={formik.handleSubmit}> 
@@ -134,9 +134,9 @@ export default function Login(){
 
                         </Box>
 
-                        <Box p={2}  display="flex" justifyContent= "center"  >
+                        {/* <Box p={2}  display="flex" justifyContent= "center"  >
                             <FormControlLabel control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />} label="Remember Device After Login" />
-                        </Box>
+                        </Box> */}
 
                         <Box p={2} >
                             <Container maxWidth="xs" >

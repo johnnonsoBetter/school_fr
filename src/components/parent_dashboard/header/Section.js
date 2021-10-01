@@ -8,6 +8,7 @@ import BehaviourReportContainer from '../behaviour_report/BehaviourReportContain
 import { Link, NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { blue } from '@mui/material/colors';
+import { AuthContext } from '../../../context/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   navlink: {
@@ -22,25 +23,27 @@ export default function Section() {
   const [value, setValue] = React.useState(0);
   const classes = useStyles()
   const {path, url} = useRouteMatch()
+  const {isAuthenticated} = React.useContext(AuthContext)
 
   console.log(path)
+  console.log(isAuthenticated())
 
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs   aria-label="basic tabs example" variant="scrollable" >
-          <Tab label="Score Report"  to="/dashboard" 
+          <Tab label="Score Report"  to= {isAuthenticated() ? "/dashboard" : "/login"}
               activeClassName={ 
                 window.location.pathname === '/dashboard' ? classes.navlink : ""
             }   component={NavLink}
           />
-          <Tab label="Behaviour Report" activeClassName={classes.navlink} component={NavLink} to="/dashboard/behaviour_reports/" />
-          <Tab label="Bills" activeClassName={classes.navlink}  component={NavLink} to="/dashboard/bills"  />
+          <Tab label="Behaviour Report" activeClassName={classes.navlink} component={NavLink} to={isAuthenticated() ? "/dashboard/behaviour_reports/" : "/login" }    />
+          <Tab label="Bills" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "/dashboard/bills" : "/login"}   />
         </Tabs>
       </Box>
      
         <Switch >
-          <Route exact path="/dashboard"  >
+          <Route exact path={path}  >
               <ScoreReport />
           </Route>
           <Route exact path="/dashboard/behaviour_reports/" >

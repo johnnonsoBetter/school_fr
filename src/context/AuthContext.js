@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
 
   const setAuthInfo = ({ token, userInfo, expiresAt, client, uid, rememberDevice }) => {
 
-    if (rememberDevice){
+    
       localStorage.setItem('token', token);
       localStorage.setItem(
         'userInfo',
@@ -30,14 +30,14 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('expiresAt', expiresAt);
       localStorage.setItem('client', client);
       localStorage.setItem('uid', uid);
-    }
+   
 
     setAuthState({
-      token: null,
-      userInfo: null,
-      expiresAt: null,
-      client: null,
-      uid: null
+      token,
+      userInfo,
+      expiresAt,
+      client,
+      uid,
     });
   };
 

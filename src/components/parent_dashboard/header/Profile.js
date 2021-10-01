@@ -67,7 +67,7 @@ export default function Profile() {
       <Menu
         anchorEl={anchorEl}
         open={open}
-        
+        onClose={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
