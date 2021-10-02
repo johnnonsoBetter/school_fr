@@ -35,7 +35,7 @@ function ParentDashboard(){
         }).catch(err => {
             setLoading(false)
         })
-
+ 
     }, [])
 
     return (

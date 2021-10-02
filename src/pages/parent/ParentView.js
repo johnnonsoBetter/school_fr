@@ -8,10 +8,6 @@ import ParentDashboard from './ParentDashboard'
 export default function ParentView(){
 
     const {isAuthenticated} = useContext(AuthContext)
-    
-
-    console.log(isAuthenticated())
- 
 
     return (
             <FetchProvider> 

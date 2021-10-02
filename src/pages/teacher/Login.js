@@ -10,9 +10,9 @@ import { Redirect, useHistory } from 'react-router-dom';
 
 const validationSchema = yup.object({
     email: yup
-      .string('Enter your school email')
-      .email('Enter a valid school email')
-      .required('School email is required'),
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required'),
     password: yup
       .string('Enter your password')
       .min(0, 'Password should be of minimum 7 characters length')
@@ -53,7 +53,7 @@ export default function Login(){
       setLoginLoading(true)
         
       publicFetch.post(
-        `api/v1/guidance_auth/sign_in`,
+        `api/v1/teacher_auth/sign_in`,
         values
       ).then((response) => {
         
@@ -87,14 +87,14 @@ export default function Login(){
 
     return (
         <>
-        {redirectOnLogin && <Redirect to="/dashboard" /> }
+        {redirectOnLogin && <Redirect to="/" /> }
         <Container maxWidth="sm" >
-            <Box  sx={{ display: "flex", justifyContent: "center", alignItems: "center"}} >
+            <Box  sx={{ display: "flex", justifyContent: "center", minHeight: "100vh", flexDirection: "column" }} >
             <form onSubmit={formik.handleSubmit}> 
                 <Box  width="100%">
-                    <Paper elevation={0} sx={{padding: "20px"}} >
+                    <Paper elevation={0}  >
                         <Box p={2} textAlign="center" m={5} marginBottom={0} >
-                             <Typography variant="h4" sx={{letterSpacing: "0em", fontWeight: "450"}}> Welcome To Parent's Login</Typography>
+                             <Typography variant="h4" sx={{letterSpacing: "0em", fontWeight: "450"}}> Welcome To Teacher's Login</Typography>
 
                         </Box>
                         <Box p={2} textAlign="center"  >
@@ -104,7 +104,7 @@ export default function Login(){
                         <Box p={2} >
                              <TextField 
                                 fullWidth  
-                                label="School Email"  
+                                label="Email"  
                                 id="fullWidth"
                                 type="email"
                                 name="email"
