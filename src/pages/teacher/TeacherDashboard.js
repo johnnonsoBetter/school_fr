@@ -15,8 +15,12 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Chip, Container, Grid } from '@mui/material';
+import { Button, Chip, Container, Grid, Hidden } from '@mui/material';
 import SideNav from '../../components/teacher_dashboard/SideNav';
+import Profile from '../../components/teacher_dashboard/Profile';
+import UnfinishedScoreReportDraftsContainer from '../../components/teacher_dashboard/home/UnfinishedScoreReportDraftsContainer';
+import { SpellcheckRounded } from '@mui/icons-material';
+
 
 const drawerWidth = 240;
 
@@ -64,13 +68,38 @@ function TeacherDashboard(props) {
       <CssBaseline />
       <AppBar
         position="fixed"
-        
+        sx={{backgroundColor: "white", boxShadow: "none"}}
       >
           <Container maxWidth="xl" > 
-        <Toolbar>
-          <Box >
+          <Toolbar
+            sx={{backgroundColor: "white"}}
+          >
+          <Box display="flex" width="100%" justifyContent="space-between" >
 
-              <Chip label="Chiboy Sam" />
+          <IconButton
+            color="success"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { md: 'none' } }}
+          >
+            <img src="/images/menu.png" width="24px" />
+          </IconButton>
+
+            <Box width="100%" display="flex" justifyContent="flex-end">
+              
+              <Hidden smDown >
+                  <Button endIcon={<SpellcheckRounded />} sx={{marginRight: "20px", fontWeight: "bolder", backgroundColor: "#00A6FF", color: "white"}}>Create Draft</Button>
+              </Hidden>
+              <Hidden smUp >
+                  <IconButton sx={{marginRight: "20px", color: "#00A6FF"}} >
+                    <SpellcheckRounded />
+                  </IconButton>
+              </Hidden>
+              <Profile />
+            </Box>
+
+             
           </Box>
           
         </Toolbar>
@@ -92,49 +121,33 @@ function TeacherDashboard(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
-          {drawer}
+          <Toolbar />
+          <SideNav />
         </Drawer>
         
       </Box>
         <Container maxWidth="xl" > 
-      <Box component="main" sx={{ flexGrow: 1, p: 4 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <Toolbar />
-        <Grid container justifyContent="center" spacing={3}  >
-            <Grid item xs={2} >
-                <SideNav />    
-            </Grid>
-            <Grid item xs={9} >
-            <Typography paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-                enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-                imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-                Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-                Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-                nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-                leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-                feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-                consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-                sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-                eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-                neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-                tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-                sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-                tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-                gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-                et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-                tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-                eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-                posuere sollicitudin aliquam ultrices sagittis orci a.
-            </Typography>
+        <Grid container justifyContent="center"   >
+            
+            <Hidden mdDown>
+              <Grid item xs={2} sm={3} >
+                  
+                  <SideNav />    
+              </Grid>
+            </Hidden>
+            <Grid item xs={12} sm={12} md={8} >
+                <Box  >
+                    <Box p={2} >
+                      <Typography variant="h4" sx={{fontWeight: "bolder"}} >Unfinished Score Reports</Typography>
+                    </Box>
+                    <UnfinishedScoreReportDraftsContainer />
+                </Box>
             </Grid>
         </Grid>
       </Box>

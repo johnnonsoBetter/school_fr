@@ -15,9 +15,27 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import { AccessibleRounded, AssignmentRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
+import { Link } from '@mui/material';
+import {makeStyles} from '@mui/styles'
+import { NavLink } from 'react-router-dom';
+
+
+const useStyles = makeStyles((theme) => ({
+ 
+  link: {
+    color: "#39393a",
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none",
+    width: "100%"
+  }
+}))
+
+
 
 export default function SideNav() {
   const [open, setOpen] = React.useState(true);
+  const classes = useStyles()
 
   const handleClick = () => {
     setOpen(!open);
@@ -30,24 +48,40 @@ export default function SideNav() {
       aria-labelledby="nested-list-subheader"
      
     >
-      <ListItemButton>
+      <ListItemButton  >
+       
+        <Link className={classes.link} component={NavLink} to="/sdf" >
         <ListItemIcon>
           <HomeRounded />
         </ListItemIcon>
         <ListItemText primary="Home" />
+        </Link>
+        
       </ListItemButton>
       <ListItemButton>
-        <ListItemIcon>
-          <SpellcheckRounded />
-        </ListItemIcon>
-        <ListItemText primary="Score Drafts" />
+
+      <Link className={classes.link} component={NavLink} to="/sdf" >
+          <ListItemIcon>
+            <SpellcheckRounded />
+          </ListItemIcon>
+          <ListItemText primary="Score Drafts" />
+        </Link>
+        
       </ListItemButton>
+
       <ListItemButton>
-        <ListItemIcon>
-          <AccessibleRounded />
-        </ListItemIcon>
-        <ListItemText primary="Behaviour Reports" />
+
+        <Link className={classes.link} component={NavLink} to="/sdf" >
+          <ListItemIcon>
+            <AccessibleRounded />
+          </ListItemIcon>
+          <ListItemText primary="Behaviour Reports" />
+          </Link>
+        
       </ListItemButton>
+
+
+
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <AssignmentRounded />
