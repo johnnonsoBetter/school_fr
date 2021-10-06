@@ -15,9 +15,11 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import { AccessibleRounded, AssignmentRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
-import { Link } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import {makeStyles} from '@mui/styles'
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import TeacherContext from '../../context/teacher/TeacherContext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,15 +30,26 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     textDecoration: "none",
     width: "100%"
+  },
+  active: {
+    backgroundColor: "#00A6FF",
+    color: "white",
+    fontWeight: "bolder",
+    borderRadius: "10px"
+    
+
+
   }
 }))
 
 
 
-export default function SideNav() {
+export default function SideNav({handleDrawerToggle}) {
   const [open, setOpen] = React.useState(true);
   const classes = useStyles()
+  const {subjects} = useContext(TeacherContext).dashboardInfo
 
+  console.log(subjects, "me see")
   const handleClick = () => {
     setOpen(!open);
   };
@@ -48,37 +61,34 @@ export default function SideNav() {
       aria-labelledby="nested-list-subheader"
      
     >
-      <ListItemButton  >
+     
        
-        <Link className={classes.link} component={NavLink} to="/sdf" >
-        <ListItemIcon>
-          <HomeRounded />
+        <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}}   activeClassName={window.location.pathname === '/' ? classes.active : ''} component={NavLink} to="/" >
+        <ListItemIcon sx={{backgroundColor: "initial"}}>
+          <HomeRounded sx={{backgroundColor: "inherit"}} />
         </ListItemIcon>
-        <ListItemText primary="Home" />
+        <ListItemText sx={{color: "inherit", fontWeight: "inherit"}} primary="Home" />
+       
         </Link>
         
-      </ListItemButton>
-      <ListItemButton>
+      
 
-      <Link className={classes.link} component={NavLink} to="/sdf" >
+      <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/score_report_drafts" >
           <ListItemIcon>
             <SpellcheckRounded />
           </ListItemIcon>
           <ListItemText primary="Score Drafts" />
         </Link>
-        
-      </ListItemButton>
+     
 
-      <ListItemButton>
-
-        <Link className={classes.link} component={NavLink} to="/sdf" >
+        <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/behaviour_reports" >
           <ListItemIcon>
             <AccessibleRounded />
           </ListItemIcon>
-          <ListItemText primary="Behaviour Reports" />
+          <ListItemText  primary="Behaviour Reports" />
           </Link>
         
-      </ListItemButton>
+    
 
 
 
@@ -91,30 +101,30 @@ export default function SideNav() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <MenuBookRounded />
-            </ListItemIcon>
-            <ListItemText primary="Mathematics" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <MenuBookRounded />
-            </ListItemIcon>
-            <ListItemText primary="English" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <MenuBookRounded />
-            </ListItemIcon>
-            <ListItemText primary="Economics" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <MenuBookRounded />
-            </ListItemIcon>
-            <ListItemText primary="Physics" />
-          </ListItemButton>
+
+          {
+            subjects.map((sub) => {
+
+              return (
+                <Link key={sub.id} onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px", paddingLeft: "32px"}} activeClassName={classes.active} component={NavLink} to={`/score_reports/${sub.id}`} >
+                  <ListItemIcon>
+                  <MenuBookRounded />
+                  </ListItemIcon>
+                  <ListItemText sx={{textTransform: "capitalize"}} primary={sub.name} />
+                </Link>
+
+              )
+            })
+          }
+
+        
+         
+
+       
+
+
+      
+
           
         </List>
       </Collapse>

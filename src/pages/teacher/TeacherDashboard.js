@@ -15,119 +15,209 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Button, Chip, Container, Grid, Hidden } from '@mui/material';
+import { Backdrop, Button, Chip, CircularProgress, Container, Grid, Hidden } from '@mui/material';
 import SideNav from '../../components/teacher_dashboard/SideNav';
 import Profile from '../../components/teacher_dashboard/Profile';
 import UnfinishedScoreReportDraftsContainer from '../../components/teacher_dashboard/home/UnfinishedScoreReportDraftsContainer';
 import { SpellcheckRounded } from '@mui/icons-material';
+import HeaderToolBar from '../../components/teacher_dashboard/HeaderToolBar';
+import Home from '../../components/teacher_dashboard/home/Home';
+import SideDrawer from '../../components/teacher_dashboard/SideDrawer';
+import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import ScoreReportDraftContainer from '../../components/teacher_dashboard/score_report_drafts/ScoreReportDraftContainer';
+import ScoreReportContainer from '../../components/teacher_dashboard/score_reports/ScoreReportContainer';
+import BehaviourReportContainer from '../../components/teacher_dashboard/behaviour_reports/BehaviourReportContainer';
+import { TeacherContextProvider } from '../../context/teacher/TeacherContext';
+import { FetchContext, FetchProvider } from '../../context/FetchContext';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { useState } from 'react';
+import CreateScoreReportDraft from '../../components/teacher_dashboard/CreateScoreReportDraft'
+import EditScoreDraftReportContainer from '../../components/teacher_dashboard/edit_score_report_draft/EditScoreDraftReportContainer';
+
+import MySnackbar from '../../components/utilities/MySnackbar';
 
 
 const drawerWidth = 240;
 
 function TeacherDashboard(props) {
-  const { window } = props;
+ 
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = useState(true)
+  const {authAxios} = useContext(FetchContext)
+  const history = useHistory()
+  const location = useLocation()
+  const routeMatch = useRouteMatch()
+  const [openSnack, setOpenSnack] = useState(false)
+  const [snackInfo, setSnackInfo] = useState({
+    message: '',
+    severity: ''
+  })
+  
+  const [dashboardInfo, setDashboardInfo] = useState({
+    unfinishedDrafts: [],
+    subjects: [],
+    termDates: [],
+    scoreTypes: [],
+    fullName: null,
+
+  })
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
+  const handleClickOpen = () => {
+    
+    history.push('#create')
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+    setOpen(true);
+  
+   
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+
+  useEffect(() => {
+
+
+
+    authAxios.get('api/v1/teacher_dashboards').then((res) => {
+      console.log(res)
+
+      const {score_report_drafts, score_types, subjects, term_dates, teacher} = res.data 
+      const newDashboardInfo = Object.assign({}, dashboardInfo)
+
+      newDashboardInfo.unfinishedDrafts = score_report_drafts
+      newDashboardInfo.termDates = term_dates
+      newDashboardInfo.fullName = teacher.full_name 
+      newDashboardInfo.scoreTypes = score_types
+      newDashboardInfo.subjects = subjects
+      
+      setDashboardInfo(newDashboardInfo)
+      setLoading(false)
+     
+
+    }).catch((err) => {
+
+      if(err.response.status === 401){
+         history.push('/login')
+      }
+
+    })
+
+    
+
+    return () => {
+
+    }
+  }, [])
+
+
+  // useEffect(() => {
+  //  console.log("making")
+  //   authAxios.get('api/v1/teacher_dashboards').then((res) => {
+  //    console.log(res)
+  //     const {score_report_drafts, score_types, subjects, term_dates, teacher} = res.data 
+  //     const newDashboardInfo = Object.assign({}, dashboardInfo)
+      
+  //     newDashboardInfo.unfinishedDrafts = score_report_drafts
+  //     newDashboardInfo.termDates = term_dates
+  //     newDashboardInfo.fullName = teacher.full_name 
+  //     newDashboardInfo.scoreTypes = score_types
+  //     newDashboardInfo.subjects = subjects
+      
+  //     setDashboardInfo(newDashboardInfo)
+  //     setLoading(false)
+
+      
+
+  //   }).catch((err) => {
+
+  //     if(err.response.status === 401){
+  //        history.push('/login')
+         
+  //     }
+
+  //   })
+
+    
+
+  //   return () => {
+
+  //   }
+  // }, [location.state])
+
+
+  useEffect(() => {
+    if (window.location.hash  === "#create"){
+      setOpen(true);
+    }else{
+      setOpen(false)
+    }
+    
+  }, [routeMatch])
+
+
+
+
+
+  
   return (
+     <TeacherContextProvider
+     
+      value={{
+        dashboardInfo: dashboardInfo,
+        handleClickOpen,
+        handleClose,
+        open,
+        openSnack,
+        snackInfo,
+        setOpenSnack: (op) => setOpenSnack(op),
+        setSnackInfo: (info) => {
+          setSnackInfo(info)
+        }
+      }}
+     >
+
+      {
+
+        loading ? 
+        <Backdrop
+          sx={{ backgroundColor: "rgba(32, 38, 45, 0.2)", backdropFilter: "blur(2px)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={loading}
+          
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      :
      
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+      <MySnackbar />
+      
+      <CreateScoreReportDraft />
+    
       <AppBar
         position="fixed"
         sx={{backgroundColor: "white", boxShadow: "none"}}
       >
           <Container maxWidth="xl" > 
-          <Toolbar
-            sx={{backgroundColor: "white"}}
-          >
-          <Box display="flex" width="100%" justifyContent="space-between" >
-
-          <IconButton
-            color="success"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
-          >
-            <img src="/images/menu.png" width="24px" />
-          </IconButton>
-
-            <Box width="100%" display="flex" justifyContent="flex-end">
-              
-              <Hidden smDown >
-                  <Button endIcon={<SpellcheckRounded />} sx={{marginRight: "20px", fontWeight: "bolder", backgroundColor: "#00A6FF", color: "white"}}>Create Draft</Button>
-              </Hidden>
-              <Hidden smUp >
-                  <IconButton sx={{marginRight: "20px", color: "#00A6FF"}} >
-                    <SpellcheckRounded />
-                  </IconButton>
-              </Hidden>
-              <Profile />
-            </Box>
-
-             
-          </Box>
-          
-        </Toolbar>
+          <HeaderToolBar handleDrawerToggle={handleDrawerToggle}/>
         </Container>
       </AppBar>
      
       <Box
         component="nav"
-        
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          <Toolbar />
-          <SideNav />
-        </Drawer>
+        
+        <SideDrawer mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle}/>
         
       </Box>
         <Container maxWidth="xl" > 
@@ -142,17 +232,25 @@ function TeacherDashboard(props) {
               </Grid>
             </Hidden>
             <Grid item xs={12} sm={12} md={8} >
-                <Box  >
-                    <Box p={2} >
-                      <Typography variant="h4" sx={{fontWeight: "bolder"}} >Unfinished Score Reports</Typography>
-                    </Box>
-                    <UnfinishedScoreReportDraftsContainer />
-                </Box>
+                <Switch >
+                 
+                 
+                  <Route   path="/score_report_drafts/:id" render={()=> (<EditScoreDraftReportContainer />)} />
+                  <Route  path="/score_report_drafts" render={()=> (<ScoreReportDraftContainer />)} />
+                  <Route  path="/behaviour_reports" render={()=> (<BehaviourReportContainer />)} />
+                  <Route  path="/score_reports/:subject" render={()=> (<ScoreReportContainer />)} />
+                  <Route path="/" render={()=> (<Home />)} /> 
+                </Switch>
+          
             </Grid>
         </Grid>
       </Box>
       </Container>
+     
     </Box>
+
+      }
+    </TeacherContextProvider>
 
   );
 }
