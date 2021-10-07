@@ -10,6 +10,8 @@ import UnscoredStudentDrafts from './unscored/UnscoreStudentDrafts';
 import ScoredStudentDrafts from './scored/ScoredStudentDrafts';
 import EditStudentDraftContext from '../../../context/teacher/EditStudentDraftContext';
 import { green } from '@mui/material/colors';
+import { FetchContext } from '../../../context/FetchContext';
+import { useHistory, useParams } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,13 +48,35 @@ function a11yProps(index) {
 
 export default function StudentScoreReportDrafts() {
   const [value, setValue] = React.useState(0);
+  const [loading, setLoading] = React.useState(false)
+  const {id} = useParams()
+  const history = useHistory()
+
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  
 
   const {scoreReportDraft} = React.useContext(EditStudentDraftContext)
+  const {authAxios} = React.useContext(FetchContext)
+
+
+  const publish = () => {
+   
+    setLoading(true)
+    
+    authAxios.post('api/v1/publish_drafts', {score_report_draft_id: id} ).then((res) => {
+     
+      history.push('/')
+
+    }).catch((err) => {
+      console.log(err)
+      setLoading(false)
+    })
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -62,8 +86,8 @@ export default function StudentScoreReportDrafts() {
           <Tab label="Marked" {...a11yProps(1)} />
           
           <IconButton> </IconButton>
-          <Button disabled={scoreReportDraft.published} endIcon={ scoreReportDraft.published ? <CheckCircleOutlineRounded sx={{color: green[300]}} /> : <CloudUploadRounded />  }> 
-          
+          <Button onClick={publish} disabled={scoreReportDraft.published} endIcon={ scoreReportDraft.published ? <CheckCircleOutlineRounded sx={{color: green[300]}} /> : <CloudUploadRounded />  }> 
+
               {
                 scoreReportDraft.published ? "Published" : "Publish"
               }

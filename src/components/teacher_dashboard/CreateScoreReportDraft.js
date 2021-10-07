@@ -19,8 +19,7 @@ import { FetchContext } from '../../context/FetchContext';
 
 const validationSchema = yup.object({
     max: yup
-      .string('Max Score')
-      .required('Max Score is required'),
+    .number().required("max").positive().lessThan(101).integer(),
     score_type_id: yup
       .string('Enter your subject')
       .required('score Type is required'),

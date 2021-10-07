@@ -7,15 +7,9 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import { FetchContext } from '../../../../context/FetchContext';
 import TeacherContext from '../../../../context/teacher/TeacherContext';
+import EditStudentDraftContext from '../../../../context/teacher/EditStudentDraftContext';
 
 
-
-const validationSchema = yup.object({
-    score: yup
-      .string('score')
-      .required('score'),
-   
-});
 
 
 
@@ -25,6 +19,15 @@ export default function StudentDraftForm(props){
     const [loading, setLoading] = useState(false)
     const {authAxios} = useContext(FetchContext)
     const {setOpenSnack, setSnackInfo, snackInfo} = useContext(TeacherContext)
+    const {scoreReportDraft} = React.useContext(EditStudentDraftContext)
+
+    console.log(scoreReportDraft.max)
+
+    const validationSchema = yup.object({
+        score: yup.number().required("!").moreThan(-1).lessThan(scoreReportDraft.max + 1)
+    
+    });
+ 
     
     
 
@@ -60,7 +63,12 @@ export default function StudentDraftForm(props){
 
             }).catch((err) => {
                 console.log(err)
-                setLoading(false)
+                const newSnackInfo = Object.assign({}, snackInfo)
+                newSnackInfo.message = `Failed To Score ${full_name}`
+                // newSnackInfo.severity = "failure"
+                // setSnackInfo(newSnackInfo)
+                // setOpenSnack(true)
+                // setLoading(false)
             })
         
         },

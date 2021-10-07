@@ -25,6 +25,12 @@ export default function ScoreReportDraftContainer(){
         }).catch((err) => {
             console.log(err)
         })
+
+        return () => {
+            setLoading(true)
+            setFailed(false)
+            setScoreReportDrafts([])
+        }
     }, [])
 
     return (

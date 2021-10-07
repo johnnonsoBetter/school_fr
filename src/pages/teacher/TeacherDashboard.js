@@ -88,7 +88,7 @@ function TeacherDashboard(props) {
 
 
     authAxios.get('api/v1/teacher_dashboards').then((res) => {
-      console.log(res)
+     
 
       const {score_report_drafts, score_types, subjects, term_dates, teacher} = res.data 
       const newDashboardInfo = Object.assign({}, dashboardInfo)
@@ -104,10 +104,10 @@ function TeacherDashboard(props) {
      
 
     }).catch((err) => {
-
-      if(err.response.status === 401){
-         history.push('/login')
-      }
+      console.log(err.response)
+      // if(err.response.status === 401){
+      //    history.push('/login')
+      // }
 
     })
 
@@ -119,40 +119,7 @@ function TeacherDashboard(props) {
   }, [])
 
 
-  // useEffect(() => {
-  //  console.log("making")
-  //   authAxios.get('api/v1/teacher_dashboards').then((res) => {
-  //    console.log(res)
-  //     const {score_report_drafts, score_types, subjects, term_dates, teacher} = res.data 
-  //     const newDashboardInfo = Object.assign({}, dashboardInfo)
-      
-  //     newDashboardInfo.unfinishedDrafts = score_report_drafts
-  //     newDashboardInfo.termDates = term_dates
-  //     newDashboardInfo.fullName = teacher.full_name 
-  //     newDashboardInfo.scoreTypes = score_types
-  //     newDashboardInfo.subjects = subjects
-      
-  //     setDashboardInfo(newDashboardInfo)
-  //     setLoading(false)
-
-      
-
-  //   }).catch((err) => {
-
-  //     if(err.response.status === 401){
-  //        history.push('/login')
-         
-  //     }
-
-  //   })
-
-    
-
-  //   return () => {
-
-  //   }
-  // }, [location.state])
-
+  
 
   useEffect(() => {
     if (window.location.hash  === "#create"){
@@ -181,6 +148,9 @@ function TeacherDashboard(props) {
         setOpenSnack: (op) => setOpenSnack(op),
         setSnackInfo: (info) => {
           setSnackInfo(info)
+        },
+        setDashboardInfo: (dashboardInfo) => {
+          setDashboardInfo(dashboardInfo)
         }
       }}
      >
@@ -238,7 +208,7 @@ function TeacherDashboard(props) {
                   <Route   path="/score_report_drafts/:id" render={()=> (<EditScoreDraftReportContainer />)} />
                   <Route  path="/score_report_drafts" render={()=> (<ScoreReportDraftContainer />)} />
                   <Route  path="/behaviour_reports" render={()=> (<BehaviourReportContainer />)} />
-                  <Route  path="/score_reports/:subject" render={()=> (<ScoreReportContainer />)} />
+                  <Route  path="/score_reports/:id" render={()=> (<ScoreReportContainer />)} />
                   <Route path="/" render={()=> (<Home />)} /> 
                 </Switch>
           
