@@ -23,6 +23,7 @@ export default function UnscoredStudentDrafts(){
     const {authAxios} = React.useContext(FetchContext)
     const [unscoredStudentDrafts, setUnscoredStudentDrafts] =  useState([])
     const {id, scoreReportDraft} = React.useContext(EditStudentDraftContext)
+    const [filteredUnscoredStudentDrafts, setFilteredUnscoredDrafts] = useState([])
 
 
     console.log(scoreReportDraft, "ddd")
@@ -32,6 +33,7 @@ export default function UnscoredStudentDrafts(){
       authAxios.get('/api/v1/student_score_report_drafts', {params: {scored: false, score_report_draft_id: id}}).then((res) => {
         
         setUnscoredStudentDrafts(res.data)
+        setFilteredUnscoredDrafts(res.data)
         setLoading(false)
       }).catch((err) => {
         console.log(err)
@@ -50,6 +52,10 @@ export default function UnscoredStudentDrafts(){
           <UnscoredStudentDraftsProvider
             value={{
               unscoredStudentDrafts,
+              filteredUnscoredStudentDrafts,
+              setUnscoredStudentDrafts: (unscoredStudentDrafts) => {
+                setUnscoredStudentDrafts(unscoredStudentDrafts)
+              }
               
 
             }}

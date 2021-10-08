@@ -6,7 +6,7 @@ import SideNav from './SideNav'
 export default function SideDrawer(props){
     const { window } = props;
     const {handleDrawerToggle, mobileOpen} = props
-    const drawerWidth = 250
+    const drawerWidth = 280
     const container = window !== undefined ? () => window().document.body : undefined;
 
 
@@ -20,7 +20,7 @@ export default function SideDrawer(props){
             keepMounted: true, // Better open performance on mobile.
             }}
             sx={{
-            display: { xs: 'block', md: 'none' },
+            display: { xs: 'block', lg: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
         >

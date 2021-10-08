@@ -8,11 +8,23 @@ import UnscoredDraftReportContext from '../../../../context/teacher/UnscoredDraf
 
 export default function GroupedStudentFilterInput() {
 
-  const {unscoredStudentDrafts} = React.useContext(UnscoredDraftReportContext)
+  
+  const [scores, setScores] = React.useState([])
+
+  const {unscoredStudentDrafts, setUnscoredStudentDrafts, filteredUnscoredStudentDrafts} = React.useContext(UnscoredDraftReportContext)
+
+  React.useEffect(() => {
+
+    setScores(unscoredStudentDrafts)
+
+    return () => {
+      setScores([])
+    }
+  }, [])
 
   console.log(unscoredStudentDrafts, "my unscorede")
 
-  const options = unscoredStudentDrafts.map((option) => {
+  const options = filteredUnscoredStudentDrafts.map((option) => {
     const firstLetter = option.full_name[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
@@ -27,8 +39,20 @@ export default function GroupedStudentFilterInput() {
       options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
       groupBy={(option) => option.firstLetter}
       getOptionLabel={(option) => option.full_name}
-      onChange={(event, value) => console.log(value)} 
-      renderInput={(params) => <TextField size="small" {...params} label="Find Students" />}
+      onChange={(event, value) => {
+
+        if (value === null){
+          setUnscoredStudentDrafts(filteredUnscoredStudentDrafts)
+
+        }else{
+          const newUnscoredStudentDrafts =  filteredUnscoredStudentDrafts.filter(score => score.full_name === value.full_name)
+          setUnscoredStudentDrafts(newUnscoredStudentDrafts)
+
+        }
+        
+        
+      }} 
+      renderInput={(params) => <TextField  size="small" {...params} label="Find Students" />}
     />
   );
 }

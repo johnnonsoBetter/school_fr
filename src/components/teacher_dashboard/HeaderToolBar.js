@@ -16,22 +16,22 @@ export default function HeaderToolBar({handleDrawerToggle}){
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { md: 'none' } }}
+                        sx={{ mr: 2, display: { lg: 'none' } }}
                     >
                         <img src="/images/menu.png" width="24px" />
                     </IconButton>
 
                     <Box width="100%" display="flex" justifyContent="flex-end">
                     
-                    <Hidden smDown >
-                        <Button onClick={handleClickOpen} endIcon={<SpellcheckRounded />} sx={{marginRight: "20px", fontWeight: "bolder", backgroundColor: "#00A6FF", color: "white"}}>Create Draft</Button>
-                    </Hidden>
-                    <Hidden smUp >
-                        <IconButton onClick={handleClickOpen} sx={{marginRight: "20px", color: "#00A6FF"}} >
-                            <SpellcheckRounded />
-                        </IconButton>
-                    </Hidden>
-                    <Profile />
+                        <Hidden smDown >
+                            <Button onClick={handleClickOpen} endIcon={<SpellcheckRounded />} sx={{marginRight: "20px", fontWeight: "bolder", backgroundColor: "#00A6FF", color: "white"}}>Create Draft</Button>
+                        </Hidden>
+                        <Hidden smUp >
+                            <IconButton onClick={handleClickOpen} sx={{marginRight: "20px", color: "#00A6FF"}} >
+                                <SpellcheckRounded />
+                            </IconButton>
+                        </Hidden>
+                        <Profile />
                     </Box>
 
                 

@@ -45,7 +45,7 @@ export default function ScoreReportDraftContainer(){
                    <Loader /> :
                    failed ?
                    <FailedFetch height="calc(98vh - 200px)" message="Failed to fetch score draft" /> : 
-                   <Box height="calc(98vh - 200px)"  > 
+                   <Box maxHeight="calc(100vh - 180px)" overflow="auto"  > 
 
                        {
                            scoreReportDrafts.length === 0 ? 

@@ -47,8 +47,6 @@ export default function BehaviourReportContainer(){
 
     useEffect(() => {
        setLoading(true)
-       console.log("my student ", student_id)
-       console.log("my student ", value.date)
         authAxios.get('api/v1/guidance_behaviour_reports', {params: {student_id: student_id, date: Object.keys(value).length === 0 ? new Date().toDateString() : value.date}}).then((res) => {
 
             

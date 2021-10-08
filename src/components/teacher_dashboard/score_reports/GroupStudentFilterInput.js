@@ -3,29 +3,16 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { LoadingButton } from '@mui/lab';
 import { Send } from '@mui/icons-material';
-import ScoredDraftReportContext from '../../../../context/teacher/ScoredDraftReportContext';
-import { useEffect } from 'react';
+
 
 
 export default function GroupedStudentFilterInput() {
 
-  const [scores, setScores] = React.useState([])
-
-  const {scoredStudentDrafts} = React.useContext(ScoredDraftReportContext)
-  
-  useEffect(() => {
-
-    setScores(scoredStudentDrafts)
-
-    return () => {
-      setScores([])
-    }
-  }, [])
+ 
 
 
 
-
-  const options = scores.map((option) => {
+  const options = top100Films.map((option) => {
     const firstLetter = option.full_name[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,

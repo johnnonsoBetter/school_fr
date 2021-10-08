@@ -195,13 +195,13 @@ function TeacherDashboard(props) {
         <Toolbar />
         <Grid container justifyContent="center"   >
             
-            <Hidden mdDown>
+            <Hidden lgDown>
               <Grid item xs={2} sm={3} >
                   
                   <SideNav />    
               </Grid>
             </Hidden>
-            <Grid item xs={12} sm={12} md={8} >
+            <Grid item xs={12} sm={12} lg={8} >
                 <Switch >
                  
                  

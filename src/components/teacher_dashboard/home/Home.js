@@ -5,6 +5,7 @@ import TeacherContext from '../../../context/teacher/TeacherContext'
 import FailedFetch from '../../utilities/FailedFetch'
 import Loader from '../../utilities/Loader'
 import UnfinishedScoreReportDraftsContainer from './UnfinishedScoreReportDraftsContainer'
+import WellcomeMessage from './WellcomeMessage'
 
 export default function Home(){
     const {setDashboardInfo, dashboardInfo} = useContext(TeacherContext)
@@ -52,7 +53,8 @@ export default function Home(){
                 <>
 
                 <Box p={2} >
-                    <Typography variant="h4" sx={{fontWeight: "bolder"}} >Unfinished Score Reports</Typography>
+                  <WellcomeMessage />
+                    {/* <Typography variant="h4" sx={{fontWeight: "bolder"}} >Unfinished Score Reports</Typography> */}
                 </Box>
                 <UnfinishedScoreReportDraftsContainer />
 
