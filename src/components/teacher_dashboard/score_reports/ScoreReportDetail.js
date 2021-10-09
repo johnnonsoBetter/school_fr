@@ -10,7 +10,7 @@ import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { Avatar, Divider, Paper, Rating, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/styles';
-import { blue, red} from '@mui/material/colors';
+import { blue, green, red} from '@mui/material/colors';
 
 const Max = styled(Paper)(({ theme }) => ({
     ...theme.typography.body1,
@@ -43,6 +43,7 @@ export default function ScoreReportDetail({theScore}) {
   const {max, score_type, remark, score, student} = theScore
 
 
+  console.log(remark, "this is the same remr")
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -97,7 +98,13 @@ export default function ScoreReportDetail({theScore}) {
        <Box p={1} >
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
                 <Typography > {score_type}</Typography>
-                <Rating name="read-only" value={  remark === "Poor" ? 2 : remark === "Excellent" ? 5 : 0  } readOnly />
+                <Rating name="read-only" 
+                value={  
+                  remark === "excellent" ? 5 : 
+                  remark === "very good" ? 4 : 
+                  remark === "good" ? 3 : 
+                  remark === "poor" ? 2 : 
+                  remark === "very poor" ? 1 :  0  } readOnly />
             </Box>
             
             <Box p={1} display="flex" justifyContent="center"  > 
@@ -110,8 +117,22 @@ export default function ScoreReportDetail({theScore}) {
         
             
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
-                <Typography > {remark}</Typography>
-                <Avatar sx={{bgcolor: remark === "Excellent" ? blue[500] : remark === "Poor" ? red[500] : null}} > {remark === "Poor" ? <GppBadRounded /> : remark === "Excellent" ? <GppGoodRounded />: null } </Avatar>
+                <Typography sx={{textTransform: "capitalize"}} > {remark}</Typography>
+                <Avatar sx={
+                  {
+                    bgcolor: 
+                    remark === "excellent" ? green[500] : 
+                    remark === "poor" ? red[300] : 
+                    remark === "very good" ? blue[500] : 
+                    remark === "good" ? blue[300] : 
+                    remark === "very poor" ? red[600] : null}} > 
+                    
+                    {
+                    remark === "poor" ? <GppBadRounded /> : 
+                    remark === "very poor" ? <GppBadRounded /> :
+                    remark === "good" ?  <GppGoodRounded /> :
+                    remark === "very good" ? <GppGoodRounded /> :
+                    remark === "excellent" ? <GppGoodRounded />: null } </Avatar>
             </Box>
 
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
@@ -119,6 +140,7 @@ export default function ScoreReportDetail({theScore}) {
                 <Avatar  src="/images/nonso.png" />
             </Box>
 
+          
        </Box>
       
       

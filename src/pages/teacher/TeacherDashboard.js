@@ -36,6 +36,7 @@ import CreateScoreReportDraft from '../../components/teacher_dashboard/CreateSco
 import EditScoreDraftReportContainer from '../../components/teacher_dashboard/edit_score_report_draft/EditScoreDraftReportContainer';
 
 import MySnackbar from '../../components/utilities/MySnackbar';
+import ClassroomStudentContainer from '../../components/teacher_dashboard/classroom/ClassroomStudentContainer';
 
 
 const drawerWidth = 240;
@@ -60,6 +61,7 @@ function TeacherDashboard(props) {
     subjects: [],
     termDates: [],
     scoreTypes: [],
+    classrooms: [],
     fullName: null,
 
   })
@@ -90,7 +92,7 @@ function TeacherDashboard(props) {
     authAxios.get('api/v1/teacher_dashboards').then((res) => {
      
 
-      const {score_report_drafts, score_types, subjects, term_dates, teacher} = res.data 
+      const {score_report_drafts, score_types, subjects, term_dates, teacher, classrooms} = res.data 
       const newDashboardInfo = Object.assign({}, dashboardInfo)
 
       newDashboardInfo.unfinishedDrafts = score_report_drafts
@@ -98,6 +100,7 @@ function TeacherDashboard(props) {
       newDashboardInfo.fullName = teacher.full_name 
       newDashboardInfo.scoreTypes = score_types
       newDashboardInfo.subjects = subjects
+      newDashboardInfo.classrooms = classrooms
       
       setDashboardInfo(newDashboardInfo)
       setLoading(false)
@@ -204,11 +207,12 @@ function TeacherDashboard(props) {
             <Grid item xs={12} sm={12} lg={8} >
                 <Switch >
                  
-                 
-                  <Route   path="/score_report_drafts/:id" render={()=> (<EditScoreDraftReportContainer />)} />
+                  <Route exact  path="/classrooms/:id" render={()=> (<ClassroomStudentContainer />)} />
+                  <Route  exact path="/score_report_drafts/:id" render={()=> (<EditScoreDraftReportContainer />)} />
                   <Route  path="/score_report_drafts" render={()=> (<ScoreReportDraftContainer />)} />
                   <Route  path="/behaviour_reports" render={()=> (<BehaviourReportContainer />)} />
-                  <Route  path="/score_reports/:id" render={()=> (<ScoreReportContainer />)} />
+                  <Route exact path="/score_reports/:id" render={()=> (<ScoreReportContainer />)} />
+
                   <Route path="/" render={()=> (<Home />)} /> 
                 </Switch>
           

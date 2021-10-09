@@ -65,7 +65,8 @@ export default function CreateScoreReportDraft() {
 
             const {id} = res.data
             setLoading(false)
-            history.push(`score_report_drafts/${id}`)
+            history.go(`score_report_drafts/${id}`)
+           
 
         }).catch((err) => {
             console.log(err)

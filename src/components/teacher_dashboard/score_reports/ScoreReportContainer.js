@@ -151,9 +151,10 @@ export default function ScoreReportContainer(){
                
             </Box>
             <Divider />
+            
 
 
-            <Box marginTop={3} >
+            <Box marginTop={3}  >
 
                     {
                         loading ?

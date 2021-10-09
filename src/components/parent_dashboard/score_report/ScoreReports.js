@@ -7,8 +7,7 @@ export default function ScoreReports(props){
 
     const {scores} = props
 
-    console.log("my own scores ",scores)
-    
+   
     return (
 
         <Box  >

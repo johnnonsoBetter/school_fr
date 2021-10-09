@@ -14,7 +14,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import { AccessibleRounded, AssignmentRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
+import { AccessibleRounded, AssignmentRounded, ClassRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
 import { Link, Typography } from '@mui/material';
 import {makeStyles} from '@mui/styles'
 import { NavLink } from 'react-router-dom';
@@ -46,13 +46,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SideNav({handleDrawerToggle}) {
   const [open, setOpen] = React.useState(true);
+  const [openClass, setOpenClass] = React.useState(true);
   const classes = useStyles()
   const {subjects} = useContext(TeacherContext).dashboardInfo
+  const {classrooms} = useContext(TeacherContext).dashboardInfo 
 
   console.log(subjects, "me see")
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const handleClassClick = () => {
+    setOpenClass(!openClass);
+  };
+
 
   return (
     <List
@@ -87,6 +94,34 @@ export default function SideNav({handleDrawerToggle}) {
           </ListItemIcon>
           <ListItemText  primary="Behaviour Reports" />
           </Link>
+
+          <ListItemButton onClick={handleClassClick}>
+        <ListItemIcon>
+          <ClassRounded />
+        </ListItemIcon>
+        <ListItemText primary="My Classrooms" />
+        {openClass ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={openClass} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+
+          {
+            classrooms.map((sub) => {
+
+              return (
+                <Link key={sub.id} onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px", paddingLeft: "32px"}} activeClassName={classes.active} component={NavLink} to={`/classrooms/${sub.id}`} >
+                  <ListItemIcon>
+                  <MenuBookRounded />
+                  </ListItemIcon>
+                  <ListItemText sx={{textTransform: "capitalize"}} primary={sub.name} />
+                </Link>
+
+              )
+            })
+          }
+ 
+        </List>
+      </Collapse>
         
     
 
@@ -117,13 +152,7 @@ export default function SideNav({handleDrawerToggle}) {
             })
           }
 
-        
-         
-
-       
-
-
-      
+ 
 
           
         </List>

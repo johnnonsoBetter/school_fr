@@ -54,7 +54,7 @@ export default function Home(){
 
                 <Box p={2} >
                   <WellcomeMessage />
-                    {/* <Typography variant="h4" sx={{fontWeight: "bolder"}} >Unfinished Score Reports</Typography> */}
+                    <Typography variant="h4" sx={{fontWeight: "bolder"}} >Unfinished Score Reports</Typography>
                 </Box>
                 <UnfinishedScoreReportDraftsContainer />
 
