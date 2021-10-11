@@ -22,6 +22,7 @@ export default function BehaviourReportDetail({behaviourReport}) {
     setAnchorEl(null);
   };
 
+
   const {behaviour_type, title, description, student} = behaviourReport 
 
   return (
@@ -80,7 +81,7 @@ export default function BehaviourReportDetail({behaviourReport}) {
             <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
                 <Typography > {title}</Typography>
                     
-                    <Avatar sx={{width: 30, height: 30, bgcolor: behaviour_type === "Good" ? green[500] :  red[500] }} > {behaviour_type === "Good" ? <GppGoodRounded /> :  <GppBadRounded /> } </Avatar>
+                    <Avatar sx={{width: 30, height: 30, bgcolor: behaviour_type === "Good" || behaviour_type === "good" ? green[500] :  red[500] }} > {behaviour_type === "Good" ? <GppGoodRounded /> :  <GppBadRounded /> } </Avatar>
                 </Box>
             
                 <Box p={1}  > 

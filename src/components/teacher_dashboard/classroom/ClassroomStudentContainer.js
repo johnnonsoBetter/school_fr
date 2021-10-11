@@ -10,6 +10,7 @@ import Loader from '../../utilities/Loader'
 import Empty from '../../utilities/Empty'
 import GroupedStudentFilterInput from './GroupStudentFilterInput'
 import Student from './Student'
+import TeacherContext from '../../../context/teacher/TeacherContext'
 
 export default function ClassroomStudentContainer(){
 
@@ -19,9 +20,16 @@ export default function ClassroomStudentContainer(){
     const [allStudents, setAllStudents] = useState([])
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
+    const {dashboardInfo} = useContext(TeacherContext)
+    
+
+    // const className = dashboardInfo.subjects.find(student => student.id === id).name
+
+   
 
     useEffect(() => {
-
+        // console.log(dashboardInfo.subjects.find((sub) => sub.id === id))
+        // console.log(id)
         authAxios.get('api/v1/teacher_classroom_students', {params: {classroom_id: id}}).then((res) => {
             console.log(res)
             setStudents(res.data)
@@ -34,9 +42,17 @@ export default function ClassroomStudentContainer(){
             setFailed(true)
         })
 
+
+        return () => {
+            setStudents([])
+            setLoading(true)
+            setAllStudents([])
+            setFailed(false)
+
+        }
         
         
-    }, [])
+    }, [id])
 
 
 
@@ -44,7 +60,7 @@ export default function ClassroomStudentContainer(){
 
         <Box>
            <Box p={1} sx={{display: { sm: 'flex' }}} alignItems="center" justifyContent="space-between">
-               <Typography sx={{mb: { xs: '10px' }, fontWeight: "bolder"}} variant="h4">Js1 Students</Typography>
+               <Typography sx={{mb: { xs: '10px' }, fontWeight: "bolder"}} variant="h4">Students</Typography>
 
                <GroupedStudentFilterInput students={students} setStudents={setStudents} allStudents={allStudents}/>
            </Box>

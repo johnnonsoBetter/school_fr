@@ -48,8 +48,8 @@ export default function CreateBehaviourReport({id, full_name}) {
             authAxios.post(`api/v1/teacher_behaviour_reports/`, 
                 { 
                         behaviour_report: 
-                        {title: values.title, behaviour_type: values.behaviour_type, description: values.description},
-                        student_id: id
+                        {title: values.title, behaviour_type: values.behaviour_type, description: values.description, student_id: id},
+                        
                     
                 })
             .then((res) => {
@@ -166,7 +166,7 @@ export default function CreateBehaviourReport({id, full_name}) {
                         size="small"
                         onChange={formik.handleChange}
                        
-                        value={"Good"}  
+                        value={formik.values.behaviour_type}  
                         // onChange={(e, value) => {
                            
 

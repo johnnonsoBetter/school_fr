@@ -21,7 +21,18 @@ import { useState } from 'react';
 import MySnackbar from '../../components/utilities/MySnackbar';
 import SideNav from '../../components/admin_dashboard/SideNav';
 import HeaderToolBar from '../../components/admin_dashboard/HeaderToolBar';
-
+import InventoryContainer from '../../components/admin_dashboard/inventory_activities/InventoryContainer';
+import TransactionContainer from '../../components/admin_dashboard/transaction_activities/TransactionContainer';
+import ItemContainer from '../../components/admin_dashboard/items/ItemContainer';
+import DebtorContainer from '../../components/admin_dashboard/debtors/DebtorContainer';
+import BillReportContainer from '../../components/admin_dashboard/bill_reports/BillReportContainer';
+import SubjectContainer from '../../components/admin_dashboard/subjects/SubjectContainer';
+import ClassroomContainer from '../../components/admin_dashboard/classrooms/ClassroomContainer';
+import TeacherContainer from '../../components/admin_dashboard/teachers/TeacherContainer';
+import StudentContainer from '../../components/admin_dashboard/students/StudentContainer';
+import SettingContainer from '../../components/admin_dashboard/settings/SettingContainer';
+import CreateTeacherContainer from '../../components/admin_dashboard/create_teacher/CreateTeacherContainer';
+import CreateStudentContainer from '../../components/admin_dashboard/create_student/CreateStudentContainer';
 
 
 const drawerWidth = 240;
@@ -191,13 +202,19 @@ function AdminDashboard(props) {
             </Hidden>
             <Grid item xs={12} sm={12} lg={8} >
                 <Switch >
-                 
-                  {/* <Route exact  path="/classrooms/:id" render={()=> (<ClassroomStudentContainer />)} />
-                  <Route  exact path="/score_report_drafts/:id" render={()=> (<EditScoreDraftReportContainer />)} />
-                  <Route  path="/score_report_drafts" render={()=> (<ScoreReportDraftContainer />)} />
-                  <Route  path="/behaviour_reports" render={()=> (<BehaviourReportContainer />)} />
-                  <Route exact path="/score_reports/:id" render={()=> (<ScoreReportContainer />)} /> */}
+                <Route path="/create_teacher" render={()=> (<CreateTeacherContainer />)} /> 
+                <Route path="/create_student" render={()=> (<CreateStudentContainer />)} /> 
 
+                  <Route path="/settings" render={()=> (<SettingContainer />)} /> 
+                  <Route path="/students" render={()=> (<StudentContainer />)} /> 
+                  <Route path="/teachers" render={()=> (<TeacherContainer />)} /> 
+                  <Route path="/classrooms" render={()=> (<ClassroomContainer />)} /> 
+                  <Route path="/subjects" render={()=> (<SubjectContainer />)} /> 
+                  <Route path="/bill_reports" render={()=> (<BillReportContainer />)} /> 
+                  <Route path="/debtors" render={()=> (<DebtorContainer />)} /> 
+                  <Route path="/items" render={()=> (<ItemContainer />)} /> 
+                  <Route path="/transactions" render={()=> (<TransactionContainer />)} /> 
+                  <Route path="/inventory_activities" render={()=> (<InventoryContainer />)} /> 
                   <Route path="/" render={()=> (<Home />)} /> 
                 </Switch>
           

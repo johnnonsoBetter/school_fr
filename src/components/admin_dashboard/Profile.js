@@ -39,7 +39,7 @@ export default function Profile() {
   const logout = () => {
 
     setLoading(true)
-    authAxios.delete('api/v1/teacher_auth/sign_out').then((res) => {
+    authAxios.delete('api/v1/auth/sign_out').then((res) => {
 
             logUserOut()
             history.push('/login')

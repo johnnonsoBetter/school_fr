@@ -1,11 +1,27 @@
-import { SpellcheckRounded } from '@mui/icons-material'
+import { SettingsRounded, SpellcheckRounded } from '@mui/icons-material'
 import { Box, Button, Hidden, IconButton, Toolbar } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import React, { useContext } from 'react'
+import { NavLink } from 'react-router-dom'
 import AdminContext from '../../context/admin/AdminContext'
 import Profile from './Profile'
 
+
+const useStyles = makeStyles((theme) => ({
+    activeLink: {
+        textDecoration: "none",
+       
+    },
+    link: {
+        textDecoration: "none",
+        
+    }
+}))
+
 export default function HeaderToolBar({handleDrawerToggle}){
     const {handleClickOpen} = useContext(AdminContext)
+    const classes = useStyles()
+
     return (
         <>
             <Toolbar sx={{backgroundColor: "white"}} >
@@ -23,14 +39,20 @@ export default function HeaderToolBar({handleDrawerToggle}){
 
                     <Box width="100%" display="flex" justifyContent="flex-end">
                     
-                        <Hidden smDown >
-                            <Button variant="outlined" onClick={handleClickOpen} endIcon={<SpellcheckRounded />} sx={{marginRight: "20px", fontWeight: "bolder", color: "black"}}>Create Draft</Button>
-                        </Hidden>
-                        <Hidden smUp >
-                            <IconButton onClick={handleClickOpen} sx={{marginRight: "20px", color: "#00A6FF"}} >
-                                <SpellcheckRounded />
+                       
+
+                            <NavLink activeClassName={classes.activeLink} to="/settings" >
+                            <IconButton sx={{marginRight: "10px"}} onClick={handleClickOpen} >
+                           
+                                <SettingsRounded />
+                                
                             </IconButton>
-                        </Hidden>
+                                    
+                            </NavLink>
+                           
+
+                            
+                            
                         <Profile />
                     </Box>
 
