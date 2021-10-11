@@ -27,7 +27,7 @@ export default function ScoreReportContainer(){
     const [failed, setFailed] = useState(false)
     const [subject_id, setSubjectId] = useState(subjects[0].id)
     const [score_type_id, setScoreTypeId] = useState(scoreTypes[0].id)
-    const [term_date_id, setTermDateId] = useState(id)
+    const [term_date_id, setTermDateId] = useState(termDates[0].id)
     const history = useHistory()
     const location = useLocation()
     const [changed, setChanged] = useState(false)
@@ -84,7 +84,11 @@ export default function ScoreReportContainer(){
         }) 
 
         return () => {
-           
+            // setScoreTypeId(scoreTypes[0].id)
+            // setTermDateId(termDates[0].id)
+            // setFailed(false)
+            // setLoading(true)
+            // setScoreReports([])
         }
         
     }, [score_type_id, term_date_id])

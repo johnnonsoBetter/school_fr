@@ -21,8 +21,6 @@ export default function StudentDraftForm(props){
     const {setOpenSnack, setSnackInfo, snackInfo} = useContext(TeacherContext)
     const {scoreReportDraft} = React.useContext(EditStudentDraftContext)
 
-    console.log(scoreReportDraft.max)
-
     const validationSchema = yup.object({
         score: yup.number().required("!").moreThan(-1).lessThan(scoreReportDraft.max + 1)
     
@@ -65,10 +63,10 @@ export default function StudentDraftForm(props){
                 console.log(err)
                 const newSnackInfo = Object.assign({}, snackInfo)
                 newSnackInfo.message = `Failed To Score ${full_name}`
-                // newSnackInfo.severity = "failure"
-                // setSnackInfo(newSnackInfo)
-                // setOpenSnack(true)
-                // setLoading(false)
+                newSnackInfo.severity = "error"
+                setSnackInfo(newSnackInfo)
+                setOpenSnack(true)
+                setLoading(false)
             })
         
         },

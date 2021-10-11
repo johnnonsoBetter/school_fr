@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function SideNav({handleDrawerToggle}) {
-  const [open, setOpen] = React.useState(true);
-  const [openClass, setOpenClass] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [openClass, setOpenClass] = React.useState(false);
   const classes = useStyles()
   const {subjects} = useContext(TeacherContext).dashboardInfo
   const {classrooms} = useContext(TeacherContext).dashboardInfo 

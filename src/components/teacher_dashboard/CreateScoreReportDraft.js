@@ -10,7 +10,7 @@ import { Box, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typogr
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { useContext } from 'react';
 import { FetchContext } from '../../context/FetchContext';
@@ -38,17 +38,20 @@ export default function CreateScoreReportDraft() {
   const history = useHistory()
   const [loading, setLoading] = React.useState(false)
   const {authAxios} = useContext(FetchContext)
+  const [redirectOnCreate, setRedirectOncreate] = React.useState(false)
+  const [id, setId] = React.useState(null)
 
   React.useEffect(() => {
     if (open) {
+      console.log("hello making")
+      setId(null)
+      setRedirectOncreate(false)
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
         descriptionElement.focus();
       }
     }
   }, [open]);
-
-
 
 
   const formik = useFormik({
@@ -64,8 +67,9 @@ export default function CreateScoreReportDraft() {
             console.log(res)
 
             const {id} = res.data
+            setId(id)
             setLoading(false)
-            history.go(`score_report_drafts/${id}`)
+            setRedirectOncreate(true)
            
 
         }).catch((err) => {
@@ -79,7 +83,7 @@ export default function CreateScoreReportDraft() {
 
   return (
     <div>
-     
+      {redirectOnCreate && <Redirect to={`/score_report_drafts/${id}`}  />}
       <Dialog
         open={open}
        

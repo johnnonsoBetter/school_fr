@@ -27,7 +27,7 @@ export default function BehaviourReportContainer(){
     const {authAxios} = useContext(FetchContext)
     const value = queryString.parse(location.search)
 
-    console.log(behaviourReports)
+
 
     useEffect(() => {
        
