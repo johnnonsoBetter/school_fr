@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Route,  } from 'react-router-dom';
 import './App.css';
+import AdminApp from './pages/admin/AdminApp';
 
 import ParentApp from './pages/parent/ParentApp';
 import TeacherApp from './pages/teacher/TeacherApp';
@@ -21,7 +22,7 @@ const theme = createTheme({
 
 function App() {
 
- //const isAdmin = window.location.host.split('.')[0] === 'admin'
+ const isAdmin = window.location.host.split('.')[0] === 'admin'
  //const isStudent = window.location.host.split('.')[0] === 'student'
  const isParent = window.location.host.split('.')[0] === 'parent'
  const isTeacher = window.location.host.split('.')[0] === 'teacher'
@@ -39,6 +40,9 @@ function App() {
           {
             isTeacher && <Route component={TeacherApp} />
           } 
+          {
+            isAdmin && <Route component={AdminApp} />
+          }
     
         </BrowserRouter>
       </ThemeProvider>
