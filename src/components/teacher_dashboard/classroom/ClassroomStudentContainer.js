@@ -31,7 +31,7 @@ export default function ClassroomStudentContainer(){
         // console.log(dashboardInfo.subjects.find((sub) => sub.id === id))
         // console.log(id)
         authAxios.get('api/v1/teacher_classroom_students', {params: {classroom_id: id}}).then((res) => {
-            console.log(res)
+            console.log(res , "studes")
             setStudents(res.data)
             setAllStudents(res.data)
             setLoading(false)
@@ -61,8 +61,11 @@ export default function ClassroomStudentContainer(){
         <Box>
            <Box p={1} sx={{display: { sm: 'flex' }}} alignItems="center" justifyContent="space-between">
                <Typography sx={{mb: { xs: '10px' }, fontWeight: "bolder"}} variant="h4">Students</Typography>
-
-               <GroupedStudentFilterInput students={students} setStudents={setStudents} allStudents={allStudents}/>
+                {
+                    allStudents.length !== 0 &&
+                    <GroupedStudentFilterInput students={allStudents} setStudents={setStudents} allStudents={allStudents}/> 
+                }
+               
            </Box>
 
            {

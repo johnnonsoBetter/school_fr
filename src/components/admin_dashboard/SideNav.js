@@ -76,35 +76,12 @@ export default function SideNav({handleDrawerToggle}) {
        
         </Link>
 
-       
-
-          <ListItemButton onClick={handleClassClick}>
-        <ListItemIcon>
-          <ClassRounded />
-        </ListItemIcon>
-        <ListItemText primary="Creators" />
-        {openClass ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={openClass} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-
         <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/create_student" >
           <ListItemIcon>
            <AddRounded />
           </ListItemIcon>
           <ListItemText  primary="Create Student" />
           </Link>
-
-          <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/create_teacher" >
-          <ListItemIcon>
-          <AddRounded />
-          </ListItemIcon>
-          <ListItemText  primary="Create Teacher" />
-          </Link >
- 
-        </List>
-      </Collapse>
-        
       
 
       <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/teachers" >
@@ -138,7 +115,7 @@ export default function SideNav({handleDrawerToggle}) {
 
     </List>
 
-    <Divider sx={{ width: '100%', maxWidth: 270 }} />
+
 
 
     <List

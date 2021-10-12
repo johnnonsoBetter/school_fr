@@ -5,6 +5,7 @@ import Empty from '../../utilities/Empty'
 import FailedFetch from '../../utilities/FailedFetch'
 import Loader from '../../utilities/Loader'
 import Debtor from './Debtor'
+import GroupedStudentFilterInput from './GroupStudentFilterInput'
 
 
 export default function DebtorContainer(){
@@ -13,6 +14,7 @@ export default function DebtorContainer(){
     const [failed, setFailed] = useState(false)
     const {authAxios} = useContext(FetchContext)
     const [debtors, setDebtors] = useState([])
+    const [allDebtors, setAllDebtors] = useState([])
 
     useEffect(() => {
 
@@ -20,6 +22,7 @@ export default function DebtorContainer(){
             console.log(res)
             setLoading(false)
             setDebtors(res.data)
+            setAllDebtors(res.data)
         }).catch(err => {
             
             setFailed(true)
@@ -30,6 +33,7 @@ export default function DebtorContainer(){
             setLoading(true)
             setFailed(false)
             setDebtors([])
+            setAllDebtors([])
         }
     }, [])
 
@@ -37,7 +41,11 @@ export default function DebtorContainer(){
         <>
         <Box p={1} sx={{display: { sm: 'flex' }}} alignItems="center" justifyContent="space-between">
             <Typography sx={{mb: { xs: '10px' }, fontWeight: "bolder"}} variant="h4">Debtors</Typography>
-           
+
+            {
+                allDebtors !== 0 && <GroupedStudentFilterInput setDebtors={setDebtors} allDebtors={allDebtors} />
+            }
+            
         </Box>
         <Box >
 
@@ -50,7 +58,7 @@ export default function DebtorContainer(){
             {
             debtors.length === 0 ? 
             <Empty message="No Debtors Found" height="calc(90vh - 200px)"/> :
-            <Box >
+            <Box sx={{maxHeight: "calc(95vh - 165px)", overflow: "auto"}} >
 
                 <Grid container >
                     

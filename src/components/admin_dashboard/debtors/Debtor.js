@@ -7,7 +7,7 @@ import React from 'react'
 
 export default function Debtor(props){
 
-    const {first_name, last_name, total_debt, id, classroom} = props.debtor 
+    const {first_name, last_name, total_debt, id, classroom, full_name} = props.debtor 
 
     return (
         <Box sx={{width: '100%', padding: "5px"}} >
@@ -20,7 +20,7 @@ export default function Debtor(props){
 
           <Box display="flex" marginLeft={2} p={1} width="100%" alignItems="center" justifyContent="space-between">
           <Stack spacing={0.7}>
-            <Typography sx={{textTransform: "capitalize"}} fontWeight={700}>{first_name} {last_name}</Typography>
+            <Typography sx={{textTransform: "capitalize"}} fontWeight={700}>{full_name}</Typography>
             <Box display="flex"  alignItems="center" >
             <ClassRounded sx={{color: grey[500], marginRight: "5px"}} />
             <Typography sx={{textTransform: "capitalize"}} variant="body2" textAlign="center" color="text.secondary">
