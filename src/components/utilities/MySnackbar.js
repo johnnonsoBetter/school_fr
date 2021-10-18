@@ -11,10 +11,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function MySnackbar() {
+export default function MySnackbar({openSnack, setOpenSnack, snackInfo}) {
 
-  const {message, severity} = React.useContext(TeacherContext).snackInfo
-  const {openSnack, setOpenSnack} = React.useContext(TeacherContext)
+  const {message, severity} = snackInfo
+  // const {openSnack, setOpenSnack} = React.useContext(TeacherContext)
   
 
   const handleClose = (event, reason) => {

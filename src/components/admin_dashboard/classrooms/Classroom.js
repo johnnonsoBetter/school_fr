@@ -1,11 +1,13 @@
-import { VisibilityRounded } from '@mui/icons-material'
+import { VisibilityOutlined, VisibilityRounded } from '@mui/icons-material'
 import { Avatar, Box, IconButton, Paper, Typography } from '@mui/material'
 import { blue, green } from '@mui/material/colors'
 import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 
 export default function Classroom(props){
     const {name, id} = props.classroom
+    const {pathname} = useLocation()
     return (
         <Box width="100%" sx={{padding: "5px"}} >
 
@@ -14,10 +16,11 @@ export default function Classroom(props){
             <Box p={2} display="flex" alignItems="center"  justifyContent="space-between" >
                 
                 <Typography sx={{textTransform: "capitalize"}} fontWeight={800}>{name}</Typography>
-                <IconButton>
-                <Avatar> <VisibilityRounded />  </Avatar>
-                </IconButton>
-            
+                <Link to={`${pathname}/${id}/?`} >
+                    <Avatar variant="rounded" sx={{bgcolor: blue[300]}} sx={{ width: 24, height: 24 }} >  <VisibilityOutlined fontSize="small"  /> </Avatar>
+                </Link>
+              
+              
             </Box>
             </Paper>
         </Box>

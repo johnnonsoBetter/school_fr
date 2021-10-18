@@ -1,13 +1,15 @@
 import { AccessibleForwardRounded, ClassRounded, Edit, NotificationAddRounded, VisibilityOutlined } from '@mui/icons-material'
 import { Avatar, Box, Card, Chip, Divider, IconButton, Paper, Stack, Switch, Typography } from '@mui/material'
 import { blue, grey } from '@mui/material/colors'
-
+import AmountFormatter from '../../utilities/AmountFormatter'
 import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 
 export default function Debtor(props){
 
-    const {first_name, last_name, total_debt, id, classroom, full_name} = props.debtor 
+    const { total_debt, id, classroom, full_name} = props.debtor 
+    const {pathname} = useLocation()
 
     return (
         <Box sx={{width: '100%', padding: "5px"}} >
@@ -30,10 +32,11 @@ export default function Debtor(props){
             
           </Stack>
 
-          <IconButton>
-           
-            <Avatar variant="rounded" sx={{bgcolor: blue[300]}} >  <VisibilityOutlined  /> </Avatar>
-          </IconButton>
+          <Link to={`${pathname}/${id}/bills?`} >
+          <Avatar variant="rounded" sx={{bgcolor: blue[300]}} >  <VisibilityOutlined  /> </Avatar>
+
+          </Link>
+
           
 
           
@@ -45,10 +48,11 @@ export default function Debtor(props){
         </Box>
        
         <Box sx={{p: 2, display: "flex", alignItems: 'center', justifyContent: "space-between", bgcolor: grey[200]}} >
+            
             <Chip label="Total Debt" />
-            <Typography> ₦{total_debt}</Typography>
+            <Typography> ₦{AmountFormatter(total_debt).amount()}</Typography>
         </Box>
         </Paper>
       </Box>
     )
-}
+} 

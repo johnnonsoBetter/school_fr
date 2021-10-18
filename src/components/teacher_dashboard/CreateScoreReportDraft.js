@@ -64,11 +64,12 @@ export default function CreateScoreReportDraft() {
     onSubmit: (values) => {
         setLoading(true)
         authAxios.post('api/v1/score_report_drafts', {score_report_draft: values}).then((res) => {
-            console.log(res)
-
+            
             const {id} = res.data
             setId(id)
+            formik.resetForm()
             setLoading(false)
+            
             setRedirectOncreate(true)
            
 

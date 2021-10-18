@@ -53,7 +53,7 @@ export default function DebtorContainer(){
             loading ? 
             <Loader /> :
             failed ?
-            <FailedFetch message="Failed To Load Behaviour Reports" height="calc(90vh - 200px)"/> : 
+            <FailedFetch message="Failed To Load Debtors" height="calc(90vh - 200px)"/> : 
             <>  
             {
             debtors.length === 0 ? 

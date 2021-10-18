@@ -5,6 +5,7 @@ import Empty from '../../utilities/Empty'
 import FailedFetch from '../../utilities/FailedFetch'
 import Loader from '../../utilities/Loader'
 import Subject from './Subject'
+import SubjectList from './SubjectList'
 
 
 export default function SubjectContainer(){
@@ -50,26 +51,7 @@ export default function SubjectContainer(){
             {
             subjects.length === 0 ? 
             <Empty message="No Subjects Found" height="calc(90vh - 200px)"/> :
-            <Box >
-
-                <Grid container >
-                    
-
-                    {
-                        subjects.map((subject) => {
-
-                            return (
-                                <Grid key={subject.id} item xs={12} sm={6} md={4} >
-                                    <Subject subject={subject} />            
-                                </Grid>
-                            )
-                        })
-                    }
-                </Grid>
-                
-
-
-            </Box>
+            <SubjectList subjects={subjects} />
             
             }
 

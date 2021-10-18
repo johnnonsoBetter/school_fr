@@ -172,7 +172,9 @@ function TeacherDashboard(props) {
      
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <MySnackbar />
+     
+      <MySnackbar setOpenSnack={setOpenSnack} openSnack={openSnack} snackInfo={snackInfo} />
+      
       
       <CreateScoreReportDraft />
     

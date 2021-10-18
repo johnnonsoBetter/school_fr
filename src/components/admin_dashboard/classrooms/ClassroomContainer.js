@@ -17,7 +17,7 @@ export default function ClassroomContainer(){
     useEffect(() => {
         
         authAxios.get('api/v1/classrooms').then((res) => {
-            console.log(res)
+           
             setLoading(false)
             setClassrooms(res.data)
         }).catch(err => {

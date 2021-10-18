@@ -33,6 +33,11 @@ import StudentContainer from '../../components/admin_dashboard/students/StudentC
 import SettingContainer from '../../components/admin_dashboard/settings/SettingContainer';
 import CreateTeacherContainer from '../../components/admin_dashboard/create_teacher/CreateTeacherContainer';
 import CreateStudentContainer from '../../components/admin_dashboard/create_student/CreateStudentContainer';
+import ClassroomInfoContainer from '../../components/admin_dashboard/classrooms/classroominfo/ClassroomInfoContainer';
+import SubjectInfoContainer from '../../components/admin_dashboard/subjects/subject_info/SubjectInfoContainer';
+import DebtBillContainer from '../../components/admin_dashboard/debtors/debt_bills/DebtBillContainer';
+import StudentInfoContainer from '../../components/admin_dashboard/students/student_info/StudentInfoContainer';
+import CreateActivityDrawer from '../../components/admin_dashboard/CreateActivityDrawer';
 
 
 const drawerWidth = 240;
@@ -41,23 +46,25 @@ function AdminDashboard(props) {
  
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerChildType, setDrawerChildType] = useState('')
   const [loading, setLoading] = useState(true)
   const {authAxios} = useContext(FetchContext)
   const history = useHistory()
   const location = useLocation()
   const routeMatch = useRouteMatch()
-  const [openSnack, setOpenSnack] = useState(false)
+  const [openSnack, setOpenSnack] = useState(true)
   const [snackInfo, setSnackInfo] = useState({
     message: '',
     severity: ''
   })
   
   const [dashboardInfo, setDashboardInfo] = useState({
-    // unfinishedDrafts: [],
-    // subjects: [],
-    // termDates: [],
+      teachers: [],
+      scoreTypes: [],
+      termDates: [],
     // scoreTypes: [],
-    // classrooms: [],
+       classrooms: [],
     // fullName: null,
 
   })
@@ -150,6 +157,14 @@ function AdminDashboard(props) {
         },
         setDashboardInfo: (dashboardInfo) => {
           setDashboardInfo(dashboardInfo)
+        },
+        drawerOpen,
+        drawerChildType,
+        setDrawerOpen: (open) => {
+          setDrawerOpen(open)
+        },
+        setDrawerChildType: (type) => {
+          setDrawerChildType(type)
         }
       }}
      >
@@ -168,8 +183,9 @@ function AdminDashboard(props) {
      
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      {/* <MySnackbar />
-       */}
+      <MySnackbar setOpenSnack={setOpenSnack} openSnack={openSnack} snackInfo={snackInfo} />
+      
+       <CreateActivityDrawer />
      
     
       <AppBar
@@ -202,9 +218,13 @@ function AdminDashboard(props) {
             </Hidden>
             <Grid item xs={12} sm={12} lg={8} >
                 <Switch >
-                <Route path="/create_teacher" render={()=> (<CreateTeacherContainer />)} /> 
-                <Route path="/create_student" render={()=> (<CreateStudentContainer />)} /> 
-
+                  
+                   <Route path="/subjects/:id/" render={() => <SubjectInfoContainer />} />
+                  <Route path="/classrooms/:id/" render={() => <ClassroomInfoContainer />} />
+                  <Route path="/debtors/:id/bills" render={() => <DebtBillContainer />} />
+                  <Route path="/students/:id" render={()=> (<StudentInfoContainer />)} /> 
+                  <Route path="/create_teacher" render={()=> (<CreateTeacherContainer />)} /> 
+                  <Route path="/create_student" render={()=> (<CreateStudentContainer />)} /> 
                   <Route path="/settings" render={()=> (<SettingContainer />)} /> 
                   <Route path="/students" render={()=> (<StudentContainer />)} /> 
                   <Route path="/teachers" render={()=> (<TeacherContainer />)} /> 
