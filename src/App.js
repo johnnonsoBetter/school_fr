@@ -6,10 +6,6 @@ import AdminApp from './pages/admin/AdminApp';
 import ParentApp from './pages/parent/ParentApp';
 import TeacherApp from './pages/teacher/TeacherApp';
 
-
-
-
-
 const theme = createTheme({
   typography: {
     fontFamily: [

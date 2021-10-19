@@ -39,7 +39,7 @@ export default function Student(props){
         <Box sx={{p: 2, display: "flex", alignItems: 'center', justifyContent: "space-between"}} >
             
             <Chip variant="outlined" sx={{fontWeight: "bolder"}} avatar={<Avatar sx={{bgcolor: "white", color: "black", fontWeight: "bold"}}>D</Avatar>} label={`₦${AmountFormater(total_debt).amount()}`} />
-            <Link to={`students/${2}/`} >
+            <Link to={`/students/${id}/`} >
              <Avatar variant="rounded" sx={{ width: 28, height: 28, bgcolor: "white"}}  >  <VisibilityOutlined sx={{color: grey[500]}}  /> </Avatar>
 
           </Link>

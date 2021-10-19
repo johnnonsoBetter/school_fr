@@ -37,6 +37,7 @@ export default function Section() {
                 window.location.pathname === `${path}` ? classes.navlink : ""
             }   component={NavLink}
           />
+          
           <Tab label="Stock Repair" activeClassName={classes.navlink} component={NavLink} to={isAuthenticated() ? `${path}/stock_repairs` : "/login" }    />
           
         </Tabs>
