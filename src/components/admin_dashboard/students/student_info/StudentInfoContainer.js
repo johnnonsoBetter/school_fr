@@ -9,6 +9,9 @@ import { makeStyles } from '@mui/styles';
 import { blue } from '@mui/material/colors';
 import { AuthContext } from '../../../../context/AuthContext';
 import ScoreReportContainer from './score_reports/ScoreReportContainer';
+import BehaviourReportContainer from './behaviour_report/BehaviourReportContainer';
+import BillContainer from './bills/BillContainer';
+
 
 const useStyles = makeStyles((theme) => ({
   navlink: {
@@ -53,14 +56,12 @@ export default function StudentInfoContainer() {
             <ScoreReportContainer />
           </Route>
           <Route exact path={`${path}/behaviour_reports`} >
-          <p>Behavioiur Report</p>
-          </Route>
+            <BehaviourReportContainer />
+          </Route>  
           <Route exact path={`${path}/bills`} >
-          <p>bill</p>
-          </Route>
-          {/* <Route exact path="/bills" >
             <BillContainer />
-          </Route> */}
+          </Route>
+         
         </Switch>
         
     </>

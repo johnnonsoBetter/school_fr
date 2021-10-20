@@ -1,72 +1,87 @@
-import { Box } from '@mui/material'
+import { Box, List, ListSubheader } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
-import TheDate from './TheDate'
-import BehaviourReportList from './BehaviourReportList'
-import Badge from '@mui/material';
-import {Chip, Avatar} from '@mui/material';
-import { ParentContext } from '../../../../../context/parent/ParentContext';
-import { blue } from '@mui/material/colors';
-import FailedFetch from '../../../../utilities/FailedFetch';
-import Loader from '../../../../utilities/Loader';
-import Empty from '../../../../utilities/Empty' 
-import { useLocation } from 'react-router-dom';
-import { FetchContext } from '../../../../../context/FetchContext';
-import queryString from 'query-string'
-
+import { useParams } from 'react-router-dom'
+import AdminContext from '../../../../../context/admin/AdminContext'
+import { BehaviourReportContextProvider } from '../../../../../context/admin/BehaviourReportContext'
+import { FetchContext } from '../../../../../context/FetchContext'
+import BehaviourReportList from '../../../../parent_dashboard/behaviour_report/BehaviourReportList'
+import Empty from '../../../../utilities/Empty'
+import FailedFetch from '../../../../utilities/FailedFetch'
+import Loader from '../../../../utilities/Loader'
+import BehaviourReportTerm from './BehaviourReportTerm'
 
 
 
 
 export default function BehaviourReportContainer(){
-    const {student_id, student} = useContext(ParentContext)
-    const child = student()
-    const [behaviourReports, setBehaviourReports] = useState([])
+
+    
+    const {dashboardInfo} = useContext(AdminContext)
+    const [termDates, setTermDates] = useState(dashboardInfo.termDates)
+    const [term_id, setTermId] = useState(termDates[0].id)
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
-    const location = useLocation()
+    const [behaviourReports, setBehaviourReports] = useState([])
     const {authAxios} = useContext(FetchContext)
-    const value = queryString.parse(location.search)
-
-
+    const {id} = useParams()
 
     useEffect(() => {
+
+       authAxios.get('api/v1/admin_student_behaviour_reports/', {params: {term_id: term_id, student_id: id}})
        
-        authAxios.get('api/v1/guidance_behaviour_reports', {params: {student_id: student_id, date: new Date().toDateString()}}).then((res) => {
+       .then((res) => {
 
+            console.log(res)
+            setBehaviourReports(res.data)
+            const subjectHeaders = new Set(res.data.map(sub => (sub.subject))) 
+            setLoading(false)
             
-            const {data} = res
-            setBehaviourReports(data)
-            setLoading(false)
 
-        }).catch(err => {
-            console.log(err)
-            setLoading(false)
-            setFailed(true)
-        })
+       }).catch(err => {
+           console.log(err)
+           setLoading(false)
+           setFailed(true)
+       })
+
+
     }, [])
 
     useEffect(() => {
-       setLoading(true)
-        authAxios.get('api/v1/guidance_behaviour_reports', {params: {student_id: student_id, date: Object.keys(value).length === 0 ? new Date().toDateString() : value.date}}).then((res) => {
-
-            
-            const {data} = res
-            setBehaviourReports(data)
-            setLoading(false)
-
+        setLoading(true)
+        authAxios.get('api/v1/admin_student_behaviour_reports/', {params: {term_id: term_id, student_id: id}})
+        
+        .then((res) => {
+ 
+             console.log(res)
+             setBehaviourReports(res.data)
+             const subjectHeaders = new Set(res.data.map(sub => (sub.subject))) 
+             setLoading(false)
+             
+ 
         }).catch(err => {
             console.log(err)
             setLoading(false)
             setFailed(true)
         })
-    }, [location.search, student_id])
+ 
+ 
+     }, [term_id])
+
 
     return (
-        <Box >
-            
-          
-
-            {
+       <BehaviourReportContextProvider
+        value={{
+            termDates,
+            term_id,
+            setTermId,
+        }}
+       >
+           
+         <Box display="flex" justifyContent="flex-end" flexGrow={1} p={1}>
+            <BehaviourReportTerm />
+         
+         </Box>
+         {
                 
                 loading ? <Loader /> :
                 failed ? <FailedFetch message="Something Went Wrong" height="calc(90vh - 200px)" />  :
@@ -78,16 +93,15 @@ export default function BehaviourReportContainer(){
                {
                     behaviourReports.length === 0 ?
                     <Empty message="No Behaviour Report Found" height="calc(90vh - 200px)" /> :
-                    <BehaviourReportList behaviourReports={behaviourReports} /> 
+                    <BehaviourReportList behaviourReports={behaviourReports} />
+
+                     
                }
 
             </>
 
             }
-            
-       
 
-        </Box>
+       </BehaviourReportContextProvider>
     )
-
 }

@@ -8,14 +8,15 @@ import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { Paper, Typography } from '@mui/material';
 
-import AmountFormater from '../../utilities/AmountFormatter';
+import AmountFormater from '../../../../utilities/AmountFormatter';
 
 
 export default function BillDetail({paymentHistories, bill, billReport}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
- 
 
+
+  console.log(billReport)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
