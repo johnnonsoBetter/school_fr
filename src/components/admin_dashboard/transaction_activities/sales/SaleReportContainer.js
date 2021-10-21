@@ -24,6 +24,15 @@ export default function SaleReportContainer(){
 
     // const {date, term_id, }
 
+    const numbers = sales.map((sale => sale.total));
+    const sum = numbers.reduce(function(sum, number) {
+    const updatedSum = sum + number;
+    return updatedSum;
+    }, 0);
+    
+
+    console.log(sum, "The total sales")
+
 
     
   
@@ -95,7 +104,7 @@ export default function SaleReportContainer(){
             <Box p={1} justifyContent="space-between" sx={{display: { sm: 'flex' }}} alignSales="center" >
 
                 <Box display="flex"  >
-                    <Typography sx={{fontWeight: "bolder"}} >Total: {AmountFormater(total).amount()} </Typography>
+                    <Typography sx={{fontWeight: "bolder"}} >Total: ₦{AmountFormater(sum).amount()} </Typography>
                 </Box>
 
            

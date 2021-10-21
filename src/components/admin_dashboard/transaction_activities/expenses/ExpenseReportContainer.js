@@ -22,9 +22,12 @@ export default function ExpenseReportContainer(){
     const [total, setTotal] = useState(0)
     const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
-    // const {date, term_id, }
-
-
+    const numbers = expenses.map((expense => expense.amount));
+    const sum = numbers.reduce(function(sum, number) {
+    const updatedSum = sum + number;
+    return updatedSum;
+    }, 0);
+    
     
   
     const expenseReportParam = () => {
@@ -95,7 +98,7 @@ export default function ExpenseReportContainer(){
             <Box p={1} justifyContent="space-between" sx={{display: { sm: 'flex' }}} alignExpenses="center" >
 
                 <Box display="flex"  >
-                    <Typography sx={{fontWeight: "bolder"}} >Total: {AmountFormater(total).amount()} </Typography>
+                    <Typography sx={{fontWeight: "bolder"}} >Total: ₦{AmountFormater(sum).amount()} </Typography>
                 </Box>
 
            

@@ -22,9 +22,12 @@ export default function DebtRecoveredReportContainer(){
     const [total, setTotal] = useState(0)
     const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
-    // const {date, term_id, }
-
-
+    const numbers = debts_recovered.map((debt_r => debt_r.amount));
+    const sum = numbers.reduce(function(sum, number) {
+    const updatedSum = sum + number;
+    return updatedSum;
+    }, 0);
+    
     
   
     const debt_recoveredReportParam = () => {
@@ -95,10 +98,10 @@ export default function DebtRecoveredReportContainer(){
             <Box p={1} justifyContent="space-between" sx={{display: { sm: 'flex' }}} alignDebtsRecovered="center" >
 
                 <Box display="flex"  >
-                    <Typography sx={{fontWeight: "bolder"}} >Total: {AmountFormater(total).amount()} </Typography>
+                    <Typography sx={{fontWeight: "bolder"}} >Total: ₦{AmountFormater(sum).amount()} </Typography>
                 </Box>
 
-           
+            
             
             </Box>
 
