@@ -102,12 +102,7 @@ export default function Profile() {
       >
        
       
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-            My Profile
-        </MenuItem>
+        
         <MenuItem>
           <LoadingButton loading={loading} onClick={logout} sx={{color: "inherit"}} startIcon={<Logout fontSize="small" />} > Logout</LoadingButton>
         </MenuItem>
