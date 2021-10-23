@@ -41,6 +41,8 @@ export default function TransactionContainer(){
             console.log(res)
             const {classrooms, teachers, score_types, term_dates, total_students, total_classrooms, total_teachers, total_debts, debt_recovered_reports, total_recovered_reports} = res.data
 
+            
+
             const newDashboardInfo = Object.assign({}, dashboardInfo)
             newDashboardInfo.classrooms = classrooms
             newDashboardInfo.teachers = teachers
@@ -51,6 +53,8 @@ export default function TransactionContainer(){
             newFilterInfo.term_id = term_dates[0].id 
             setFilterInfo(newFilterInfo)
             setLoading(false)
+
+            
 
             setDashboardInfo(newDashboardInfo)
         }).catch((err) => {
@@ -89,7 +93,7 @@ export default function TransactionContainer(){
                      loading ? 
                      <Loader /> :
                      failed ?
-                     <FailedFetch message="Failed To Load DebtsRecovered" height="calc(90vh - 200px)"/> : 
+                     <FailedFetch message="Failed To Load Transactions" height="calc(90vh - 200px)"/> : 
                   <>
                  <Box mt={2} display="flex" justifyContent="flex-end" >
                     {

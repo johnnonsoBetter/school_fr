@@ -90,7 +90,7 @@ export default function InventoryContainer(){
                      loading ? 
                      <Loader /> :
                      failed ?
-                     <FailedFetch message="Failed To Load DebtsRecovered" height="calc(90vh - 200px)"/> : 
+                     <FailedFetch message="Failed To Load Inventory" height="calc(90vh - 200px)"/> : 
                   <>
                  <Box mt={2} display="flex" justifyContent="flex-end" >
                     {

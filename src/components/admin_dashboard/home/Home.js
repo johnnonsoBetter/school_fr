@@ -242,9 +242,11 @@ export default function Home(){
            <Box mt={2} height="300px"   maxHeight="300px"  >
                {/* <CustomizedTables /> */}
                {
-                 
+                 debtRecoveredReports.length !== 0 && <HomeDebtRecovered debts_recovered={debtRecoveredReports} />
                }
-               <HomeDebtRecovered debts_recovered={debtRecoveredReports} />
+
+
+               
            </Box>
         </Box>
         </Grow>
