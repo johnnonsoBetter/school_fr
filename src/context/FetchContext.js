@@ -6,9 +6,15 @@ const {Provider} = FetchContext
 
 const FetchProvider = ({children}) => {
     
+    // const authAxios = axios.create({
+    //     baseURL: 'https://confamsch-b.herokuapp.com/' 
+    // })
+
     const authAxios = axios.create({
-        baseURL: 'https://confamsch-b.herokuapp.com/' 
+        baseURL: 'http://localhost:3001' 
     })
+
+
 
     authAxios.interceptors.request.use(
         config => {

@@ -14,13 +14,15 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AmountFormatter from '../../../utilities/AmountFormatter'
-
+import {DateTime} from 'luxon'
 
 
 function Row(props) {
   const { sale, admin  } = props;
   const {item_solds} = sale
   const [open, setOpen] = React.useState(false);
+  const time =  DateTime.fromISO(sale.created_at).toLocaleString(DateTime.TIME_SIMPLE)
+            
 
   return (
     <React.Fragment>
@@ -38,7 +40,7 @@ function Row(props) {
           {admin.first_name}
         </TableCell>
         <TableCell  align="center">₦{AmountFormatter(sale.total).amount()}</TableCell>
-        <TableCell sx={{textTransform: "capitalize"}} align="center">{sale.created_at}</TableCell>
+        <TableCell sx={{textTransform: "capitalize"}} align="center">{time}</TableCell>
         
       </TableRow>
       <TableRow>
@@ -58,7 +60,7 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {item_solds.map((item_sold) => (
-                    <TableRow key={item_sold.date}>
+                    <TableRow key={item_sold.id}>
                       
                       <TableCell align="center">{item_sold.name}</TableCell>
                       <TableCell align="center">

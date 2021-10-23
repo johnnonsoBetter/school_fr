@@ -53,7 +53,7 @@ function AdminDashboard(props) {
   const history = useHistory()
   const location = useLocation()
   const routeMatch = useRouteMatch()
-  const [openSnack, setOpenSnack] = useState(true)
+  const [openSnack, setOpenSnack] = useState(false)
   const [snackInfo, setSnackInfo] = useState({
     message: '',
     severity: ''
@@ -92,31 +92,9 @@ function AdminDashboard(props) {
 
     setLoading(false)
 
-    // authAxios.get('api/v1/Admin_dashboards').then((res) => {
-     
+    window.document.title = "Admin"
 
-    //   const {score_report_drafts, score_types, subjects, term_dates, Admin, classrooms} = res.data 
-    //   const newDashboardInfo = Object.assign({}, dashboardInfo)
-
-    //   newDashboardInfo.unfinishedDrafts = score_report_drafts
-    //   newDashboardInfo.termDates = term_dates
-    //   newDashboardInfo.fullName = Admin.full_name 
-    //   newDashboardInfo.scoreTypes = score_types
-    //   newDashboardInfo.subjects = subjects
-    //   newDashboardInfo.classrooms = classrooms
-      
-    //   setDashboardInfo(newDashboardInfo)
-    //   setLoading(false)
-     
-
-    // }).catch((err) => {
-    //   console.log(err.response)
-    //   // if(err.response.status === 401){
-    //   //    history.push('/login')
-    //   // }
-
-    // })
-
+  
     
 
     return () => {
@@ -193,6 +171,7 @@ function AdminDashboard(props) {
         sx={{backgroundColor: "white", boxShadow: "none"}}
       >
           <Container maxWidth="xl" > 
+          
           <HeaderToolBar handleDrawerToggle={handleDrawerToggle}/>
         </Container>
       </AppBar>
@@ -209,7 +188,7 @@ function AdminDashboard(props) {
       <Box component="main" sx={{ flexGrow: 1 }}>
         <Toolbar />
         <Grid container justifyContent="center"   >
-            
+             
             <Hidden lgDown>
               <Grid item xs={2} sm={3} >
                   

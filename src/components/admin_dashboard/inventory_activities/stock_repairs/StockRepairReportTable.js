@@ -11,15 +11,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import AmountFormatter from '../../../utilities/AmountFormatter'
 
+import {DateTime} from 'luxon'
 
 
 function Row(props) {
   const { stockRepair, admin, item } = props;
   const [open, setOpen] = React.useState(false);
+  const time =  DateTime.fromISO(stockRepair.created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
   return (
     <React.Fragment>
@@ -30,7 +29,7 @@ function Row(props) {
         </TableCell>
         <TableCell sx={{textTransform: "capitalize"}}  align="center">{item.name}</TableCell>
         <TableCell sx={{textTransform: "capitalize"}}  align="center">{stockRepair.quantity}</TableCell>
-        <TableCell sx={{textTransform: "capitalize"}} align="center">{stockRepair.created_at}</TableCell>
+        <TableCell sx={{textTransform: "capitalize"}} align="center">{time}</TableCell>
         
       </TableRow>
       

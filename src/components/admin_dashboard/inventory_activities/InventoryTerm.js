@@ -9,8 +9,8 @@ import InventoryContext from '../../../context/admin/InventoryContext';
 import AdminContext from '../../../context/admin/AdminContext';
 import { useContext } from 'react';
 
-export default function InventoryTerm() {
-  const {termDates} = React.useContext(AdminContext).dashboardInfo
+export default function InventoryTerm(props) {
+  const {termDates} = props
   const {filterInfo, setFilterInfo} = useContext(InventoryContext)
   const [value, setValue] = React.useState(termDates[0].id)
 

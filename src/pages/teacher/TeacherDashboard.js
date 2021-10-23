@@ -87,6 +87,7 @@ function TeacherDashboard(props) {
 
   useEffect(() => {
 
+    window.document.title = "Teacher"
 
 
     authAxios.get('api/v1/teacher_dashboards').then((res) => {

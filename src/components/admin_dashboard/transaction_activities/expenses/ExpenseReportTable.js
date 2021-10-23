@@ -14,13 +14,13 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AmountFormatter from '../../../utilities/AmountFormatter'
-
+import {DateTime} from 'luxon'
 
 
 function Row(props) {
   const { expense, admin  } = props;
   const [open, setOpen] = React.useState(false);
-
+  const time =  DateTime.fromISO(expense.created_at).toLocaleString(DateTime.TIME_SIMPLE)
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -30,7 +30,7 @@ function Row(props) {
         </TableCell>
         <TableCell sx={{textTransform: "capitalize"}}  align="center">{expense.title}</TableCell>
         <TableCell sx={{textTransform: "capitalize"}}  align="center">₦{AmountFormatter(expense.amount).amount()}</TableCell>
-        <TableCell sx={{textTransform: "capitalize"}} align="center">{expense.created_at}</TableCell>
+        <TableCell sx={{textTransform: "capitalize"}} align="center">{time}</TableCell>
         
       </TableRow>
       

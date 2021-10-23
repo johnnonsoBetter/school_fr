@@ -9,8 +9,8 @@ import TransactionContext from '../../../context/admin/TransactionContext';
 import AdminContext from '../../../context/admin/AdminContext';
 import { useContext } from 'react';
 
-export default function TransactionTerm() {
-  const {termDates} = React.useContext(AdminContext).dashboardInfo
+export default function TransactionTerm(props) {
+  const {termDates} = props
   const {filterInfo, setFilterInfo} = useContext(TransactionContext)
   const [value, setValue] = React.useState(termDates[0].id)
 

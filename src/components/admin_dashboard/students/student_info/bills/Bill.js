@@ -5,7 +5,7 @@ import BillDetail from './BillDetail'
 
 
 export default function Bill(props){
-    const {title, payment_completed, total_amount, id} = props.bill
+    const {title, payment_completed, amount, id} = props.bill
 
     console.log(props.bill, "the main bill")
 
@@ -18,7 +18,7 @@ export default function Bill(props){
                     <Box display="flex" >
                         
                        
-                       <Chip  color="primary" variant="outlined" label={total_amount}  />
+                       <Chip  color="primary" variant="outlined" label={amount}  />
                        <Chip label={payment_completed ? "Paid" : "Not Paid"} sx={{color: payment_completed ? green[700] : red[300]}} variant="outlined" />
                        <BillDetail  bill={props.bill} billReport={props.bill.bill_report} paymentHistories={props.bill.payment_histories}  id={id} />
                        

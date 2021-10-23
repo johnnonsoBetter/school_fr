@@ -35,6 +35,9 @@ function ParentDashboard(){
         }).catch(err => {
             setLoading(false)
         })
+
+        window.document.title = "Parent"
+
  
     }, [])
 

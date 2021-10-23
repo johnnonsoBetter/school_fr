@@ -26,6 +26,7 @@ export default function HeaderToolBar({handleDrawerToggle}){
         <>
             <Toolbar sx={{backgroundColor: "white"}} >
                 <Box display="flex" width="100%" justifyContent="space-between" >
+                <Box sx={{display: {xs: 'none', sm: 'none', md: 'none', lg: 'block'}}} ml={10}><img src="/images/logo.png" alt="logo" /></Box>
 
                     <IconButton
                         color="success"
@@ -37,21 +38,7 @@ export default function HeaderToolBar({handleDrawerToggle}){
                         <img src="/images/menu.png" width="24px" />
                     </IconButton>
 
-                    <Box width="100%" display="flex" justifyContent="flex-end">
-                    
-                       
-
-                            <NavLink activeClassName={classes.activeLink} to="/settings" >
-                            <IconButton sx={{marginRight: "10px"}} onClick={handleClickOpen} >
-                           
-                                <SettingsRounded />
-                                
-                            </IconButton>
-                                    
-                            </NavLink>
-                           
-
-                            
+                    <Box width="100%" display="flex" justifyContent="flex-end">                     
                             
                         <Profile />
                     </Box>

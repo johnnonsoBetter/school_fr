@@ -115,7 +115,8 @@ export default function BillDetail({paymentHistories, bill, billReport}) {
 
                             return (
                                 <Box key={ph.id} display="flex" p={1} justifyContent="space-between" >
-                                    <Typography>May 23 2021</Typography>
+                                   
+                                    <Typography>{new Date(ph.created_at).toDateString()}</Typography>
                                     <Typography>₦{AmountFormater(ph.amount).amount()}</Typography>
                                 </Box>
                             )

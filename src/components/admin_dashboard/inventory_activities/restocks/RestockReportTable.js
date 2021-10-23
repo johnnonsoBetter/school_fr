@@ -14,12 +14,14 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AmountFormatter from '../../../utilities/AmountFormatter'
-
+import {DateTime} from 'luxon'
 
 
 function Row(props) {
   const { restock, admin, item } = props;
   const [open, setOpen] = React.useState(false);
+  const time =  DateTime.fromISO(restock.created_at).toLocaleString(DateTime.TIME_SIMPLE)
+  
 
   return (
     <React.Fragment>
@@ -30,7 +32,7 @@ function Row(props) {
         </TableCell>
         <TableCell sx={{textTransform: "capitalize"}}  align="center">{item.name}</TableCell>
         <TableCell sx={{textTransform: "capitalize"}}  align="center">{restock.quantity}</TableCell>
-        <TableCell sx={{textTransform: "capitalize"}} align="center">{restock.created_at}</TableCell>
+        <TableCell sx={{textTransform: "capitalize"}} align="center">{time}</TableCell>
         
       </TableRow>
       

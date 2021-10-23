@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { Paper, Typography } from '@mui/material';
-
+import DateTime from 'luxon'
 import AmountFormater from '../../../../utilities/AmountFormatter';
 
 
@@ -23,6 +23,9 @@ export default function BillDetail({paymentHistories, bill, billReport}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+
+
 
   
 
@@ -116,10 +119,10 @@ export default function BillDetail({paymentHistories, bill, billReport}) {
 
                             return (
                                 <Box key={ph.id} display="flex" p={1} justifyContent="space-between" >
-                                    <Typography>May 23 2021</Typography>
+                                    <Typography>{new Date(ph.created_at).toDateString()}</Typography>
                                     <Typography>₦{AmountFormater(ph.amount).amount()}</Typography>
                                 </Box>
-                            )
+                            ) 
                         })
                     }
 

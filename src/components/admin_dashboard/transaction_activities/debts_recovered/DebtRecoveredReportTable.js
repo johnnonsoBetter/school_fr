@@ -18,7 +18,7 @@ import { CancelRounded, CheckRounded } from '@mui/icons-material';
 import { blue, green, red } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
-
+import {DateTime} from 'luxon'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -36,6 +36,7 @@ function Row(props) {
   const {payment_completed, balance, paid} = props.bill  
   const [open, setOpen] = React.useState(false);
   const classes = useStyles()
+  const time =  DateTime.fromISO(debt_recovered.created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
   return (
     <React.Fragment>
@@ -51,7 +52,7 @@ function Row(props) {
         <TableCell sx={{textTransform: "capitalize"}} align="center">
             <Link className={classes.link} to={`/debtors/${id}/bills?`} > {full_name} </Link>
         </TableCell>
-        <TableCell sx={{textTransform: "capitalize"}} align="center">6:45pm</TableCell>
+        <TableCell sx={{textTransform: "capitalize"}} align="center">{time}</TableCell>
         
       </TableRow>
      

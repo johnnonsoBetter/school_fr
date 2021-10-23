@@ -55,17 +55,17 @@ export default function ItemContainer(){
             
             <Box p={1} justifyContent="space-between" sx={{display: { sm: 'flex' }}} alignItems="center" >
 
-            <Box display="flex"  >
+            <Box display="flex" alignItems="center"  >
                 <Typography sx={{fontWeight: "bolder"}} variant="h4">All Items</Typography>
+                 <Chip variant="outlined" sx={{ml: "16px", textTransform: "capitalize"}} label={`${allItems.length}`} />
             </Box>
 
             {
                 allItems !== 0 && 
-                <Box display="flex" width="100%" alignItems="center" justifyContent="space-between"  >
-
-                    <Chip variant="outlined" sx={{mr: "10px", textTransform: "capitalize"}} label={`${allItems.length}`} />
-                    <GroupedStudentFilterInput allItems={allItems} setItems={setItems} />
-
+                 <Box mt={1} >
+                    
+                     <GroupedStudentFilterInput allItems={allItems} setItems={setItems} />
+                
                 </Box>
             }
             

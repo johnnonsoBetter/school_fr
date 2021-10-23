@@ -66,6 +66,7 @@ export default function SideNav({handleDrawerToggle}) {
 
   return (
       <>
+     
     <List
       sx={{ width: '100%', maxWidth: 270, bgcolor: 'background.paper'}}
       component="nav"
@@ -96,7 +97,7 @@ export default function SideNav({handleDrawerToggle}) {
       <Collapse in={openClass} timeout="auto" unmountOnExit>
         <List component="div" sx={{mb: 1, mt: 1, pl: 1, pr: 1}} disablePadding>
         <Grid justify="center"  container spacing={1} >
-            <Grid item xs={6}  >
+            {/* <Grid item xs={6}  >
              
               <Link onClick={handleDrawerToggle} className={classes.link} activeClassName={classes.buttonActive} component={NavLink} to="/create_student" >
                 <Button fullWidth endIcon={<AddRounded />} size="small" variant="outlined">
@@ -114,7 +115,7 @@ export default function SideNav({handleDrawerToggle}) {
                 </Button>
               </Link>
       
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={6}  >
               <Button onClick={() => {setDrawerOpen(true); setDrawerChildType('expense')}} fullWidth endIcon={<AddRounded />} size="small" variant="outlined">
@@ -199,12 +200,12 @@ export default function SideNav({handleDrawerToggle}) {
     >
      
       
-     <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/bill_reports" >
+     {/* <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/bill_reports" >
             <ListItemIcon>
                 <img src="/images/bill.png" alt="Bill Reports" />
             </ListItemIcon>
             <ListItemText  primary="Bill Reports" />
-    </Link>
+    </Link> */}
 
     <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/debtors" >
             <ListItemIcon>

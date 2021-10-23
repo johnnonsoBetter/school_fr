@@ -9,15 +9,18 @@ import IconButton from '@mui/material/IconButton';
 import { Paper, Typography } from '@mui/material';
 import { FetchContext } from '../../../context/FetchContext';
 import { ParentContext } from '../../../context/parent/ParentContext';
+import AmountFormater from '../../utilities/AmountFormatter';
 
 
-export default function BillDetail({id}) {
+export default function BillDetail(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {authAxios} = useContext(FetchContext)
-  const {student_id} = useContext(ParentContext)
+  
   const open = Boolean(anchorEl);
   const [loading, setLoading] = useState(true)
   const [failed, setFailed] = useState(false)
+
+  const {payment_histories, paid, balance, amount, bill_report} = props.bill
 
 
   const handleClick = (event) => {
@@ -27,23 +30,6 @@ export default function BillDetail({id}) {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-
-    authAxios.get( `api/v1/guidance_bills/${id}` , {params: {student_id: student_id}}).then((res) => {
-
-            
-      const {data} = res
-      console.log(data)
-     
-      setLoading(false)
-
-  }).catch(err => {
-      console.log(err)
-      setLoading(false)
-      setFailed(true)
-  })
-
-  }, [])
 
 
 
@@ -101,8 +87,8 @@ export default function BillDetail({id}) {
        <Box p={2} >
 
                 <Box width="100%" display="flex" p={1} justifyContent="space-between" alignItems="center" >  
-                    <Typography > Exam Fee</Typography>
-                    <Typography > ₦3,600</Typography>
+                    <Typography > {bill_report.title}</Typography>
+                    <Typography > ₦{AmountFormater(amount).amount()}</Typography>
                     
                 </Box>
                 
@@ -110,7 +96,7 @@ export default function BillDetail({id}) {
                 <Box p={1} display="flex"  justifyContent="space-around" alignItems="center"  > 
                     <Paper elevation={2} >
                       <Box textAlign="center" p={1} >
-                        <Typography>₦2,000</Typography>
+                        <Typography>₦{AmountFormater(paid).amount()}</Typography>
                         <Typography>Paid</Typography>
 
                       </Box>
@@ -119,7 +105,7 @@ export default function BillDetail({id}) {
 
                     <Paper elevation={2} >
                       <Box textAlign="center" p={1} >
-                        <Typography>₦1,600</Typography>
+                        <Typography>₦{AmountFormater(balance).amount()}</Typography>
                         <Typography>Balance</Typography>
 
                       </Box>
@@ -129,39 +115,29 @@ export default function BillDetail({id}) {
 
                 <Box p={1}>
                   <Typography>Payment History</Typography>
+
                   <Box width="100%" maxHeight="120px" overflow="auto" >  
-                    <Box display="flex" p={1} justifyContent="space-between" >
-                      <Typography>May 23 2021</Typography>
-                      <Typography>₦4,500</Typography>
-                    </Box>
+                   
 
-                    <Box display="flex" p={1} justifyContent="space-between" >
-                      <Typography>May 23 2021</Typography>
-                      <Typography>₦4,500</Typography>
-                    </Box>
+                   {
+                       payment_histories.map((ph) => {
 
-                    <Box display="flex" p={1} justifyContent="space-between" >
-                      <Typography>May 23 2021</Typography>
-                      <Typography>₦4,500</Typography>
-                    </Box>
+                           return (
+                               <Box key={ph.id} display="flex" p={1} justifyContent="space-between" >
+                                  
+                                   <Typography>{new Date(ph.created_at).toDateString()}</Typography>
+                                   <Typography>₦{AmountFormater(ph.amount).amount()}</Typography>
+                               </Box>
+                           )
+                       })
+                   }
 
-                    <Box display="flex" p={1} justifyContent="space-between" >
-                      <Typography>May 23 2021</Typography>
-                      <Typography>₦4,500</Typography>
-                    </Box>
-
-                    <Box display="flex" p={1} justifyContent="space-between" >
-                      <Typography>May 23 2021</Typography>
-                      <Typography>₦4,500</Typography>
-                    </Box>
-
-                    <Box display="flex" p={1} justifyContent="space-between" >
-                      <Typography>May 23 2021</Typography>
-                      <Typography>₦4,500</Typography>
-                    </Box>
+                   
+                 </Box>
+                  
 
                     
-                  </Box>
+                  
                 </Box>
                 
 
