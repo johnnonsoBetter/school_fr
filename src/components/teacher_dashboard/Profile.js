@@ -24,8 +24,9 @@ export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [loading, setLoading] = React.useState(false)
-  const {logUserOut} = React.useContext(AuthContext)
+  const {logUserOut, authState} = React.useContext(AuthContext)
   const {authAxios} = React.useContext(FetchContext)
+  const {first_name} = JSON.parse(authState.userInfo)
   const history = useHistory()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -63,7 +64,7 @@ export default function Profile() {
        
         <Tooltip title="Account">
          
-          <Chip avatar={<Avatar src="/images/nonso.png" />} label="Chukwuma Paul" clickable onClick={handleClick}  />
+          <Chip avatar={<Avatar src="/images/nonso.png" />} label={first_name} clickable onClick={handleClick}  />
         </Tooltip>
       </Box>
       <Menu
