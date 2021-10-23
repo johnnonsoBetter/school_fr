@@ -168,7 +168,7 @@ export default function Home(){
                                         <Typography fontWeight={700}> Total Classroom</Typography>
                                         <Box display="flex" alignItems="center" >  <BarChartRounded /> <Typography> {totalClassrooms} </Typography> </Box>
                                              
-                                        <Typography> <Link to='/subjects' className={classes.link} > View</Link></Typography>
+                                        <Typography> <Link to='/classrooms' className={classes.link} > View</Link></Typography>
                                     </Stack>
                                 </Box>
 
