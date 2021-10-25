@@ -22,7 +22,7 @@ export default function WellcomeMessage(){
             <ThemeProvider theme={theme} >
                 <Box display="flex" borderRadius={2} alignItems="center" p={2} sx={{backgroundColor: blueGrey[100], height: "120px"}} >
                    <Typography fontWeight="bolder" variant="h4" sx={{textTransform: "capitalize"}} >
-                       Wellcome {first_name} {last_name}
+                       Welcome {first_name} {last_name}
                    </Typography>
                    <Box sx={{ml: 2}} >
                        <img src="/images/clapping.png" alt="clapping" style={{width: "50px", maxWidth: "100%"}} />
