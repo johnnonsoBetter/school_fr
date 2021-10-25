@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 export default function Teacher(props){
 
-    const { id, full_name} = props.teacher 
+    const { id, full_name, permitted} = props.teacher 
     
     return (
         <Box sx={{width: '100%', padding: "5px"}} >
@@ -35,7 +35,7 @@ export default function Teacher(props){
        
         <Box sx={{p: 2, display: "flex", alignItems: 'center', justifyContent: "space-between"}} >
             
-            <Chip variant="outlined" label="Active" sx={{fontWeight: "bolder"}} />
+            <Chip variant="outlined" label={permitted ? "Active" : "Not Active"} sx={{fontWeight: "bolder"}} />
             <Link to={`teachers/${2}/`} >
              <Avatar variant="rounded" sx={{ width: 28, height: 28, bgcolor: "white"}}  >  <VisibilityOutlined sx={{color: grey[500]}}  /> </Avatar>
 
