@@ -2,6 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Route,  } from 'react-router-dom';
 import './App.css';
 import AdminApp from './pages/admin/AdminApp';
+import LandingPageApp from './pages/landing_page/LandingPageApp';
 
 import ParentApp from './pages/parent/ParentApp';
 import TeacherApp from './pages/teacher/TeacherApp';
@@ -22,6 +23,8 @@ function App() {
  //const isStudent = window.location.host.split('.')[0] === 'student'
  const isParent = window.location.host.split('.')[0] === 'parent'
  const isTeacher = window.location.host.split('.')[0] === 'teacher'
+ const isLandingPage = window.location.host.split('.').length === 1
+
 
   
 
@@ -29,7 +32,9 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-        
+          {
+            isLandingPage && <Route component={LandingPageApp} />
+          }
           {
             isParent && <Route component={ParentApp} />
           } 
