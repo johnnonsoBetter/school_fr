@@ -23,7 +23,7 @@ function App() {
  //const isStudent = window.location.host.split('.')[0] === 'student'
  const isParent = window.location.host.split('.')[0] === 'parent'
  const isTeacher = window.location.host.split('.')[0] === 'teacher'
- const isLandingPage = window.location.host.split('.').length === 1
+ const isLandingPage = window.location.host === 'www.confamsch.com.ng' || window.location.host === 'localhost:3000' 
 
 
   console.log(window.location.host.split('.'))
