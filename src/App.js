@@ -26,7 +26,8 @@ function App() {
  const isLandingPage = window.location.host.split('.').length === 1
 
 
-  
+  console.log(window.location.host.split('.'))
+  console.log(isLandingPage)
 
   return (
     <div className="App">
