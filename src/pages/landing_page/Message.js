@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Paper, Stack, Typography } from '@mui/material'
 import React from 'react'
+import { HashLink } from 'react-router-hash-link'
 
 
 export default function Message(){
@@ -21,9 +22,18 @@ export default function Message(){
                     </Box>
                     <Box  width="100%" mt={3} display="flex" justifyContent="center" >
                         <Stack direction="row" spacing={2}>
-                            <Button color="warning" variant="outlined" size="large"> Schools </Button>
-                            <Button color="success" variant="outlined" size="large"> Parents</Button>
-                            <Button color="info" variant="outlined" size="large"> Teachers</Button>
+                           
+                            <HashLink  style={{textDecoration: "none"}} smooth to={'/#school-f'}>
+                                <Button color="warning" variant="outlined" size="large"> Schools </Button>
+                            </HashLink>
+
+                            <HashLink  style={{textDecoration: "none"}} smooth to={'/#parent-f'}>
+                                <Button color="success" variant="outlined" size="large"> Parents </Button>
+                            </HashLink>
+
+                            <HashLink  style={{textDecoration: "none"}} smooth to={'/#teacher-f'}>
+                                <Button color="info" variant="outlined" size="large"> Teachers </Button>
+                            </HashLink>
                         </Stack>
                     </Box>
                 </Box>

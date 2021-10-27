@@ -33,7 +33,7 @@ export default function HeaderToolBar({handleDrawerToggle}){
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { lg: 'none' } }}
+                        sx={{ display: { lg: 'none' } }}
                     >
                         <img src="/images/menu.png" width="24px" />
                     </IconButton>

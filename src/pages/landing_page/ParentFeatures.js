@@ -11,7 +11,7 @@ export default function ParentFeatures(){
             
             
 
-            <Grid xs={12} sm={6} md={6} zeroMinWidth >
+            <Grid xs={12} sm={12} md={6} zeroMinWidth >
                 <Box   display="flex" alignItems="center" flexDirection="column" 
                 
                 sx={{justifyContent: {md: "center"}, mt: {xs: 5, sm: 5, lg: 1}}}  >
@@ -22,11 +22,11 @@ export default function ParentFeatures(){
                 </Box>
             </Grid>
 
-            <Grid xs={12} sm={6} md={5} zeroMinWidth >
+            <Grid xs={12} sm={12} md={6} zeroMinWidth >
                 <Box >
                     <Box sx={{justifyContent: {md: "center"}, mt: {xs: 5, sm: 5, lg: 1}}}   display="flex" flexDirection="column"  justifyContent="center" alignItems="center" width="100%" >
-                        <Paper elevation={3}  >
-                        <img src="/images/dashboard_for.png" alt="logo" style={{maxWidth: "100%"}} />
+                        <Paper elevation={5} sx={{transformOrigin: "right", maxHeight: "300px", height: "300px",  transform: "perspective(1200px) rotateY(-9deg)", transition: ".55s"}}  >
+                        <img src="/images/parents_d.png" alt="logo" style={{maxWidth: "100%", maxHeight: "100%"}} />
                         </Paper>
                         
                     </Box>

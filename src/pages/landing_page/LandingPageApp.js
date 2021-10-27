@@ -18,10 +18,13 @@ import {  PhoneRounded } from '@mui/icons-material';
 import Actions from './Actions';
 import Message from './Message';
 import Aim from './Aim';
+import MobileNav from './MobileNav'
 import ParentFeatures from './ParentFeatures';
 import { Divider } from '@mui/material';
 import TeacherFeatures from './TeacherFeatures';
 import SchoolFeatures from './SchoolFeatures';
+import { HashLink } from 'react-router-hash-link';
+import Contact from './Contact';
 
 
 function ElevationScroll(props) {
@@ -118,46 +121,49 @@ export default function LandingPageApp(props) {
         <AppBar sx={{ backgroundColor: "rgb(233 243 255 / 20%)", backdropFilter: "blur(2px)", zIndex: (theme) => theme.zIndex.drawer + 1 }} >
             <Toolbar>
                 <Box display="flex" width="100%" alignItems="center" justifyContent="space-between" >
-                    <Box ><img src="/images/logo.png" alt="logo" /></Box>
+                    <Link to="/" >
+                      <Box ><img src="/images/logo.png" alt="logo" /></Box>
 
-                    {/* <IconButton
-                        color="success"
-                        aria-label="open drawer"
-                        edge="start"
-                       
-                        sx={{ mr: 2, display: { lg: 'none' } }}
-                    >
-                        <img src="/images/menu.png" width="24px" />
-                    </IconButton> */}
-
+                    </Link>
+                    
                         
 
                     <Box width="100%" display="flex" justifyContent="flex-end" alignItems="center">                     
                             
-                        {/* <Profile /> */}
+                        
 
-                        <Box mr={4}  >
+                        <Box sx={{mr: {md: 4}}}  >
                           <Actions />
+                        </Box>
+
+                        <Box sx={{display: {md: 'none'}}} >
+                          <MobileNav />
                         </Box>
                         
                         <Box display="flex" sx={ {display:  {xs: 'none', sm: 'none', md: 'flex'}}} >
 
                         <Box mr={4} >
-                            <Link className={classes.link}  > <Typography variant="h6"> Features </Typography></Link>
+                            
+                            <HashLink  style={{textDecoration: "none"}} smooth to={'/#features'}>
+                              <Typography sx={{color: "black"}} variant="h6"> Features </Typography>
+                            </HashLink>
                         </Box>
 
                         <Box mr={4}>
-                            <Link className={classes.link} > <Typography variant="h6"> Why Us? </Typography></Link>
+                            
+                            <HashLink  style={{textDecoration: "none"}} smooth to={'/#why-us'}>
+                              <Typography sx={{color: "black"}} variant="h6"> Why us? </Typography>
+                            </HashLink>
                         </Box>
 
                         <Box >
-                            <Link className={classes.link} > 
-                            <Box display="flex" alignItems="center"  >
-                            <Typography sx={{mr: 1}} variant="h6"> Contact Us </Typography> 
-                            <PhoneRounded fontSize="23px" />
-                            </Box>
+                          <HashLink  style={{textDecoration: "none"}} smooth to={'/#contact-us'}>
+                              <Box display="flex" alignItems="center"  >
+                              <Typography sx={{mr: 1}} sx={{color: "black"}} variant="h6"> Contact Us </Typography> 
+                              <PhoneRounded sx={{ml: 1}} fontSize="23px" sx={{color: "black"}} />
+                              </Box>
                             
-                            </Link>
+                           </HashLink>
                         </Box>
 
 
@@ -185,25 +191,47 @@ export default function LandingPageApp(props) {
           <Divider />
         </Box>
 
-        <SchoolFeatures />
+        <Box id="features" >
+
+          <Box id="school-f" >
+            <SchoolFeatures />
+          </Box>
+            
 
         <Box mt={4} >
           <Divider />
+        </Box>
+
+       
+        <Box id="parent-f" >
+          <ParentFeatures />
+        </Box>
+
+        <Box mt={4} >
+          <Divider />
+        </Box>
+
+        <Box id="teacher-f" >
+         <TeacherFeatures />
+
         </Box>
         
-        <ParentFeatures />
-
         <Box mt={4} >
           <Divider />
         </Box>
 
-        <TeacherFeatures />
 
-        <Box mt={4} >
-          <Divider />
+
         </Box>
 
-         <Aim />
+          <Box id="why-us" >
+            <Aim />
+          </Box>
+
+          <Box id="contact-us" >
+            <Contact />
+          </Box>
+         
 
 
        

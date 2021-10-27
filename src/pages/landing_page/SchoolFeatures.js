@@ -25,7 +25,7 @@ export default function SchoolFeatures(){
             <Grid xs={12} sm={6} md={5} zeroMinWidth >
                 <Box >
                     <Box sx={{justifyContent: {md: "center"}, mt: {xs: 5, sm: 5, lg: 1}}}   display="flex" flexDirection="column"  justifyContent="center" alignItems="center" width="100%" >
-                        <Paper elevation={3}  >
+                        <Paper elevation={5} sx={{transformOrigin: "right",  maxHeight: "300px", transform: "perspective(1200px) rotateY(-9deg)", transition: ".55s"}}  >
                         <img src="/images/dashboard_for.png" alt="logo" style={{maxWidth: "100%"}} />
                         </Paper>
                         

@@ -33,7 +33,7 @@ export default function Aim(){
 
                     <Grid item xs={12} sm={6} >
                         <Box  >
-                            <Typography variant="h6" fontWeight="bolder"  >The Solution:</Typography>
+                            <Typography variant="h6" fontWeight="bolder"  >Our Solution:</Typography>
                         </Box>
                         <Box >
                             <Typography variant="h6"   >

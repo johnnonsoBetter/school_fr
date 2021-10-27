@@ -18,8 +18,9 @@ import { LoadingButton } from '@mui/lab';
 import { Link, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { FetchContext } from '../../context/FetchContext';
-import { Avatar, Button, Chip } from '@mui/material';
+import { Avatar, Button, Chip, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { HashLink } from 'react-router-hash-link';
 
 
 
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Actions(props) {
+export default function MobileNav(props) {
   const [anchorEl, setAnchorEl] = React.useState(false);
   const open = Boolean(anchorEl);
   const classes = useStyles()
@@ -52,10 +53,10 @@ export default function Actions(props) {
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
           
        
-        <Tooltip title="Accounts">
+        <Tooltip title="Menus">
          
           <IconButton onClick={handleClick} >
-              <GraphicEqRounded />
+          <img src="/images/menu.png" width="24px" />
           </IconButton>
         </Tooltip>
       </Box>
@@ -96,74 +97,30 @@ export default function Actions(props) {
       
        
 
-        <MenuItem>
-       
-            <Button variant="outlined" sx={{width: "100px"}} onClick={() => {
-               // window.location.assign('/lsdi')
-               window.location.href = `http://parent.${window.location.host}/dashboard`;
-               
-              }}  >  
-             
+        <MenuItem onClick={handleClose} >
             
-            Parent
-            </Button>
-             
-               
-          
-    
+            <HashLink  style={{textDecoration: "none"}} smooth to={'/#why-us'}>
+                <Typography sx={{color: "black"}} variant="h6"> Why us? </Typography>
+            </HashLink>
+           
         </MenuItem>
 
-        <MenuItem>
-       
-            <Button variant="outlined" sx={{width: "100px"}} onClick={() => {
-               // window.location.assign('/lsdi')
-               window.location.href = `http://teacher.${window.location.host}/`;
-               
-              }}  >  
-             
+        <MenuItem onClick={handleClose} >
             
-            Teacher
-            </Button>
-      
+            <HashLink  style={{textDecoration: "none"}} smooth to={'/#features'}>
+                <Typography sx={{color: "black"}} variant="h6"> Features </Typography>
+            </HashLink>
+
         </MenuItem>
 
-        <MenuItem>
-
-            <Button variant="outlined" width="100px" sx={{width: "100px"}} height="100%" p={1} onClick={() => {
-               // window.location.assign('/lsdi')
-               window.location.href = `http://admin.${window.location.host}/`;
-               
-              }}  >  
-             
+        <MenuItem onClick={handleClose} >
             
-            Admin
-       
-               
-          
-         </Button>
+            <HashLink  style={{textDecoration: "none"}} smooth to={'/#contact-us'}>
+                <Typography sx={{color: "black"}} variant="h6"> Contact Us </Typography>
+            </HashLink>
+
         </MenuItem>
 
-        {/* <MenuItem>
-        <Box p={1}>
-            <Box onClick={props.goTo('parent')} >  
-                Parent
-            </Box>
-             
-              
-          
-         </Box>
-        </MenuItem>
-
-        <MenuItem>
-        <Box p={1}>
-            <Box onClick={props.goTo('parent')} >  
-            Parent
-            </Box>
-             
-              
-          
-         </Box>
-        </MenuItem> */}
       </Menu>
     </React.Fragment> 
   );
