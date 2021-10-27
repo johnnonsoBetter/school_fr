@@ -1,4 +1,4 @@
-import { Box, Drawer, Toolbar } from '@mui/material'
+import { Box, Drawer, SwipeableDrawer, Toolbar } from '@mui/material'
 import React from 'react'
 import SideNav from './SideNav'
 
@@ -11,7 +11,7 @@ export default function SideDrawer(props){
 
 
     return (
-        <Drawer
+        <SwipeableDrawer
             container={container}
             variant="temporary"
             open={mobileOpen}
@@ -27,6 +27,6 @@ export default function SideDrawer(props){
         <Box p={1} display="flex" justifyContent="center"  width="100%"  ><img style={{maxWidth: "100%", marginRight: "16px"}} src="/images/logo.png" alt="logo" /></Box>
 
         <SideNav  handleDrawerToggle={handleDrawerToggle} />
-      </Drawer>
+      </SwipeableDrawer>
     )
 }
