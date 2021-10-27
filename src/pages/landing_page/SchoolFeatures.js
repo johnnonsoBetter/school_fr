@@ -213,34 +213,7 @@ export default function SchoolFeatures(){
                     </Box>
                 </Grid>
 
-                <Grid xs={12} sm={6} md={4} zeroMinWidth >
-                    <Box p={1} >
-
-
-                        
-                        <Paper elevation={5} sx={{borderRadius: "10px"}}  >
-                            <Box minHeight="200px" position="relative" >
-                                    <Box textAlign="center" top={-15} left="90%" position="absolute" > 
-
-                                        <Paper elevation={3} sx={{p: 0.5}} >
-                                        <img src="/images/best.png" alt="logo" />
-                                        </Paper>
-                                    
-                                    </Box>
-
-                                    <Box textAlign="center" p={1} >
-                                        <Typography variant="h5" sx={{textTransform: "uppercase"}} fontWeight={700}> Report cards </Typography>
-                                    </Box>
-
-                                    <Box p={1} ml={2}>
-                                        <Typography sx={{textTransform: "capitalize"}} >  Access to child Report cards and print functionality </Typography>
-                                    </Box>
-                                
-
-                            </Box>
-                        </Paper>
-                    </Box>
-                </Grid>
+               
             </Grid>
 
         </Box>
