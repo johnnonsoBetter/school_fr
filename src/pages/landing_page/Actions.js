@@ -100,7 +100,7 @@ export default function Actions(props) {
        
             <Button variant="outlined" sx={{width: "100px"}} onClick={() => {
                // window.location.assign('/lsdi')
-               window.location.href = `http://parent.${window.location.host}/dashboard`;
+               window.location.href = `http://parent.confamsch.com.ng/dashboard`;
                
               }}  >  
              
@@ -117,7 +117,7 @@ export default function Actions(props) {
        
             <Button variant="outlined" sx={{width: "100px"}} onClick={() => {
                // window.location.assign('/lsdi')
-               window.location.href = `http://teacher.${window.location.host}/`;
+               window.location.href = `http://teacher.confamsch.com.ng/`;
                
               }}  >  
              
@@ -131,7 +131,7 @@ export default function Actions(props) {
 
             <Button variant="outlined" width="100px" sx={{width: "100px"}} height="100%" p={1} onClick={() => {
                // window.location.assign('/lsdi')
-               window.location.href = `http://admin.${window.location.host}/`;
+               window.location.href = `http://admin.confamsch.com.ng/`;
                
               }}  >  
              

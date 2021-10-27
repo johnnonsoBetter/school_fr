@@ -26,9 +26,6 @@ function App() {
  const isLandingPage = window.location.host === 'www.confamsch.com.ng' || window.location.host === 'localhost:3000' 
 
 
-  console.log(window.location.host.split('.'))
-  console.log(isLandingPage)
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
