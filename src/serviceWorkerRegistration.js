@@ -9,6 +9,28 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
+import axios from 'axios'
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+      .replace(/-/g, '+')
+      .replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+const vapidPublicKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY)
+const fetcher = axios.create({
+  baseURL: process.env.NODE_ENV === 'development'? 'http://localhost:3001' : process.env.REACT_APP_CONFAMSCH_BACKEND_API
+})
+
 
 const isLocalhost = Boolean(
     window.location.hostname === 'localhost' ||
@@ -38,11 +60,17 @@ const isLocalhost = Boolean(
   
           // Add some additional logging to localhost, pointing developers to the
           // service worker/PWA documentation.
-          navigator.serviceWorker.ready.then(() => {
-            console.log(
-              'This web app is being served cache-first by a service ' +
-                'worker. To learn more, visit https://cra.link/PWA'
-            );
+          navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+            serviceWorkerRegistration.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: vapidPublicKey
+            }).then((sub) => {
+              fetcher.post('api/v1/notifications', JSON.stringify(sub)).then((res) => {
+                console.log(res)
+              }).catch(err => {
+                console.log(err)
+              })
+            })
           });
         } else {
           // Is not localhost. Just register service worker
@@ -56,6 +84,18 @@ const isLocalhost = Boolean(
     navigator.serviceWorker
       .register(swUrl)
       .then((registration) => {
+
+        registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: vapidPublicKey
+        }).then((sub) => {
+          fetcher.post('api/v1/notifications', JSON.stringify(sub)).then((res) => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        })
+
         registration.onupdatefound = () => {
           const installingWorker = registration.installing;
           if (installingWorker == null) {
@@ -86,7 +126,7 @@ const isLocalhost = Boolean(
                 if (config && config.onSuccess) {
                   config.onSuccess(registration);
                 }
-              }
+              }                                                                                            
             }
           };
         };

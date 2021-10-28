@@ -103,8 +103,7 @@ export default function Profile() {
        
       
         <MenuItem>
-          <LoadingButton loading={loading} onCl
-          ick={logout} sx={{color: "inherit"}} startIcon={<Logout fontSize="small" />} > Logout</LoadingButton>
+          <LoadingButton loading={loading} onClick={logout} sx={{color: "inherit"}} startIcon={<Logout fontSize="small" />} > Logout</LoadingButton>
         </MenuItem>
       </Menu>
     </React.Fragment> 
