@@ -65,8 +65,7 @@ export default function Login(){
         console.log(token)
         setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
          
-        window.location.href = 'https://admin.confamsch.com.ng'
-   
+        setRedirectOnLogin(true)
      
           
       }).catch((err) => {                                             
