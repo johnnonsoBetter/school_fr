@@ -7,15 +7,15 @@ export default function ParentFeatures(){
     return (
         <Box mt={4} >
           
-            <Grid container justifyContent="space-around" >
+            <Grid container justifyContent="space-around" alignItems="center" >
             
             
 
             <Grid xs={12} sm={12} md={6} zeroMinWidth >
-                <Box   display="flex" alignItems="center" flexDirection="column" 
+                <Box   display="flex" alignItems="center" justifyContent="center" flexDirection="column" 
                 
                 sx={{justifyContent: {md: "center"}, mt: {xs: 5, sm: 5, lg: 1}}}  >
-                    <Box textAlign="center">
+                    <Box textAlign="center" display="flex" alignItems="center">
                         <Typography   variant="h4" sx={{textTransform: "capitalize"}} >Parents deserve better communication with the school and a simple Tool to monitor their children academic activities</Typography>
                     </Box>
                    
@@ -25,8 +25,8 @@ export default function ParentFeatures(){
             <Grid xs={12} sm={12} md={6} zeroMinWidth >
                 <Box >
                     <Box sx={{justifyContent: {md: "center"}, mt: {xs: 5, sm: 5, lg: 1}}}   display="flex" flexDirection="column"  justifyContent="center" alignItems="center" width="100%" >
-                        <Paper elevation={5} sx={{transformOrigin: "right", maxHeight: "300px", height: "300px",  transform: "perspective(1200px) rotateY(-9deg)", transition: ".55s"}}  >
-                        <img src="/images/parents_d.png" alt="logo" style={{maxWidth: "100%", maxHeight: "100%"}} />
+                        <Paper  elevation={0} sx={{transformOrigin: "right", transform: "perspective(1200px) rotateY(-9deg)", transition: ".55s"}}  >
+                        <img src="/images/parent_dashboard.png" alt="logo" style={{maxWidth: "100%", maxHeight: "100%"}} />
                         </Paper>
                         
                     </Box>

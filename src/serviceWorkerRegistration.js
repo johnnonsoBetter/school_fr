@@ -9,7 +9,7 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
-
+import axios from 'axios'
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -27,7 +27,9 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 const vapidPublicKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY)
-
+const fetcher = axios.create({
+  baseURL: process.env.NODE_ENV === 'development'? 'http://localhost:3001' : process.env.REACT_APP_CONFAMSCH_BACKEND_API
+})
 
 
 const isLocalhost = Boolean(
@@ -63,7 +65,11 @@ const isLocalhost = Boolean(
               userVisibleOnly: true,
               applicationServerKey: vapidPublicKey
             }).then((sub) => {
-              console.log(sub)
+              fetcher.post('api/v1/notifications', JSON.stringify(sub)).then((res) => {
+                console.log(res)
+              }).catch(err => {
+                console.log(err)
+              })
             })
           });
         } else {
@@ -78,6 +84,18 @@ const isLocalhost = Boolean(
     navigator.serviceWorker
       .register(swUrl)
       .then((registration) => {
+
+        registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: vapidPublicKey
+        }).then((sub) => {
+          fetcher.post('api/v1/notifications', JSON.stringify(sub)).then((res) => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
+        })
+
         registration.onupdatefound = () => {
           const installingWorker = registration.installing;
           if (installingWorker == null) {
@@ -108,7 +126,7 @@ const isLocalhost = Boolean(
                 if (config && config.onSuccess) {
                   config.onSuccess(registration);
                 }
-              }
+              }                                                                                            
             }
           };
         };

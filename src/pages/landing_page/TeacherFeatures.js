@@ -7,7 +7,7 @@ export default function TeacherFeatures(){
     return (
         <Box mt={4} >
           
-            <Grid container justifyContent="space-around" >
+            <Grid container justifyContent="space-around" alignItems="center" >
             
             
 
@@ -25,8 +25,8 @@ export default function TeacherFeatures(){
             <Grid xs={12} sm={6} md={5} zeroMinWidth >
                 <Box >
                     <Box sx={{justifyContent: {md: "center"}, mt: {xs: 5, sm: 5, lg: 1}}}   display="flex" flexDirection="column"  justifyContent="center" alignItems="center" width="100%" >
-                        <Paper elevation={3} sx={{transformOrigin: "right", maxHeight: "300px", height: "300px",  transform: "perspective(1200px) rotateY(-9deg)", transition: ".55s"}}  >
-                        <img src="/images/teacher_d.png" alt="logo" style={{maxWidth: "100%"}} />
+                        <Paper elevation={0} sx={{transformOrigin: "right",  transform: "perspective(1200px) rotateY(-9deg)", transition: ".55s"}}  >
+                        <img src="/images/teacher_dashboard.png" alt="logo" style={{maxWidth: "100%"}} />
                         </Paper>
                         
                     </Box>
