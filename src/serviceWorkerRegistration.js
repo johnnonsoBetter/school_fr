@@ -1,3 +1,4 @@
+import { FunctionsRounded } from '@mui/icons-material';
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -10,8 +11,10 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
 import axios from 'axios'
+import { subBusinessDays } from 'date-fns';
 
-function urlBase64ToUint8Array(base64String) {
+
+ function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding)
       .replace(/-/g, '+')
@@ -26,10 +29,19 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
+
+
 const vapidPublicKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY)
+
+
 const fetcher = axios.create({
   baseURL: process.env.NODE_ENV === 'development'? 'http://localhost:3001' : process.env.REACT_APP_CONFAMSCH_BACKEND_API
 })
+
+
+
+
+
 
 
 const isLocalhost = Boolean(
@@ -60,16 +72,33 @@ const isLocalhost = Boolean(
   
           // Add some additional logging to localhost, pointing developers to the
           // service worker/PWA documentation.
+
+          console.log("my vapid ",vapidPublicKey)
+
+          // fetcher.get('api/v1/vapid_keys').then((res) => {
+          //   console.log("the same res", res)
+          // }).catch(err => {
+          //   console.log(err)
+          // })
+
+          
+
           navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
             serviceWorkerRegistration.pushManager.subscribe({
               userVisibleOnly: true,
               applicationServerKey: vapidPublicKey
             }).then((sub) => {
-              fetcher.post('api/v1/notifications', JSON.stringify(sub)).then((res) => {
+              const s =  JSON.stringify(sub)
+              const subParams = JSON.parse(s)
+        
+              fetcher.post('api/v1/notifications', 
+              {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
                 console.log(res)
               }).catch(err => {
                 console.log(err)
               })
+ 
+            
             })
           });
         } else {
@@ -89,11 +118,16 @@ const isLocalhost = Boolean(
           userVisibleOnly: true,
           applicationServerKey: vapidPublicKey
         }).then((sub) => {
-          fetcher.post('api/v1/notifications', JSON.stringify(sub)).then((res) => {
-            console.log(res)
-          }).catch(err => {
-            console.log(err)
-          })
+          const s = JSON.stringify(sub)
+          const subParams = JSON.parse(s)
+        
+          
+          // fetcher.post('api/v1/notifications', 
+          // {params: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
+          //   console.log(res)
+          // }).catch(err => {
+          //   console.log(err)
+          // })
         })
 
         registration.onupdatefound = () => {
