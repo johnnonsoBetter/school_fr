@@ -9,6 +9,7 @@ import { Link, NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { blue } from '@mui/material/colors';
 import { AuthContext } from '../../../context/AuthContext';
+import { FetchContext } from '../../../context/FetchContext';
 
 const useStyles = makeStyles((theme) => ({
   navlink: {
@@ -20,13 +21,75 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Section() {
 
-  const [value, setValue] = React.useState(0);
+
+
+  
   const classes = useStyles()
   const {path, url} = useRouteMatch()
   const {isAuthenticated} = React.useContext(AuthContext)
+  const {authAxios} = React.useContext(FetchContext)
+  const [displayNotificationNotice, setDisplayNotificationNotice] = React.useState(false)
 
-  console.log(path)
-  console.log(isAuthenticated())
+
+
+ function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+      .replace(/-/g, '+')
+      .replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+
+
+const vapidPublicKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_KEY)
+
+
+
+
+  React.useEffect(() => {
+
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+
+      
+
+        navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+          serviceWorkerRegistration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: vapidPublicKey
+          }).then((sub) => {
+            const s =  JSON.stringify(sub)
+            const subParams = JSON.parse(s)
+      
+            authAxios.post('api/v1/notifications', 
+            {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
+              console.log(res)
+            }).catch(err => {
+              console.log(err)
+            })
+    
+          
+          })
+        });
+       
+     
+      
+      
+    }
+
+
+    
+
+  }, [])
+
+
 
   return (
     <>

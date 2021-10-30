@@ -31,6 +31,7 @@ export default function Login(){
     const history = useHistory()
     const {isAuthenticated} = useContext(AuthContext)
 
+
     const formik = useFormik({
         initialValues: {
           email: '',
@@ -66,7 +67,9 @@ export default function Login(){
         setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
          
         // setRedirectOnLogin(true)
-        window.location.href = 'https://admin.confamsch.com.ng'
+       window.location.href = 'ssfdfs'
+        history.replace('sefsdf')
+        console.log("replaces")
      
           
       }).catch((err) => {                                             

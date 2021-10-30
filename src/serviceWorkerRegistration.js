@@ -71,35 +71,26 @@ const isLocalhost = Boolean(
           checkValidServiceWorker(swUrl, config);
   
           // Add some additional logging to localhost, pointing developers to the
-          // service worker/PWA documentation.
-
-          console.log("my vapid ",vapidPublicKey)
-
-          // fetcher.get('api/v1/vapid_keys').then((res) => {
-          //   console.log("the same res", res)
-          // }).catch(err => {
-          //   console.log(err)
-          // })
-
+          // service worker/PWA documentation
           
 
           navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
-            serviceWorkerRegistration.pushManager.subscribe({
-              userVisibleOnly: true,
-              applicationServerKey: vapidPublicKey
-            }).then((sub) => {
-              const s =  JSON.stringify(sub)
-              const subParams = JSON.parse(s)
+            // serviceWorkerRegistration.pushManager.subscribe({
+            //   userVisibleOnly: true,
+            //   applicationServerKey: vapidPublicKey
+            // }).then((sub) => {
+            //   const s =  JSON.stringify(sub)
+            //   const subParams = JSON.parse(s)
         
-              fetcher.post('api/v1/notifications', 
-              {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
-                console.log(res)
-              }).catch(err => {
-                console.log(err)
-              })
+            //   fetcher.post('api/v1/notifications', 
+            //   {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
+            //     console.log(res)
+            //   }).catch(err => {
+            //     console.log(err)
+            //   })
  
             
-            })
+            // })
           });
         } else {
           // Is not localhost. Just register service worker
@@ -114,20 +105,20 @@ const isLocalhost = Boolean(
       .register(swUrl)
       .then((registration) => {
 
-        registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: vapidPublicKey
-        }).then((sub) => {
-              const s =  JSON.stringify(sub)
-              const subParams = JSON.parse(s)
+        // registration.pushManager.subscribe({
+        //   userVisibleOnly: true,
+        //   applicationServerKey: vapidPublicKey
+        // }).then((sub) => {
+        //       const s =  JSON.stringify(sub)
+        //       const subParams = JSON.parse(s)
         
-              fetcher.post('api/v1/notifications', 
-              {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
-                console.log(res)
-              }).catch(err => {
-                console.log(err)
-              })
-        })
+        //       fetcher.post('api/v1/notifications', 
+        //       {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
+        //         console.log(res)
+        //       }).catch(err => {
+        //         console.log(err)
+        //       })
+        // })
 
         registration.onupdatefound = () => {
           const installingWorker = registration.installing;
