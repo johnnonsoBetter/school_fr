@@ -100,8 +100,8 @@ export default function Actions(props) {
        
             <Button variant="outlined" sx={{width: "100px"}} onClick={() => {
                // window.location.assign('/lsdi')
-               //window.location.href = `https://parent.confamsch.com.ng/dashboard`;
-               window.location.href = 'parent.localhost:3000'
+               window.location.href = `https://parent.confamsch.com.ng/dashboard`;
+               //window.location.href = 'parent.localhost:3000'
                
               }}  >  
              
@@ -118,8 +118,8 @@ export default function Actions(props) {
        
             <Button variant="outlined" sx={{width: "100px"}} onClick={() => {
                // window.location.assign('/lsdi')
-               //window.location.href = `https://teacher.confamsch.com.ng/`;
-               window.location.href = 'teacher.localhost:3000'
+               window.location.href = `https://teacher.confamsch.com.ng/`;
+              // window.location.href = 'teacher.localhost:3000'
                
               }}  >  
              
@@ -133,8 +133,8 @@ export default function Actions(props) {
 
             <Button variant="outlined" width="100px" sx={{width: "100px"}} height="100%" p={1} onClick={() => {
                // window.location.assign('/lsdi')
-               //window.location.href = `https://admin.confamsch.com.ng/`;
-               window.location.href = 'admin.localhost:3000'
+               window.location.href = `https://admin.confamsch.com.ng/`;
+               //window.location.href = 'admin.localhost:3000'
                
               }}  >  
              
