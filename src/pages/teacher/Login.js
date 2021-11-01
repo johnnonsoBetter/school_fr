@@ -48,8 +48,7 @@ export default function Login(){
 
     const submitCredentials = (values) => {
 
-      // console.log(values)
-
+     
       setLoginLoading(true)
         
       publicFetch.post(
@@ -62,9 +61,9 @@ export default function Login(){
         const client = response.headers['client']
         const uid = response.headers['uid']
         const userInfo = response.data['data']
-        console.log(token)
+        window.location.href = '/'
         setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
-        setRedirectOnLogin(true)
+         
           
       }).catch((err) => {                                             
         

@@ -64,12 +64,11 @@ export default function Login(){
         const uid = response.headers['uid']
         const userInfo = response.data['data']
         console.log(token)
-        setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
-         
+        
         // setRedirectOnLogin(true)
-       window.location.href = 'ssfdfs'
-        history.replace('sefsdf')
-        console.log("replaces")
+       window.location.href = '/'
+       setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
+        
      
           
       }).catch((err) => {                                             

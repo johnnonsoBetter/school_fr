@@ -35,18 +35,14 @@ const validationSchema = yup.object({
     onSubmit: (values) => {
       //submitCredentials(values)
 
-      console.log(values)
-
-      const formData = new FormData();
-    // formData.append('first_name', values.first_name);
-    // formData.append('last_name', values.last_name);
-    // formData.append('middle_name', values.middle_name);
+    console.log(values)
+    const formData = new FormData();
+   
     // formData.append('email', values.email);
     // formData.append('password', values.password);
-      formData.append('image', image);
+    formData.append('image', image);
 
-    
-    authAxios.post('api/v1/student_auth/', formData ).then((res) => {
+    authAxios.post('api/v1/student_auth/', {formData, student: values} ).then((res) => {
         console.log(res)
     }).catch(err => {
         console.log(err)

@@ -62,10 +62,9 @@ export default function Login(){
         const client = response.headers['client']
         const uid = response.headers['uid']
         const userInfo = response.data['data']
-        console.log(token)
+        window.location.href = '/dashboard'
         setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
-        setRedirectOnLogin(true)
-     
+         
      
           
       }).catch((err) => {                                             
