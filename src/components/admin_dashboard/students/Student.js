@@ -8,7 +8,7 @@ import AmountFormater from '../../utilities/AmountFormatter'
 
 export default function Student(props){
 
-    const { id, full_name, total_debt} = props.student 
+    const { id, full_name, total_debt, image} = props.student 
     
     return (
         <Box sx={{width: '100%', padding: "5px"}} >
@@ -17,7 +17,7 @@ export default function Student(props){
            
         <Box sx={{ p: 2, display: 'flex', alignItems: "center" }}>
 
-          <Avatar variant="rounded"  src="/images/nonso.png" />
+          <Avatar variant="rounded"  src={image === null ? '/images/nonso.png' : image} />
 
           <Box display="flex" marginLeft={2} p={1} width="100%" alignItems="center" justifyContent="space-between">
           <Stack spacing={0.7}>

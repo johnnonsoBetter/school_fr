@@ -1,26 +1,56 @@
-import { LoadingButton } from '@mui/lab';
-import { Box, Container, Input, Paper, TextField, Typography } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import { DatePicker, LoadingButton, LocalizationProvider } from '@mui/lab';
+import { Box, Container, FormControl, Grid, IconButton, Input, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material'
+import React, { useContext, useEffect, useState } from 'react'
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { FetchContext } from '../../../context/FetchContext';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import AdminContext from '../../../context/admin/AdminContext';
 
 export default function CreateStudentContainer(){
 
     const [image, setImage] = useState(null)
 
     const {authAxios} = useContext(FetchContext)
+    const [dateOfBirth, setDateOfBirth] = useState(new Date().toDateString())
+    const [dateOfAdmission, setDateOfAdmission] = useState(new Date().toDateString())
+    const [classrooms, setClassrooms] = useState([{name: "nan/", id: -1}])
+    const [religions, setReligions] = useState(["Christainity", "Muslim"])
+    const [btnLoading, setBtnLoading] = useState(false)
+    const {setOpenSnack, snackInfo, setSnackInfo} = useContext(AdminContext)
 
+    
 
-const validationSchema = yup.object({
-    first_name: yup
-        .string().required(),
-    middle_name: yup
-        .string().required(),
-    last_name: yup
-        .string().required()
-  });
+    useEffect(() => {
+        authAxios.get('api/v1/classrooms').then((res) => {
+            const {data} = res 
+            setClassrooms(data)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
 
+    const validationSchema = yup.object({
+        first_name: yup
+            .string().required(),
+        middle_name: yup
+            .string().required(),
+        last_name: yup
+            .string().required(),
+        address: yup
+            .string().required(),
+        classroom_id: yup
+            .number().positive(),
+        religion: yup
+            .string().required(),
+        state: yup
+            .string().required(),
+        lga: yup
+            .string().required(),
+        middle_name: yup
+            .string().required(),
+            
+    });
 
   const formik = useFormik({
     initialValues: {
@@ -28,24 +58,54 @@ const validationSchema = yup.object({
       first_name: '',
       middle_name: '',
       last_name: '',
-      classroom_id: 1,
+      classroom_id: -1,
+      address: '',
+      gender: 'Male',
+      state: '',
+      lga: '',
+      religion: 'Christainity'
+
       
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       //submitCredentials(values)
 
-    console.log(values)
+    setBtnLoading(true)
     const formData = new FormData();
    
     // formData.append('email', values.email);
     // formData.append('password', values.password);
     formData.append('image', image);
+    formData.append('first_name', values.first_name)
+    formData.append('middle_name', values.middle_name)
+    formData.append('last_name', values.last_name)
+    formData.append('lga', values.lga)
+    formData.append('address', values.address)
+    formData.append('state', values.state)
+    formData.append('religion', values.religion)
+    formData.append('classroom_id', values.classroom_id)
+    formData.append('date_of_birth', dateOfBirth)
+    formData.append('date_of_admission', dateOfAdmission)
 
-    authAxios.post('api/v1/student_auth/', {formData, student: values} ).then((res) => {
-        console.log(res)
+    authAxios.post('api/v1/student_auth/', formData ).then((res) => {
+        
+        formik.resetForm()
+        const newSnackBarInfo = Object.assign(snackInfo, {})
+        newSnackBarInfo.message = `Succesfully Created Student`
+        newSnackBarInfo.severity = 'success'
+        setSnackInfo(newSnackBarInfo)
+        setOpenSnack(true)
+        setBtnLoading(false)
+
     }).catch(err => {
         console.log(err)
+        const newSnackBarInfo = Object.assign(snackInfo, {})
+        newSnackBarInfo.message = `Failed to Create Subject`
+        newSnackBarInfo.severity = 'warning'
+        setSnackInfo(newSnackBarInfo)
+        setOpenSnack(true)
+        setBtnLoading(false)
     })
       
     },
@@ -53,90 +113,273 @@ const validationSchema = yup.object({
   
 
     return (
-        <Box  sx={{ display: "flex", justifyContent: "center", minHeight: "100vh", flexDirection: "column" }} >
+       
             <form onSubmit={formik.handleSubmit}> 
-                <Box  width="100%">
-                    <Paper elevation={0}  >
+               
+                        <Grid container >
+
+                        <Grid item xs={12}  >
+                                <Box p={2} >
+                                
+
+                                    <input type="file" name="image" accept="image/*"
+                                        onChange={(event) => {
+
+                                            setImage(event.target.files[0])
+                                        }}
+                                    />
+
+                                </Box>
+
+                            </Grid>
+
+                            
+                            <Grid item xs={12} sm={6} >
+                                <Box p={2} >
+                                <TextField 
+                                    fullWidth label="First Name" 
+                                    id="fullWidth" 
+                                    name="first_name"
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.first_name && Boolean(formik.errors.first_name)}
+                                    helperText={formik.touched.first_name && formik.errors.first_name}
+                                    value={formik.values.first_name}  
+                                    
+                                    
+                                />
+
+                                </Box>
+
+                            </Grid>
+
+
                         
-                        
-                        <Box p={2} >
-                             <TextField 
-                                fullWidth label="First Name" 
-                                id="fullWidth" 
-                                name="first_name"
-                                
-                                
+
+                        <Grid item xs={12} sm={6} >
+
+                            <Box p={2} >
+                                <TextField 
+                                    fullWidth label="Middle Name" 
+                                    id="fullWidth" 
+                                    name="middle_name"
+                                    
+                                    
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.middle_name && Boolean(formik.errors.middle_name)}
+                                    helperText={formik.touched.middle_name && formik.errors.middle_name}
+                                    value={formik.values.middle_name}  
+                                    
+                                    
+                                />
+
+                            </Box>
+
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} >
+                            <Box p={2} >
+                                <TextField 
+                                    fullWidth label="Last Name" 
+                                    id="fullWidth" 
+                                    name="last_name"
+
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.last_name && Boolean(formik.errors.last_name)}
+                                    helperText={formik.touched.last_name && formik.errors.last_name}
+                                    value={formik.values.last_name}  
+                                    
+                                    
+                                />
+
+                            </Box>
+                            
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} >
+                            <Box p={2} display="flex" justifyContent="space-around" >
+                                <FormControl >
+                                    
+                                    Date Of Birth
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
+                                        value={dateOfBirth}
+                                        onChange={(newValue) => {
+                                            setDateOfBirth(newValue);
+                                            
+                                        }}
+                                        renderInput={(params) => <TextField size="small" sx={{width: "160px"}}  {...params} />}
+                                    />
+
+                                    </LocalizationProvider>
+                                </FormControl>
+
+                                <FormControl >
+                                    
+                                    Date Of Admission
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
+                                        value={dateOfAdmission}
+                                        onChange={(newValue) => {
+                                            setDateOfAdmission(newValue);
+                                            
+                                        }}
+                                        renderInput={(params) => <TextField size="small" sx={{width: "160px"}}  {...params} />}
+                                    />
+
+                                    </LocalizationProvider>
+                                </FormControl>
+                            
+
+                            </Box>
+                            
+                        </Grid>
+
+
+
+
+                        <Grid item xs={12} sm={6} >
+                            <Box p={2} >
+                            <FormControl fullWidth >
+                                <InputLabel> Classroom</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={formik.values.classroom_id}
+                                error={formik.touched.classroom_id && Boolean(formik.errors.classroom_id)}
+                                helperText={formik.touched.classroom_id && formik.errors.classroom_id}
+                                label="Classroom"
+                                name="classroom_id"
                                 onChange={formik.handleChange}
-                                error={formik.touched.first_name && Boolean(formik.errors.first_name)}
-                                helperText={formik.touched.email && formik.errors.first_name}
-                                value={formik.values.first_name}  
+                                fullWidth
+                                >
+                                    
                                 
-                                
-                            />
+                                    {
+                                        classrooms.map((classroom) => {
 
-                        </Box>
+                                            return (
+                                            <MenuItem key={classroom.id} value={classroom.id}> {classroom.name}</MenuItem>
+                                            )
+                                        })
+                                    }
+                            </Select>
+                            </FormControl>
 
-                        <Box p={2} >
-                             <TextField 
-                                fullWidth label="Middle Name" 
-                                id="fullWidth" 
-                                name="middle_name"
-                                
-                                
+                            
+                            </Box>
+                            
+                        </Grid>
+
+                        <Grid item xs={12} sm={6} >
+                            <Box p={2} >
+                            <FormControl fullWidth >
+                                <InputLabel> Religion</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={formik.values.religion}
+                                error={formik.touched.religion && Boolean(formik.errors.religion)}
+                                helperText={formik.touched.religion && formik.errors.religion}
+                                label="Religion"
+                                name="religion"
                                 onChange={formik.handleChange}
-                                error={formik.touched.middle_name && Boolean(formik.errors.middle_name)}
-                                helperText={formik.touched.email && formik.errors.middle_name}
-                                value={formik.values.middle_name}  
+                                fullWidth
+                                >
+                                    
                                 
-                                
-                            />
+                                    {
+                                        religions.map((religion) => {
 
-                        </Box>
+                                            return (
+                                            <MenuItem key={religion} value={religion}> {religion}</MenuItem>
+                                            )
+                                        })
+                                    }
+                            </Select>
+                            </FormControl>
 
-                        <Box p={2} >
-                             <TextField 
-                                fullWidth label="Last Name" 
-                                id="fullWidth" 
-                                name="last_name"
-                                
-                                
-                                onChange={formik.handleChange}
-                                error={formik.touched.last_name && Boolean(formik.errors.last_name)}
-                                helperText={formik.touched.email && formik.errors.last_name}
-                                value={formik.values.last_name}  
-                                
-                                
-                            />
+                            
+                            </Box>
+                            
+                        </Grid>
+                        <Grid item xs={12} sm={6} >
+                            <Box p={2} >
+                                <TextField 
+                                    fullWidth label="Address" 
+                                    id="fullWidth" 
+                                    name="address"
 
-                        </Box>
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.address && Boolean(formik.errors.address)}
+                                    helperText={formik.touched.address && formik.errors.address}
+                                    value={formik.values.address}  
+                                    
+                                    
+                                />
 
-                        <Box p={2} >
+                            </Box>
+                            
+                        </Grid>
+                       
 
-                         <input type="file" name="image" accept="image/*"
-                            onChange={(event) => {
+                        <Grid item xs={12} sm={3} >
+                            <Box p={2} >
+                                <TextField 
+                                    fullWidth label="State Of Origin" 
+                                    id="fullWidth" 
+                                    name="state"
 
-                                setImage(event.target.files[0])
-                            }}
-                        />
-                             
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.state && Boolean(formik.errors.state)}
+                                    helperText={formik.touched.state && formik.errors.state}
+                                    value={formik.values.state}  
+                                    
+                                    
+                                />
 
-                        </Box>
+                            </Box>
+                            
+                        </Grid>
 
+                        <Grid item xs={12} sm={3} >
+                            <Box p={2} >
+                                <TextField 
+                                    fullWidth label="LGA" 
+                                    id="fullWidth" 
+                                    name="lga"
 
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.lga && Boolean(formik.errors.lga)}
+                                    helperText={formik.touched.lga && formik.errors.lga}
+                                    value={formik.values.lga}  
+                                    
+                                    
+                                />
 
-                        <Box p={2} >
-                            <Container maxWidth="xs" >
-                            <LoadingButton   type="submit" fullWidth  variant="outlined">
-                                Create
-                            </LoadingButton>
-                            </Container>
+                            </Box>
+                            
+                        </Grid>
+
+                        <Grid item xs={12} >
                            
-                        </Box>
-                    
-                    </Paper>
+                            <Box p={2} >
+                                <Container maxWidth="xs" >
+                                <LoadingButton loading={btnLoading}   type="submit" fullWidth  variant="outlined">
+                                    Create
+                                </LoadingButton>
+                                </Container>
+                            
+                            </Box>
+                        </Grid>
+                       
+
+                        </Grid>
+                       
+
+                        
+
                 
-                </Box>
                 </form>
-            </Box>
+        
     )
 }
