@@ -16,6 +16,8 @@ export default function SideDrawer(props){
             variant="temporary"
             open={mobileOpen}
             onClose={handleDrawerToggle}
+            onOpen={handleDrawerToggle}
+           
             ModalProps={{
                 keepMounted: true, // Better open performance on mobile.
             }}
