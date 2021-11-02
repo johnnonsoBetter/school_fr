@@ -9,7 +9,7 @@ import AdminContext from '../../../context/admin/AdminContext';
 
 export default function CreateStudentContainer(){
 
-    const [image, setImage] = useState(null)
+    const [image, setImage] = useState({})
 
     const {authAxios} = useContext(FetchContext)
     const [dateOfBirth, setDateOfBirth] = useState(new Date().toDateString())
@@ -18,6 +18,7 @@ export default function CreateStudentContainer(){
     const [religions, setReligions] = useState(["Christainity", "Muslim"])
     const [btnLoading, setBtnLoading] = useState(false)
     const {setOpenSnack, snackInfo, setSnackInfo} = useContext(AdminContext)
+    const [src, setSrc] = useState('')
 
     
 
@@ -110,7 +111,8 @@ export default function CreateStudentContainer(){
       
     },
 });
-  
+
+
 
     return (
        
@@ -118,7 +120,33 @@ export default function CreateStudentContainer(){
                
                         <Grid container >
 
+                        <Grid item xs={12} >
+                                
+                                <Box p={2} maxHeight="280px" display="flex" justifyContent="center"  width="100%">
+
+                                    <Paper elevation={7} sx={{borderRadius: "15px", width: 270, display: 'flex', justifyContent: 'center'}}  >
+                                        <img src={src} style={{maxWidth: "100%", borderRadius: "15px", minHeight: "250px", minWidth: "270px"}}  />
+                                    </Paper>
+                                
+                                    
+
+                                </Box>
+
+                            </Grid>
+
+                            <Grid item xs={12}  >
+                               
+                                <Box p={2} >
+
+                                    
+
+                                 
+                                </Box>
+
+                            </Grid>
+
                         <Grid item xs={12}  >
+                               
                                 <Box p={2} >
                                 
 
@@ -126,6 +154,7 @@ export default function CreateStudentContainer(){
                                         onChange={(event) => {
 
                                             setImage(event.target.files[0])
+                                            setSrc(URL.createObjectURL(event.target.files[0])) 
                                         }}
                                     />
 
@@ -197,7 +226,7 @@ export default function CreateStudentContainer(){
 
                         <Grid item xs={12} sm={6} >
                             <Box p={2} display="flex" justifyContent="space-around" >
-                                <FormControl >
+                                <FormControl sx={{m: 1}} >
                                     
                                     Date Of Birth
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -207,15 +236,15 @@ export default function CreateStudentContainer(){
                                             setDateOfBirth(newValue);
                                             
                                         }}
-                                        renderInput={(params) => <TextField size="small" sx={{width: "160px"}}  {...params} />}
+                                        renderInput={(params) => <TextField size="small" fullWidth  {...params} />}
                                     />
 
                                     </LocalizationProvider>
                                 </FormControl>
 
-                                <FormControl >
+                                <FormControl sx={{m: 1}} >
                                     
-                                    Date Of Admission
+                                    Date Of Adm
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
                                         value={dateOfAdmission}
@@ -223,7 +252,7 @@ export default function CreateStudentContainer(){
                                             setDateOfAdmission(newValue);
                                             
                                         }}
-                                        renderInput={(params) => <TextField size="small" sx={{width: "160px"}}  {...params} />}
+                                        renderInput={(params) => <TextField size="small" fullWidth  {...params} />}
                                     />
 
                                     </LocalizationProvider>
