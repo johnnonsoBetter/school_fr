@@ -11,6 +11,7 @@ import { AuthContext } from '../../../../context/AuthContext';
 import ScoreReportContainer from './score_reports/ScoreReportContainer';
 import BehaviourReportContainer from './behaviour_report/BehaviourReportContainer';
 import BillContainer from './bills/BillContainer';
+import Profile from './profile/Profile';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,8 +50,8 @@ export default function StudentInfoContainer() {
       </Box>
      
         <Switch >
-          <Route exact path={`/students/${id}/`}  >
-             <p> Profile </p>
+          <Route exact path={`${path}/`}  >
+             <Profile />
           </Route>
           <Route exact path={`${path}/score_reports`}  >
             <ScoreReportContainer />

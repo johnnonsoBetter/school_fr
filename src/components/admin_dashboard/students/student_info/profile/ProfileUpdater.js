@@ -1,25 +1,52 @@
 import { DatePicker, LoadingButton, LocalizationProvider } from '@mui/lab';
-import { Box, Container, FormControl, Grid, IconButton, Input, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, FormControl, Grid, Grow, IconButton, Input, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { FetchContext } from '../../../context/FetchContext';
+
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import AdminContext from '../../../context/admin/AdminContext';
+import AdminContext from '../../../../../context/admin/AdminContext';
+import { FetchContext } from '../../../../../context/FetchContext';
+import Loader from '../../../../utilities/Loader';
+import FailedFetch from '../../../../utilities/FailedFetch';
 
-export default function CreateStudentContainer(){
 
-    const [image, setImage] = useState({})
+export default function ProfileUpdater(props){
+
+    const {setOpenUpdater, student} = props
+
+
+    const {
+        full_name, 
+        first_name, 
+        last_name, 
+        date_of_birth, 
+        middle_name, 
+        state, 
+        lga, 
+        date_of_admission,
+        religion,
+        gender,
+        admission_no,
+        address,
+        classroom_id,
+    } = props.student
+    
+
+    const [image, setImage] = useState()
 
     const {authAxios} = useContext(FetchContext)
     const [dateOfBirth, setDateOfBirth] = useState(new Date().toDateString())
     const [dateOfAdmission, setDateOfAdmission] = useState(new Date().toDateString())
     const [classrooms, setClassrooms] = useState([{name: "nan/", id: -1}])
-    const [religions, setReligions] = useState(["Christainity", "Muslim"])
+    const religions = ["Christainity", "Muslim"]
     const [btnLoading, setBtnLoading] = useState(false)
     const {setOpenSnack, snackInfo, setSnackInfo} = useContext(AdminContext)
-    const [src, setSrc] = useState('/images/no-pictures.png')
     const genders = ["Male", "Female"]
+    const [loading, setLoading] = useState(true)
+    const [failed, setFailed] = useState(false)
+
+    const [src, setSrc] = useState( props.student.image !== null ? props.student.image : '/images/no-pictures.png')
 
     
 
@@ -27,8 +54,10 @@ export default function CreateStudentContainer(){
         authAxios.get('api/v1/classrooms').then((res) => {
             const {data} = res 
             setClassrooms(data)
+            setLoading(false)
         }).catch((err) => {
-            console.log(err)
+            setLoading(false)
+            setFailed(true)
         })
     }, [])
 
@@ -61,17 +90,17 @@ export default function CreateStudentContainer(){
   const formik = useFormik({
     initialValues: {
      
-      first_name: '',
-      middle_name: '',
-      last_name: '',
-      classroom_id: -1,
-      address: '',
-      gender: 'Male',
-      state: '',
-      lga: '',
-      religion: 'Christainity',
-      gender: '',
-      admission_no: ''
+      first_name,
+      middle_name,
+      last_name,
+      classroom_id: classroom_id,
+      address,
+      gender,
+      state,
+      lga,
+      religion,
+      gender,
+      admission_no
 
       
     },
@@ -98,25 +127,25 @@ export default function CreateStudentContainer(){
     formData.append('gender', values.gender)
     formData.append('admission_no', values.admission_no)
 
-    authAxios.post('api/v1/student_auth/', formData ).then((res) => {
+    // authAxios.post('api/v1/student_auth/', formData ).then((res) => {
         
-        formik.resetForm()
-        const newSnackBarInfo = Object.assign(snackInfo, {})
-        newSnackBarInfo.message = `Succesfully Created Student`
-        newSnackBarInfo.severity = 'success'
-        setSnackInfo(newSnackBarInfo)
-        setOpenSnack(true)
-        setBtnLoading(false)
+    //     formik.resetForm()
+    //     const newSnackBarInfo = Object.assign(snackInfo, {})
+    //     newSnackBarInfo.message = `Succesfully Updated Student`
+    //     newSnackBarInfo.severity = 'success'
+    //     setSnackInfo(newSnackBarInfo)
+    //     setOpenSnack(true)
+    //     setBtnLoading(false)
 
-    }).catch(err => {
-        console.log(err)
-        const newSnackBarInfo = Object.assign(snackInfo, {})
-        newSnackBarInfo.message = `Failed to Create Student`
-        newSnackBarInfo.severity = 'warning'
-        setSnackInfo(newSnackBarInfo)
-        setOpenSnack(true)
-        setBtnLoading(false)
-    })
+    // }).catch(err => {
+    //     console.log(err)
+    //     const newSnackBarInfo = Object.assign(snackInfo, {})
+    //     newSnackBarInfo.message = `Failed to Update Student`
+    //     newSnackBarInfo.severity = 'warning'
+    //     setSnackInfo(newSnackBarInfo)
+    //     setOpenSnack(true)
+    //     setBtnLoading(false)
+    // })
       
     },
 });
@@ -124,11 +153,18 @@ export default function CreateStudentContainer(){
 
 
     return (
+
         <>
-        <Box p={2} >
-            <Typography variant="h4" fontWeight={800} > Create A New Student</Typography>
-        </Box>
-        
+
+
+
+        {
+
+        loading ? <Loader /> :
+        failed ? <FailedFetch message="Something Went Wrong" height="calc(90vh - 200px)" />  :
+        <Grow in={true} >
+
+       
         <form onSubmit={formik.handleSubmit}> 
                
         <Grid container >
@@ -151,16 +187,20 @@ export default function CreateStudentContainer(){
 
              <Grid item xs={12} sm={6}  >
                
-                <Box p={2} >
+                <Box p={2} display="flex" justifyContent="space-around" alignItems="center" >
                 
 
-                    <input type="file" name="image" accept="image/*"
+                    <input type="file"  name="image" accept="image/*"
                         onChange={(event) => {
 
                             setImage(event.target.files[0])
                             setSrc(URL.createObjectURL(event.target.files[0])) 
                         }}
                     />
+
+                    <Button variant="outlined" color="secondary"  onClick={() => setOpenUpdater(false)} >
+                        Back 
+                    </Button>
 
                 </Box>
 
@@ -438,7 +478,7 @@ export default function CreateStudentContainer(){
             <Box p={2} >
                 <Container maxWidth="xs" >
                 <LoadingButton loading={btnLoading}   type="submit" fullWidth  variant="outlined">
-                    Create
+                    Update Profile
                 </LoadingButton>
                 </Container>
             
@@ -450,7 +490,8 @@ export default function CreateStudentContainer(){
        
 </form>
 
+</Grow>
+}
 </>
-        
     )
 }

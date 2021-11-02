@@ -72,7 +72,7 @@ export default function ClassroomInfoContainer(){
 
 
     return (
-        <>
+        <Box>
         
 
         {
@@ -85,9 +85,9 @@ export default function ClassroomInfoContainer(){
                 <Typography sx={{mb: { xs: '10px' }, fontWeight: "bolder"}} variant="h4"> {classroomInfo.name}</Typography>
              
                 <Box justifyContent="space-around" sx={{display: {xs: "flex"}}}>
-                    <Chip variant="outlined" sx={{mr: 1, fontWeight: "bolder"}} avatar={<Avatar>{classroomInfo.allStudents.length}</Avatar>} label="Total Students" />
-                    <Chip variant="outlined" sx={{mr: 1, fontWeight: "bolder"}} avatar={<Avatar>{classroomInfo.teachers.length}</Avatar>} label="Total Teachers" />
-                    <Chip variant="outlined" sx={{mr: 1, fontWeight: "bolder"}} avatar={<Avatar>{classroomInfo.subjects.length}</Avatar>} label="Total Subjects" />
+                    <Chip variant="outlined" sx={{mr: 1, fontWeight: "bolder"}} avatar={<Avatar>{classroomInfo.allStudents.length}</Avatar>} label="Students" />
+                    <Chip variant="outlined" sx={{mr: 1, fontWeight: "bolder"}} avatar={<Avatar>{classroomInfo.teachers.length}</Avatar>} label="Teachers" />
+                    <Chip variant="outlined" sx={{mr: 1, fontWeight: "bolder"}} avatar={<Avatar>{classroomInfo.subjects.length}</Avatar>} label="Subjects" />
                 </Box>
             
             </Box>
@@ -96,6 +96,6 @@ export default function ClassroomInfoContainer(){
         }
 
      
-    </>
+    </Box>
     )
 }

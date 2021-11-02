@@ -16,53 +16,65 @@ import BehaviourReportTerm from './BehaviourReportTerm'
 export default function BehaviourReportContainer(){
 
     
-    const {dashboardInfo} = useContext(AdminContext)
-    const [termDates, setTermDates] = useState(dashboardInfo.termDates)
-    const [term_id, setTermId] = useState(termDates[0].id)
+    const [termDates, setTermDates] = useState([])
+    const [term_id, setTermId] = useState(-1)
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const [behaviourReports, setBehaviourReports] = useState([])
     const {authAxios} = useContext(FetchContext)
     const {id} = useParams()
 
+   
+
     useEffect(() => {
+        
 
-       authAxios.get('api/v1/admin_student_behaviour_reports/', {params: {term_id: term_id, student_id: id}})
+        if (term_id == -1) {
+            setLoading(true)
+            authAxios.get('api/v1/admin_student_behaviour_reports/', {params: {student_id: id}})
        
-       .then((res) => {
-
-            console.log(res)
-            setBehaviourReports(res.data)
-            const subjectHeaders = new Set(res.data.map(sub => (sub.subject))) 
+            .then((res) => {
+     
+            const {term_dates, behaviour_reports} = res.data
+            
+            
+            setTermId(term_dates[0].id)
+            setTermDates(term_dates)
+            setBehaviourReports(behaviour_reports)
+        
             setLoading(false)
             
 
-       }).catch(err => {
-           console.log(err)
-           setLoading(false)
-           setFailed(true)
-       })
+            }).catch(err => {
+               
+                setLoading(false)
+                setFailed(true)
+            })
+            
 
-
-    }, [])
-
-    useEffect(() => {
-        setLoading(true)
-        authAxios.get('api/v1/admin_student_behaviour_reports/', {params: {term_id: term_id, student_id: id}})
+        }else {
+            setLoading(true)
+            authAxios.get('api/v1/admin_student_behaviour_reports/', {params: {term_id: term_id, student_id: id}})
         
         .then((res) => {
  
-             console.log(res)
-             setBehaviourReports(res.data)
-             const subjectHeaders = new Set(res.data.map(sub => (sub.subject))) 
-             setLoading(false)
+            const {behaviour_reports} = res.data
+
+            setBehaviourReports(behaviour_reports)
+            setLoading(false)
              
  
         }).catch(err => {
-            console.log(err)
+         
             setLoading(false)
             setFailed(true)
         })
+
+
+
+          
+        }
+        
  
  
      }, [term_id])

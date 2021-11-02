@@ -12,8 +12,6 @@ export default function BehaviourReportTerm() {
   const {termDates, term_id, setTermId} = React.useContext(BehaviourReportContext)
 
 
-  console.log(termDates)
-
   const handleChange = (event) => {
     // const newFilterInfo = Object.assign({}, filterInfo)
     // newFilterInfo.term_id = event.target.value
