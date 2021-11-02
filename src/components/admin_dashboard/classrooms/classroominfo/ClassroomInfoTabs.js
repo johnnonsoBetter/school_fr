@@ -10,6 +10,7 @@ import StudentList from '../../students/StudentList';
 import { Badge } from '@mui/material';
 import SubjectList from '../../subjects/SubjectList';
 import TeacherList from '../../teachers/TeacherList';
+import ClassroomDebtorsContainer from '../ClassroomDebtorsContainer';
  
  function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -58,6 +59,7 @@ import TeacherList from '../../teachers/TeacherList';
            <Tab label="Students"  {...a11yProps(0)} />
            <Tab label="Teachers" {...a11yProps(1)} />
            <Tab label="Subjects" {...a11yProps(2)} />
+           <Tab label="Debtors" {...a11yProps(3)} />
          </Tabs>
        </Box>
        <TabPanel value={value} index={0}>
@@ -68,6 +70,10 @@ import TeacherList from '../../teachers/TeacherList';
        </TabPanel>
        <TabPanel value={value} index={2}>
          <SubjectList subjects={classroomInfo.subjects} />
+       </TabPanel>
+
+       <TabPanel value={value} index={3}>
+         <ClassroomDebtorsContainer />
        </TabPanel>
      </Box>
    );

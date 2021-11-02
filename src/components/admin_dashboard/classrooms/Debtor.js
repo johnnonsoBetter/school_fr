@@ -18,7 +18,7 @@ export default function Debtor(props){
            
         <Box sx={{ p: 2, display: 'flex', alignItems: "center" }}>
 
-          <Avatar variant="rounded"  src={image !== null ? image : '/images/no-pictures.png'} />
+          <Avatar variant="rounded"  src={image !== null ? image : '/images/no-pictures.png'}  />
 
           <Box display="flex" marginLeft={2} p={1} width="100%" alignItems="center" justifyContent="space-between">
           <Stack spacing={0.7}>
@@ -32,7 +32,7 @@ export default function Debtor(props){
             
           </Stack>
 
-          <Link to={`${pathname}/${id}/bills?`} >
+          <Link to={`/debtors/${id}/bills?`}  >
           <Avatar variant="rounded" sx={{bgcolor: blue[300]}} >  <VisibilityOutlined  /> </Avatar>
 
           </Link>
