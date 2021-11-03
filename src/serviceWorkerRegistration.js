@@ -90,21 +90,6 @@ const isLocalhost = Boolean(
       .register(swUrl)
       .then((registration) => {
 
-        // registration.pushManager.subscribe({
-        //   userVisibleOnly: true,
-        //   applicationServerKey: vapidPublicKey
-        // }).then((sub) => {
-        //       const s =  JSON.stringify(sub)
-        //       const subParams = JSON.parse(s)
-        
-        //       fetcher.post('api/v1/notifications', 
-        //       {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
-        //         console.log(res)
-        //       }).catch(err => {
-        //         console.log(err)
-        //       })
-        // })
-
         registration.onupdatefound = () => {
           const installingWorker = registration.installing;
           if (installingWorker == null) {
