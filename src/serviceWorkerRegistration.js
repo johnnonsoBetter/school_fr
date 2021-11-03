@@ -75,22 +75,7 @@ const isLocalhost = Boolean(
           
 
           navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
-            // serviceWorkerRegistration.pushManager.subscribe({
-            //   userVisibleOnly: true,
-            //   applicationServerKey: vapidPublicKey
-            // }).then((sub) => {
-            //   const s =  JSON.stringify(sub)
-            //   const subParams = JSON.parse(s)
-        
-            //   fetcher.post('api/v1/notifications', 
-            //   {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
-            //     console.log(res)
-            //   }).catch(err => {
-            //     console.log(err)
-            //   })
- 
-            
-            // })
+           
           });
         } else {
           // Is not localhost. Just register service worker

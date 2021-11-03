@@ -69,6 +69,16 @@ self.addEventListener('message', (event) => {
   }
 });
 
+self.addEventListener('install', function (event) {
+
+  self.skipWaiting();
+
+  event.waitUntil(
+      // Do stuff
+      console.log("stopped the waiting")
+  );
+});
+
 self.addEventListener("push", (event) => {
   let title = (event.data && event.data.text()) || "Yay a message";
   let body = "We have received a push message";
