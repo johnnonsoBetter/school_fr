@@ -1,11 +1,12 @@
 import { LoadingButton } from '@mui/lab'
-import { Box, Checkbox, Container, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
+import { Alert, Box, Checkbox, Container, FormControl, FormControlLabel, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { publicFetch } from '../.../../../utils/fetch';
 import { AuthContext } from '../../context/AuthContext';
 import { Redirect, useHistory } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 const validationSchema = yup.object({
@@ -28,8 +29,12 @@ export default function Login(){
     const [loginError, setLoginError] = useState(false)
     const {setAuthState} = useContext(AuthContext)
     const [checked, setChecked] = useState(false)
-    const history = useHistory()
-    const {isAuthenticated} = useContext(AuthContext)
+    const [openSnack, setOpenSnack] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [snackInfo, setSnackInfo] = useState({
+      message: '',
+      severity: ''
+    })
 
     const formik = useFormik({
         initialValues: {
@@ -42,6 +47,23 @@ export default function Login(){
           
         },
     });
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpenSnack(false);
+    };
+
+    const handleClickShowPassword = () => {
+      setShowPassword(!showPassword)
+    };
+  
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
+  
 
 
 
@@ -67,8 +89,24 @@ export default function Login(){
           
       }).catch((err) => {                                             
         
-       
+
+        const {status, data} = err.response
+        const {errors} = data
+        const newSnackInfo = Object.assign(snackInfo, {})
+        
+
+        if (status === 401 && errors[0] === "Invalid login credentials. Please try again."){
+          newSnackInfo.message = errors[0]
+        }else{
+          newSnackInfo.message = "Something went wrong"
+        }
+
+        setSnackInfo(newSnackInfo)
+
+
+        setSnackInfo(newSnackInfo)
         setLoginLoading(false)
+        setLoginError(true)
 
        
       })
@@ -86,6 +124,12 @@ export default function Login(){
         <>
         {redirectOnLogin && <Redirect to="/" /> }
         <Container maxWidth="sm" >
+            <Snackbar open={loginError} anchorOrigin={{vertical: 'top', horizontal: 'center'}} autoHideDuration={2000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity='error'  sx={{ width: '100%' }}>
+              {snackInfo.message}
+              
+            </Alert>
+          </Snackbar>
             <Box  sx={{ display: "flex", justifyContent: "center", minHeight: "100vh", flexDirection: "column" }} >
             <form onSubmit={formik.handleSubmit}> 
                 <Box  width="100%">
@@ -114,19 +158,33 @@ export default function Login(){
                         </Box>
 
                         <Box p={2} >
-                             <TextField 
-                                fullWidth label="Password" 
-                                id="fullWidth" 
-                                name="password"
-                                type="password"
-                                
-                                onChange={formik.handleChange}
-                                error={formik.touched.email && Boolean(formik.errors.password)}
-                                helperText={formik.touched.email && formik.errors.password}
-                                value={formik.values.password}  
-                                
-                                
-                            />
+                            
+                              <FormControl sx={{width: '100%' }} variant="outlined">
+                                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <OutlinedInput
+                              
+                                  name="password"
+                                  fullWidth
+                                  type={showPassword ? 'text' : 'password'}
+                                  onChange={formik.handleChange}
+                                  error={formik.touched.email && Boolean(formik.errors.password)}
+                                  helperText={formik.touched.email && formik.errors.password}
+                                  value={formik.values.password}  
+                                  endAdornment={
+                                    <InputAdornment position="end">
+                                      <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                      >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                      </IconButton>
+                                    </InputAdornment>
+                                  }
+                                  label="Password"
+                                />
+                            </FormControl>
 
                         </Box>
 

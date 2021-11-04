@@ -37,6 +37,7 @@ import EditScoreDraftReportContainer from '../../components/teacher_dashboard/ed
 
 import MySnackbar from '../../components/utilities/MySnackbar';
 import ClassroomStudentContainer from '../../components/teacher_dashboard/classroom/ClassroomStudentContainer';
+import AttendanceContainer from '../../components/teacher_dashboard/attendance/AttendanceContainer';
 
 
 const drawerWidth = 240;
@@ -62,7 +63,9 @@ function TeacherDashboard(props) {
     termDates: [],
     scoreTypes: [],
     classrooms: [],
+    myClassrooms: [],
     fullName: null,
+    classroom: null,
 
   })
 
@@ -93,7 +96,7 @@ function TeacherDashboard(props) {
     authAxios.get('api/v1/teacher_dashboards').then((res) => {
      
 
-      const {score_report_drafts, score_types, subjects, term_dates, teacher, classrooms} = res.data 
+      const {score_report_drafts, score_types, subjects, term_dates, teacher, classrooms, my_classrooms} = res.data 
       const newDashboardInfo = Object.assign({}, dashboardInfo)
 
       newDashboardInfo.unfinishedDrafts = score_report_drafts
@@ -102,6 +105,8 @@ function TeacherDashboard(props) {
       newDashboardInfo.scoreTypes = score_types
       newDashboardInfo.subjects = subjects
       newDashboardInfo.classrooms = classrooms
+      newDashboardInfo.myClassrooms = my_classrooms
+
       
       setDashboardInfo(newDashboardInfo)
       setLoading(false)
@@ -204,12 +209,12 @@ function TeacherDashboard(props) {
             <Hidden lgDown>
               <Grid item xs={2} sm={3} >
                   
-                  <SideNav />    
+                  <SideNav handleDrawerToggle={handleDrawerToggle}/>    
               </Grid>
             </Hidden>
             <Grid item xs={12} sm={12} lg={8} >
                 <Switch >
-                 
+                <Route exact  path="/attendances/:classroom_id" render={()=> (<AttendanceContainer />)} />
                   <Route exact  path="/classrooms/:id" render={()=> (<ClassroomStudentContainer />)} />
                   <Route  exact path="/score_report_drafts/:id" render={()=> (<EditScoreDraftReportContainer />)} />
                   <Route  path="/score_report_drafts" render={()=> (<ScoreReportDraftContainer />)} />

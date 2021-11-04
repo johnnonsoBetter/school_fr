@@ -14,7 +14,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import { AccessibleRounded, AssignmentRounded, ClassRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
+import { AccessibleRounded, AssignmentRounded, BookmarkAddedRounded, ClassRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
 import { Link, Typography } from '@mui/material';
 import {makeStyles} from '@mui/styles'
 import { NavLink } from 'react-router-dom';
@@ -44,12 +44,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SideNav({handleDrawerToggle}) {
+export default function SideNav(props) {
   const [open, setOpen] = React.useState(false);
   const [openClass, setOpenClass] = React.useState(false);
+  const [openAttendanceClass, setOpenAttendanceClass] = React.useState(false);
   const classes = useStyles()
-  const {subjects} = useContext(TeacherContext).dashboardInfo
-  const {classrooms} = useContext(TeacherContext).dashboardInfo 
+  const {classrooms, myClassrooms, subjects} = useContext(TeacherContext).dashboardInfo 
+  const {dashboardInfo, setDashboardInfo} = useContext(TeacherContext) 
+  const {handleDrawerToggle} = props
+
 
   console.log(subjects, "me see")
   const handleClick = () => {
@@ -58,6 +61,10 @@ export default function SideNav({handleDrawerToggle}) {
 
   const handleClassClick = () => {
     setOpenClass(!openClass);
+  };
+
+  const handleAttendanceClassClick = () => {
+    setOpenAttendanceClass(!openAttendanceClass);
   };
 
 
@@ -111,7 +118,7 @@ export default function SideNav({handleDrawerToggle}) {
               return (
                 <Link key={sub.id} onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px", paddingLeft: "32px"}} activeClassName={classes.active} component={NavLink} to={`/classrooms/${sub.id}`} >
                   <ListItemIcon>
-                  <MenuBookRounded />
+                  <ClassRounded />
                   </ListItemIcon>
                   <ListItemText sx={{textTransform: "capitalize"}} primary={sub.name} />
                 </Link>
@@ -143,7 +150,7 @@ export default function SideNav({handleDrawerToggle}) {
               return (
                 <Link key={sub.id} onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px", paddingLeft: "32px"}} activeClassName={classes.active} component={NavLink} to={`/score_reports/${sub.id}`} >
                   <ListItemIcon>
-                  <MenuBookRounded />
+                  <AssignmentRounded />
                   </ListItemIcon>
                   <ListItemText sx={{textTransform: "capitalize"}} primary={sub.name} />
                 </Link>
@@ -157,6 +164,54 @@ export default function SideNav({handleDrawerToggle}) {
           
         </List>
       </Collapse>
+          
+           
+            {
+            myClassrooms.length !== 0 &&
+
+            <>
+            <ListItemButton onClick={handleAttendanceClassClick}>
+              <ListItemIcon>
+                <BookmarkAddedRounded />
+              </ListItemIcon>
+              <ListItemText primary="Take Attendance" />
+              {openAttendanceClass ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openAttendanceClass} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+
+                {
+                  myClassrooms.map((classroom) => {
+
+                    return (
+                      <Link key={classroom.id} onClick={() => {
+                        const newDashboardInfo = Object.assign({}, dashboardInfo)
+
+                       newDashboardInfo.classroom = classroom.name
+
+                        
+                        setDashboardInfo(newDashboardInfo)
+                        handleDrawerToggle()
+                      }} className={classes.link} sx={{padding: "10px", paddingLeft: "32px"}} activeClassName={classes.active} component={NavLink} to={`/attendances/${classroom.id}`} >
+                        <ListItemIcon>
+                        <BookmarkAddedRounded />
+                        </ListItemIcon>
+                        <ListItemText sx={{textTransform: "capitalize"}} primary={classroom.name} />
+                      </Link>
+
+                    )
+                  })
+                  
+                }
+                
+
+              </List>
+
+            </Collapse>
+            
+            </>
+            }
+          
     </List>
   );
 }

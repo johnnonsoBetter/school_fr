@@ -27,7 +27,7 @@ export default function MySnackbar({openSnack, setOpenSnack, snackInfo}) {
 
   return (
      
-      <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={openSnack} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity}  sx={{ width: '100%' }}>
           {message}
           
