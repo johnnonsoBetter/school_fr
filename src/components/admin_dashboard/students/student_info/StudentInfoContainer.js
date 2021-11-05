@@ -12,6 +12,8 @@ import ScoreReportContainer from './score_reports/ScoreReportContainer';
 import BehaviourReportContainer from './behaviour_report/BehaviourReportContainer';
 import BillContainer from './bills/BillContainer';
 import Profile from './profile/Profile';
+import AttendanceContainer from './attendance/AttendanceContainer';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,9 +45,11 @@ export default function StudentInfoContainer() {
                 window.location.pathname ===  `/students/${id}/` ? classes.navlink : ""
             }   component={NavLink}  to={`/students/${id}/`}
           />
-          <Tab label="Score Report" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "score_reports" : "/login"}   />
-          <Tab label="Behaviour Report" activeClassName={classes.navlink} component={NavLink} to={isAuthenticated() ? "behaviour_reports" : "/login" }    />
           <Tab label="Bills" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "bills" : "/login"}   />
+          <Tab label="Score Reports" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "score_reports" : "/login"}   />
+          <Tab label="Behaviour Reports" activeClassName={classes.navlink} component={NavLink} to={isAuthenticated() ? "behaviour_reports" : "/login" }    />
+          <Tab label="Attendance" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "attendances" : "/login"}   />
+          <Tab label="Report Cards" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "report_cards" : "/login"}   />
         </Tabs>
       </Box>
      
@@ -61,6 +65,9 @@ export default function StudentInfoContainer() {
           </Route>  
           <Route exact path={`${path}/bills`} >
             <BillContainer />
+          </Route>
+          <Route exact path={`${path}/attendances`} >
+            <AttendanceContainer />
           </Route>
          
         </Switch>

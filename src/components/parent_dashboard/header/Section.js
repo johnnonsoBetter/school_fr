@@ -10,6 +10,7 @@ import { makeStyles } from '@mui/styles';
 import { blue } from '@mui/material/colors';
 import { AuthContext } from '../../../context/AuthContext';
 import { FetchContext } from '../../../context/FetchContext';
+import AttendanceContainer from '../attendance/AttendanceContainer';
 
 const useStyles = makeStyles((theme) => ({
   navlink: {
@@ -95,13 +96,14 @@ const vapidPublicKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs   aria-label="basic tabs example" variant="scrollable" >
-          <Tab label="Score Report"  to= {isAuthenticated() ? "/dashboard" : "/login"}
+          <Tab label="Score Reports"  to= {isAuthenticated() ? "/dashboard" : "/login"}
               activeClassName={ 
                 window.location.pathname === '/dashboard' ? classes.navlink : ""
             }   component={NavLink}
           />
-          <Tab label="Behaviour Report" activeClassName={classes.navlink} component={NavLink} to={isAuthenticated() ? "/dashboard/behaviour_reports/" : "/login" }    />
+          <Tab label="Behaviour Reports" activeClassName={classes.navlink} component={NavLink} to={isAuthenticated() ? "/dashboard/behaviour_reports/" : "/login" }    />
           <Tab label="Bills" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "/dashboard/bills" : "/login"}   />
+          <Tab label="Attendance" activeClassName={classes.navlink}  component={NavLink} to= {isAuthenticated() ? "/dashboard/attendances" : "/login"}   />
         </Tabs>
       </Box>
      
@@ -114,6 +116,9 @@ const vapidPublicKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_
           </Route>
           <Route exact path="/dashboard/bills" >
             <BillContainer />
+          </Route>
+          <Route exact path="/dashboard/attendances" >
+            <AttendanceContainer />
           </Route>
         </Switch>
         

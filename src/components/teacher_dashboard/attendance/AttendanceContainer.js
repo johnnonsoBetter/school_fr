@@ -128,7 +128,7 @@ export default function AttendanceContainer () {
                                 </Badge>
                             } 
                     />
-                    <BottomNavigationAction  label="Students" value="Student"  
+                    <BottomNavigationAction  label="Students" value="Students"  
                     
                     icon={
                         
@@ -151,7 +151,7 @@ export default function AttendanceContainer () {
 
                     {attendances.length === 0 && <Empty message={`No ${value} Students`} height="calc(90vh - 200px)"/>}
                     <SwipeableList
-                        scrollStartThreshold={1}
+                        scrollStartThreshold={attendances.length}
                     >
 
                         <Grid container >
