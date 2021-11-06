@@ -38,6 +38,8 @@ import SubjectInfoContainer from '../../components/admin_dashboard/subjects/subj
 import DebtBillContainer from '../../components/admin_dashboard/debtors/debt_bills/DebtBillContainer';
 import StudentInfoContainer from '../../components/admin_dashboard/students/student_info/StudentInfoContainer';
 import CreateActivityDrawer from '../../components/admin_dashboard/CreateActivityDrawer';
+import AnnouncementContainer from '../../components/admin_dashboard/announcements/AnnouncementContainer';
+import CreateAnnouncementContainer from '../../components/admin_dashboard/announcements/CreateAnnouncementContainer';
 
 
 const drawerWidth = 240;
@@ -204,6 +206,7 @@ function AdminDashboard(props) {
                   <Route path="/students/:id" render={()=> (<StudentInfoContainer />)} /> 
                   <Route path="/create_teacher" render={()=> (<CreateTeacherContainer />)} /> 
                   <Route path="/create_student" render={()=> (<CreateStudentContainer />)} /> 
+                  <Route path="/create_announcement" render={()=> (<CreateAnnouncementContainer />)} /> 
                   <Route path="/settings" render={()=> (<SettingContainer />)} /> 
                   <Route path="/students" render={()=> (<StudentContainer />)} /> 
                   <Route path="/teachers" render={()=> (<TeacherContainer />)} /> 
@@ -214,6 +217,7 @@ function AdminDashboard(props) {
                   <Route path="/items" render={()=> (<ItemContainer />)} /> 
                   <Route path="/transactions" render={()=> (<TransactionContainer />)} /> 
                   <Route path="/inventory_activities" render={()=> (<InventoryContainer />)} /> 
+                  <Route path="/announcements" render={()=> (<AnnouncementContainer />)} /> 
                   <Route path="/" render={()=> (<Home />)} /> 
                 </Switch>
           

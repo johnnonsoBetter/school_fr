@@ -1,6 +1,7 @@
 import { Backdrop, CircularProgress, Container} from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Route, useHistory, Switch } from 'react-router-dom'
+import AnnouncementContainer from '../../components/parent_dashboard/announcements/AnnouncementContainer'
 
 import Header from '../../components/parent_dashboard/header/Header'
 import Section from '../../components/parent_dashboard/header/Section'
@@ -25,12 +26,13 @@ function ParentDashboard(){
     useEffect(() => {
         
         authAxios.get('api/v1/guidance_dashboards').then((res) => {
-            const children = res.data
+            const {announcements, students} = res.data
+            
     
-            setChildren(children)
-            setStudentId(children[0].id)
+            setChildren(students)
+            setStudentId(students[0].id)
             setLoading(false)
-            console.log("children" , children)
+          
 
         }).catch(err => {
             setLoading(false)
@@ -64,8 +66,25 @@ function ParentDashboard(){
                         </Backdrop>
                         :
                         <Container maxWidth="lg">
-                            <Header />         
-                            <Section />
+                            <Header />  
+
+                            <Switch >
+
+                            <Route path="/dashboard" >    
+                                <Section />
+                            
+                            </Route>  
+
+                            <Route path="/" >    
+                                <AnnouncementContainer />
+                            
+                            </Route> 
+                                
+                                
+                            </Switch>  
+
+                                
+                            
                         </Container> 
                     }
 

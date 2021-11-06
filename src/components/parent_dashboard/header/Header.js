@@ -8,6 +8,8 @@ import { makeStyles } from '@mui/styles';
 import Children from './Children';
 import Notification from './Notification';
 import Profile from './Profile';
+import { Link } from 'react-router-dom';
+import { DashboardCustomizeOutlined } from '@mui/icons-material';
 
 
 
@@ -43,6 +45,12 @@ export default function Header(props) {
                  
 
                   <Box display="flex" alignItems="center"  >
+                     
+                     
+                     <Link to="/" > <img src="/images/bullhorn.png" /> </Link>
+                     <Box ml={2} >
+                       <Link to="/dashboard"> <DashboardCustomizeOutlined color="info" /> </Link>
+                     </Box>
                     <Notification />
                     <Profile />
                   </Box>

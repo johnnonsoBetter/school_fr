@@ -97,6 +97,16 @@ export default function SideNav({handleDrawerToggle}) {
       <Collapse in={openClass} timeout="auto" unmountOnExit>
         <List component="div" sx={{mb: 1, mt: 1, pl: 1, pr: 1}} disablePadding>
         <Grid justify="center"  container spacing={1} >
+
+        <Grid item xs={12}  >
+             
+             <Link onClick={handleDrawerToggle} className={classes.link} activeClassName={classes.buttonActive} component={NavLink} to="/create_announcement" >
+               <Button fullWidth endIcon={<AddRounded />} size="small" variant="outlined">
+                   Announcement
+               </Button>
+             </Link>
+           </Grid>
+
             <Grid item xs={6}  >
              
               <Link onClick={handleDrawerToggle} className={classes.link} activeClassName={classes.buttonActive} component={NavLink} to="/create_student" >
@@ -149,15 +159,26 @@ export default function SideNav({handleDrawerToggle}) {
               </Button>
             </Grid>
 
+            
+
+            
+
+            
+
 
           </Grid>
         </List>
       </Collapse>
 
-        
+      <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/announcements" >
+          <ListItemIcon>
+            <img src="/images/bullhorn.png" alt="Announcements" />
+          </ListItemIcon>
+          <ListItemText primary="Announcement" />
+        </Link>
           
 
-      <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/teachers" >
+        <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/teachers" >
           <ListItemIcon>
             <img src="/images/presentation.png" alt="Teachers" />
           </ListItemIcon>
@@ -189,8 +210,6 @@ export default function SideNav({handleDrawerToggle}) {
     </List>
 
     <Divider sx={{ width: '100%', maxWidth: 270 }} />
-
-
 
     <List
       sx={{ width: '100%', maxWidth: 270, bgcolor: 'background.paper' }}

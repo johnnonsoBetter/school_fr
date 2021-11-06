@@ -17,7 +17,7 @@ export default function ParentView(){
                             ( <Login />) 
                             
                         } />
-                        <Route   path="/dashboard" render={()=>
+                        <Route   path="/" render={()=>
                           isAuthenticated() ? ( <ParentDashboard />) : <Redirect to="/login" />
                         
                         } />
