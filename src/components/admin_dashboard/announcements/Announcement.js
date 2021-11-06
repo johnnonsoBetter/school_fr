@@ -29,7 +29,7 @@ export default function Announcement(props) {
                      >
 
 
-                    <Box position="absolute" display="flex" top={0} right={1} >
+                    <Box position="absolute" display="flex" zIndex={1000} top={0} right={1} >
                        
                        
                        <EditAnnouncement />
