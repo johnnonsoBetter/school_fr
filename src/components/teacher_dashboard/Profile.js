@@ -64,7 +64,7 @@ export default function Profile() {
        
         <Tooltip title="Account">
          
-          <Chip avatar={<Avatar src="/images/nonso.png" />} label={first_name} clickable onClick={handleClick}  />
+          <Chip avatar={<Avatar  />} label={first_name} clickable onClick={handleClick}  />
         </Tooltip>
       </Box>
       <Menu

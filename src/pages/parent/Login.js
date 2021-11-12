@@ -86,7 +86,7 @@ export default function Login(){
         const client = response.headers['client']
         const uid = response.headers['uid']
         const userInfo = response.data['data']
-        window.location.href = '/dashboard'
+        window.location.href = '/'
         setAuthState({token, expiresAt: expiry, userInfo, client, uid, rememberDevice: checked})
          
      
