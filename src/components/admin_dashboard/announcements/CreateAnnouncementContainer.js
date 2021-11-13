@@ -9,18 +9,20 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { green } from '@mui/material/colors'
 import { useHistory } from 'react-router-dom'
+import AdminContext from '../../../context/admin/AdminContext'
+import { AuthContext } from '../../../context/AuthContext'
 
 
 export default function CreateAnnouncementContainer() {
 
-    const [loading, setLoading] = useState(true)
-    const [failed, setFailed] = useState(false)
+
     const {authAxios} = useContext(FetchContext)
     
-    const [announcementImages, setAnnouncementImages] = useState([])
+    const {announcementImages} = useContext(AdminContext).dashboardInfo
     const [btnLoading, setBtnLoading] = useState(false)
-    const [announcement_image_id, setAnnouncementImageId] = useState(-1)
+    const [announcement_image_id, setAnnouncementImageId] = useState(announcementImages[0].id)
     const history = useHistory()
+    const {setAuthState} = useContext(AuthContext)
 
 
     const validationSchema = yup.object({
@@ -43,34 +45,18 @@ export default function CreateAnnouncementContainer() {
 
             authAxios.post(`api/v1/announcements/`, {announcement: {message: values.message, announcement_image_id: announcement_image_id}})
             .then((res) => {
-                // console.log(res)
-
-                
-                // const newSnackInfo = Object.assign({}, snackInfo)
-                // newSnackInfo.message = `Reported ${full_name} `
-                // newSnackInfo.severity = "success"
-                // setSnackInfo(newSnackInfo)
-              
-                // setOpenSnack(true)
+          
                  history.push('/announcements')
                  setBtnLoading(false)
-                // handleClose()
-                
-                
-                
-                
-
+               
             }).catch((err) => {
+
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 setBtnLoading(false)
-                // // console.log(err)
                 
-                // const newSnackInfo = Object.assign({}, snackInfo)
-                // newSnackInfo.message = `Failed To Report ${full_name} `
-                // newSnackInfo.severity = "error"
-                // setSnackInfo(newSnackInfo)
-              
-                // setOpenSnack(true)
-                // setLoading(false)
                 
             })
         
@@ -78,27 +64,6 @@ export default function CreateAnnouncementContainer() {
     }); 
     
    
-
-    useEffect(() => {
-
-        authAxios.get('api/v1/announcement_images').then((res) => {
-            console.log(res)
-            setLoading(false)
-            setAnnouncementImages(res.data)
-          
-        }).catch(err => {
-            
-            setFailed(true)
-            setLoading(false)
-        })
-
-        return () => {
-            setLoading(true)
-            setFailed(false)
-            setAnnouncementImages([])
-          
-        }
-    }, [])
 
     return (
         <>
@@ -108,11 +73,7 @@ export default function CreateAnnouncementContainer() {
         </Box>
         <Box >
 
-        {
-            loading ? 
-            <Loader /> :
-            failed ?
-            <FailedFetch message="Failed To Load AnnouncementImages" height="calc(90vh - 200px)"/> : 
+        
             <form onSubmit={formik.handleSubmit}>  
                 <Box  display="flex" justifyContent="flex-end" >
 
@@ -193,7 +154,7 @@ export default function CreateAnnouncementContainer() {
                    }
                </Grid>
             </form> 
-        }
+        
 
          </Box>
     </>

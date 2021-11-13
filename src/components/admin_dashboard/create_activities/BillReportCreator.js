@@ -6,6 +6,7 @@ import AdminContext from "../../../context/admin/AdminContext";
 import { LoadingButton } from "@mui/lab";
 import { FetchContext } from "../../../context/FetchContext";
 import { Bookmark, BookmarkRounded, CheckBox, CheckBoxOutlineBlankRounded } from "@mui/icons-material";
+import { AuthContext } from "../../../context/AuthContext";
 
 const validationSchema = yup.object({
     title: yup
@@ -23,7 +24,8 @@ export default function BillReportCreator() {
     const {authAxios} = useContext(FetchContext)
     const [classroom_ids, setClassroomIds] = useState([])
     const {classrooms} = useContext(AdminContext).dashboardInfo
-    
+    const {setAuthState} = useContext(AuthContext)
+
 
     const formik = useFormik({
 
@@ -48,6 +50,11 @@ export default function BillReportCreator() {
                 setLoading(false)
     
             }).catch((err) => {
+
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 const newSnackBarInfo = Object.assign(snackInfo, {})
                 newSnackBarInfo.message = `Failed to Create Bill Report`
                 newSnackBarInfo.severity = 'warning'

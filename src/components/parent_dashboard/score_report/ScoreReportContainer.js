@@ -10,6 +10,7 @@ import queryString from 'query-string'
 import { useLocation } from 'react-router-dom'
 import { blue } from '@mui/material/colors'
 import FailedFetch from '../../utilities/FailedFetch'
+import { AuthContext } from '../../../context/AuthContext'
 
 
 
@@ -22,31 +23,10 @@ function ScoreReportContainer(){
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const location = useLocation()
+    const {setAuthState} = useContext(AuthContext)
 
     const value = queryString.parse(location.search)
     const child = student()
-    
-    useEffect(() => {
-       
-        authAxios.get('api/v1/guidance_score_reports', {params: {student_id: student_id, date: new Date().toDateString()}}).then((res) => {
-
-            console.log(res)
-            const {data} = res
-            setScores(data)
-            const subjectHeaders = new Set(data.map(sub => (sub.subject))) 
-            setFilteredSubjectHeaders([...subjectHeaders])
-            setLoading(false)
-
-        }).catch(err => {
-            console.log(err)
-            setLoading(false)
-            setFailed(true)
-        })
-
-
-     
-
-    }, [])
 
     useEffect(() => {
         setLoading(true)
@@ -60,7 +40,10 @@ function ScoreReportContainer(){
             setLoading(false)
 
         }).catch(err => {
-           
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setLoading(false)
             setFailed(true)
         })

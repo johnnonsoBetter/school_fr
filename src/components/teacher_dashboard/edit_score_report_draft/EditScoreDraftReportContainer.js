@@ -2,6 +2,7 @@ import { CloudUploadRounded } from '@mui/icons-material'
 import { Box, Divider, Grid, IconButton, Paper, Skeleton, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react' 
 import { useParams } from 'react-router-dom'
+import { AuthContext } from '../../../context/AuthContext'
 import { FetchContext } from '../../../context/FetchContext'
 import { EditStudentDraftContextProvider } from '../../../context/teacher/EditStudentDraftContext'
 import FailedFetch from '../../utilities/FailedFetch'
@@ -25,6 +26,7 @@ export default function EditScoreDraftReportContainer(){
         scoreType: null,
         subject: null
     })
+    const {setAuthState} = useContext(AuthContext)
 
 
     useEffect(() => {
@@ -44,7 +46,10 @@ export default function EditScoreDraftReportContainer(){
             setScoreReportDraft(newScoreReportDraft)
             setLoading(false)
         }).catch((err) => {
-            console.log(err)
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
         })
 
     }, [])

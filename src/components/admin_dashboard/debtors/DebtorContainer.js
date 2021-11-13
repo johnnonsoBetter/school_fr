@@ -1,5 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import { FetchContext } from '../../../context/FetchContext'
 import Empty from '../../utilities/Empty'
 import FailedFetch from '../../utilities/FailedFetch'
@@ -15,6 +16,8 @@ export default function DebtorContainer(){
     const {authAxios} = useContext(FetchContext)
     const [debtors, setDebtors] = useState([])
     const [allDebtors, setAllDebtors] = useState([])
+    const {setAuthState} = useContext(AuthContext)
+
 
     useEffect(() => {
 
@@ -24,7 +27,10 @@ export default function DebtorContainer(){
             setDebtors(res.data)
             setAllDebtors(res.data)
         }).catch(err => {
-            
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
         })

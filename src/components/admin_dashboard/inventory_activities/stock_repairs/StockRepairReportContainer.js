@@ -9,6 +9,7 @@ import { FetchContext } from '../../../../context/FetchContext'
 import InventoryContext from '../../../../context/admin/InventoryContext'
 import StockRepairReportTable from './StockRepairReportTable'
 import AmountFormater from '../../../utilities/AmountFormatter'
+import { AuthContext } from '../../../../context/AuthContext'
 
 
 
@@ -21,9 +22,7 @@ export default function StockRepairReportContainer(){
     const {filterType, filterInfo} = useContext(InventoryContext)
     const [total, setTotal] = useState(0)
     const reducer = (previousValue, currentValue) => previousValue + currentValue;
-
-    // const {date, term_id, }
-
+    const {setAuthState} = useContext(AuthContext)
 
     
   
@@ -40,31 +39,9 @@ export default function StockRepairReportContainer(){
         return {}
     }
 
-    useEffect(() => {
-        
-        authAxios.get('api/v1/stock_repair_reports',
-            {params: stockRepairReportParam()}
-        ).then((res) => {
-            console.log(res)
-            setLoading(false)
-            setStockRepairs(res.data)
-            
-        }).catch(err => {
-            setFailed(true)
-            setLoading(false)
-            setTotal(0)
-        })
-
-        return () => {
-            setLoading(true)
-            setFailed(false)
-            setStockRepairs([])
-      
-        }
-    }, [])
 
     useEffect(() => {
-        
+        setLoading(true)
         authAxios.get('api/v1/stock_repair_reports',
             {params: stockRepairReportParam()}
         ).then((res) => {
@@ -75,6 +52,10 @@ export default function StockRepairReportContainer(){
             
             
         }).catch(err => {
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
             setTotal(0)

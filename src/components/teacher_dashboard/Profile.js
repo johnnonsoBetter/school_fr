@@ -24,7 +24,7 @@ export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [loading, setLoading] = React.useState(false)
-  const {logUserOut, authState} = React.useContext(AuthContext)
+  const {logUserOut, authState, setAuthState} = React.useContext(AuthContext)
   const {authAxios} = React.useContext(FetchContext)
   const {first_name} = JSON.parse(authState.userInfo)
   const history = useHistory()
@@ -46,7 +46,10 @@ export default function Profile() {
             history.push('/login')
       
     }).catch(err => {
-        
+      const {status} = err.response 
+      if (status === 401){
+          setAuthState({})
+      }
         setLoading(false)
         
     })

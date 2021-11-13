@@ -31,7 +31,7 @@ function Contact(){
                     
                     <Grid item xs={12} md={4}  >
                         <Box  p={1} display="flex" justifyContent="center" alignItems="center" >
-                        <Box display="flex" width="20px"   sx={{mr: 1}} ><img style={{maxWidth: "100%"}} src="/images/gmail.png" alt="email" /></Box>
+                            <Box display="flex" width="20px"   sx={{mr: 1}} ><img style={{maxWidth: "100%"}} src="/images/gmail.png" alt="email" /></Box>
                             
                             <Typography variant="h5"  style={{color: "black", fontWeight: "500"}} >   <a  style={{color: "black", textDecoration: "none"}} href="mailto:confamgroup@gmail.com">confamgroup@gmail.com</a> </Typography>
                                                                                 

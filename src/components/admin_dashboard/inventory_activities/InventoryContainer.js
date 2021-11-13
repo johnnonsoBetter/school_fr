@@ -14,61 +14,21 @@ import InventoryTerm from './InventoryTerm'
 
 export default function InventoryContainer(){
  
-    const [termDates, setTermDates] = useState([])
+    
+    
 
+
+    const {dashboardInfo} = useContext(AdminContext)
+    const {termDates} = dashboardInfo
     const [filterType, setFilterType] = useState('date')
-
-    console.log("my tem ",termDates)
     const [filterInfo, setFilterInfo] = useState({
         date: new Date().toDateString(),
-        term_id: termDates.length === 0 ? -1 : termDates[0].id,
+        term_id: termDates[0].id,
         from: new Date().toDateString(),
         to: new Date().toDateString()
     })
 
 
-
-    const {authAxios} = useContext(FetchContext)
-    const {dashboardInfo, setDashboardInfo} = useContext(AdminContext)
-    
-    const [loading, setLoading] = useState(true)
-    const [failed, setFailed] = useState(false)
-    
-
-    useEffect(() => {
-
-        authAxios.get('api/v1/admin_dashboards').then((res) => {
-
-            console.log(res)
-            const {classrooms, teachers, score_types, term_dates, total_students, total_classrooms, total_teachers, total_debts, debt_recovered_reports, total_recovered_reports} = res.data
-
-            const newDashboardInfo = Object.assign({}, dashboardInfo)
-            newDashboardInfo.classrooms = classrooms
-            newDashboardInfo.teachers = teachers
-            newDashboardInfo.scoreTypes = score_types
-            newDashboardInfo.termDates = term_dates
-            setTermDates(term_dates)
-            const newFilterInfo = Object.assign({}, filterInfo)
-            newFilterInfo.term_id = term_dates[0].id 
-            setFilterInfo(newFilterInfo)
-            setLoading(false)
-
-            setDashboardInfo(newDashboardInfo)
-        }).catch((err) => {
-            console.log(err)
-            setLoading(false)
-            setFailed(true)
-        })
-
-
-
-        return () => {
-          setLoading(true)
-          setFailed(false)
-         
-        }
-        
-    }, [])
 
 
     return (
@@ -86,12 +46,7 @@ export default function InventoryContainer(){
                     <Typography variant="h4"> Inventory</Typography>
                     <FilterHeader />
                  </Box>
-                 {
-                     loading ? 
-                     <Loader /> :
-                     failed ?
-                     <FailedFetch message="Failed To Load Inventory" height="calc(90vh - 200px)"/> : 
-                  <>
+                
                  <Box mt={2} display="flex" justifyContent="flex-end" >
                     {
                        filterType === 'date' ? <InventoryDate /> : 
@@ -101,10 +56,7 @@ export default function InventoryContainer(){
                     
                  </Box>
                   <Section />
-                  </>
-                }
-                
-                
+   
             </Box>
         </InventoryContextProvider>
        

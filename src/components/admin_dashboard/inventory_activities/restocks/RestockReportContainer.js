@@ -9,6 +9,7 @@ import { FetchContext } from '../../../../context/FetchContext'
 import InventoryContext from '../../../../context/admin/InventoryContext'
 import RestockReportTable from './RestockReportTable'
 import AmountFormater from '../../../utilities/AmountFormatter'
+import { AuthContext } from '../../../../context/AuthContext'
 
 
 
@@ -22,7 +23,8 @@ export default function RestockReportContainer(){
     const [total, setTotal] = useState(0)
     const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
-    // const {date, term_id, }
+    const {setAuthState} = useContext(AuthContext)
+
 
 
     
@@ -41,30 +43,7 @@ export default function RestockReportContainer(){
     }
 
     useEffect(() => {
-        
-        authAxios.get('api/v1/restock_reports',
-            {params: restockReportParam()}
-        ).then((res) => {
-            console.log(res)
-            setLoading(false)
-            setRestocks(res.data)
-            
-        }).catch(err => {
-            setFailed(true)
-            setLoading(false)
-            setTotal(0)
-        })
-
-        return () => {
-            setLoading(true)
-            setFailed(false)
-            setRestocks([])
-      
-        }
-    }, [])
-
-    useEffect(() => {
-        
+        setLoading(true)
         authAxios.get('api/v1/restock_reports',
             {params: restockReportParam()}
         ).then((res) => {
@@ -75,6 +54,10 @@ export default function RestockReportContainer(){
             
             
         }).catch(err => {
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
             setTotal(0)

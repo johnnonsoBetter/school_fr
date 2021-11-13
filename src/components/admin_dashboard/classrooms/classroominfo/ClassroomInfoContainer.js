@@ -1,6 +1,7 @@
 import { Avatar, Badge, Box, Chip, Grid, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { AuthContext } from '../../../../context/AuthContext'
 import { FetchContext } from '../../../../context/FetchContext'
 import Empty from '../../../utilities/Empty'
 import FailedFetch from '../../../utilities/FailedFetch'
@@ -23,6 +24,7 @@ export default function ClassroomInfoContainer(){
         teachers: []
     })
     const {id} = useParams()
+    const {setAuthState} = useContext(AuthContext)
 
     useEffect(() => {
         
@@ -43,6 +45,10 @@ export default function ClassroomInfoContainer(){
             //setClassroomInfo(res.data)
         }).catch(err => {
             
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
         })

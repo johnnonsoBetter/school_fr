@@ -9,6 +9,7 @@ import { FetchContext } from '../../../../context/FetchContext'
 import TransactionContext from '../../../../context/admin/TransactionContext'
 import DebtRecoveredReportTable from './DebtRecoveredReportTable'
 import AmountFormater from '../../../utilities/AmountFormatter'
+import { AuthContext } from '../../../../context/AuthContext'
 
 
 
@@ -27,6 +28,8 @@ export default function DebtRecoveredReportContainer(){
     const updatedSum = sum + number;
     return updatedSum;
     }, 0);
+
+    const {setAuthState} = useContext(AuthContext)
     
     
   
@@ -44,30 +47,7 @@ export default function DebtRecoveredReportContainer(){
     }
 
     useEffect(() => {
-        
-        authAxios.get('api/v1/debt_recovered_reports',
-            {params: debt_recoveredReportParam()}
-        ).then((res) => {
-            console.log(res)
-            setLoading(false)
-            setDebtsRecovered(res.data)
-            
-        }).catch(err => {
-            setFailed(true)
-            setLoading(false)
-            setTotal(0)
-        })
-
-        return () => {
-            setLoading(true)
-            setFailed(false)
-            setDebtsRecovered([])
-      
-        }
-    }, [])
-
-    useEffect(() => {
-        
+        setLoading(true)
         authAxios.get('api/v1/debt_recovered_reports',
             {params: debt_recoveredReportParam()}
         ).then((res) => {
@@ -78,6 +58,10 @@ export default function DebtRecoveredReportContainer(){
             
             
         }).catch(err => {
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
             setTotal(0)

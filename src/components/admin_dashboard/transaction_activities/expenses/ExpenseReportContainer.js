@@ -9,6 +9,7 @@ import { FetchContext } from '../../../../context/FetchContext'
 import TransactionContext from '../../../../context/admin/TransactionContext'
 import ExpenseReportTable from './ExpenseReportTable'
 import AmountFormater from '../../../utilities/AmountFormatter'
+import { AuthContext } from '../../../../context/AuthContext'
 
 
 
@@ -20,14 +21,13 @@ export default function ExpenseReportContainer(){
     const [expenses, setExpenses] = useState([])
     const {filterType, filterInfo} = useContext(TransactionContext)
     const [total, setTotal] = useState(0)
-    const reducer = (previousValue, currentValue) => previousValue + currentValue;
-
+    
     const numbers = expenses.map((expense => expense.amount));
     const sum = numbers.reduce(function(sum, number) {
     const updatedSum = sum + number;
     return updatedSum;
     }, 0);
-    
+    const {setAuthState} = useContext(AuthContext)
     
   
     const expenseReportParam = () => {
@@ -43,31 +43,9 @@ export default function ExpenseReportContainer(){
         return {}
     }
 
-    useEffect(() => {
-        
-        authAxios.get('api/v1/expense_reports',
-            {params: expenseReportParam()}
-        ).then((res) => {
-            console.log(res)
-            setLoading(false)
-            setExpenses(res.data)
-            
-        }).catch(err => {
-            setFailed(true)
-            setLoading(false)
-            setTotal(0)
-        })
-
-        return () => {
-            setLoading(true)
-            setFailed(false)
-            setExpenses([])
-      
-        }
-    }, [])
 
     useEffect(() => {
-        
+        setLoading(true)
         authAxios.get('api/v1/expense_reports',
             {params: expenseReportParam()}
         ).then((res) => {
@@ -78,9 +56,13 @@ export default function ExpenseReportContainer(){
             
             
         }).catch(err => {
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
-            setTotal(0)
+          
         })
 
         return () => {

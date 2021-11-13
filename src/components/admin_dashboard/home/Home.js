@@ -18,6 +18,7 @@ import AmountFormatter from '../../utilities/AmountFormatter'
 import HomeDebtRecovered from './HomeDebtRecovered'
 import Loader from '../../utilities/Loader'
 import FailedFetch from '../../utilities/FailedFetch'
+import { AuthContext } from '../../../context/AuthContext'
 
 const useStyles = makeStyles((theme) => ({
     link: {
@@ -39,6 +40,7 @@ export default function Home(){
     const [debtRecoveredReports, setDebtRecoveredReports] = useState([])
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
+    const {setAuthState} = useContext(AuthContext)
     
 
     useEffect(() => {
@@ -63,7 +65,12 @@ export default function Home(){
 
             setDashboardInfo(newDashboardInfo)
         }).catch((err) => {
-            console.log(err)
+            
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
+
             setLoading(false)
             setFailed(true)
         })

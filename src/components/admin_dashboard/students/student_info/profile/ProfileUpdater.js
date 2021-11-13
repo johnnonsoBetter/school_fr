@@ -38,7 +38,7 @@ export default function ProfileUpdater(props){
     const {authAxios} = useContext(FetchContext)
     const [dateOfBirth, setDateOfBirth] = useState(new Date().toDateString())
     const [dateOfAdmission, setDateOfAdmission] = useState(new Date().toDateString())
-    const [classrooms, setClassrooms] = useState([{name: "nan/", id: -1}])
+    const {classrooms} = useContext(AdminContext).dashboardInfo
     const religions = ["Christainity", "Muslim"]
     const [btnLoading, setBtnLoading] = useState(false)
     const {setOpenSnack, snackInfo, setSnackInfo} = useContext(AdminContext)
@@ -50,16 +50,6 @@ export default function ProfileUpdater(props){
 
     
 
-    useEffect(() => {
-        authAxios.get('api/v1/classrooms').then((res) => {
-            const {data} = res 
-            setClassrooms(data)
-            setLoading(false)
-        }).catch((err) => {
-            setLoading(false)
-            setFailed(true)
-        })
-    }, [])
 
     const validationSchema = yup.object({
         first_name: yup
@@ -127,26 +117,6 @@ export default function ProfileUpdater(props){
     formData.append('gender', values.gender)
     formData.append('admission_no', values.admission_no)
 
-    // authAxios.post('api/v1/student_auth/', formData ).then((res) => {
-        
-    //     formik.resetForm()
-    //     const newSnackBarInfo = Object.assign(snackInfo, {})
-    //     newSnackBarInfo.message = `Succesfully Updated Student`
-    //     newSnackBarInfo.severity = 'success'
-    //     setSnackInfo(newSnackBarInfo)
-    //     setOpenSnack(true)
-    //     setBtnLoading(false)
-
-    // }).catch(err => {
-    //     console.log(err)
-    //     const newSnackBarInfo = Object.assign(snackInfo, {})
-    //     newSnackBarInfo.message = `Failed to Update Student`
-    //     newSnackBarInfo.severity = 'warning'
-    //     setSnackInfo(newSnackBarInfo)
-    //     setOpenSnack(true)
-    //     setBtnLoading(false)
-    // })
-      
     },
 });
 
@@ -154,14 +124,7 @@ export default function ProfileUpdater(props){
 
     return (
 
-        <>
-
-
-
-        {
-
-        loading ? <Loader /> :
-        failed ? <FailedFetch message="Something Went Wrong" height="calc(90vh - 200px)" />  :
+       
         <Grow in={true} >
 
        
@@ -491,7 +454,6 @@ export default function ProfileUpdater(props){
 </form>
 
 </Grow>
-}
-</>
+
     )
 }

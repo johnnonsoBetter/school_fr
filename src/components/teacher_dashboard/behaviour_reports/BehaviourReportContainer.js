@@ -9,6 +9,7 @@ import TheDate from './TheDate'
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom';
 import BehaviourReport from './BehaviourReport'
+import { AuthContext } from '../../../context/AuthContext'
 
 export default function BehaviourReportContainer(){
 
@@ -18,34 +19,22 @@ export default function BehaviourReportContainer(){
     const {authAxios} = useContext(FetchContext)
     const location = useLocation()
     const value = queryString.parse(location.search)
+    const {setAuthState} = useContext(AuthContext)
 
 
-    useEffect(() => {
-        authAxios.get('api/v1/teacher_behaviour_reports', {params: {date: new Date().toDateString()}}).then((res) => {
-
-            console.log(res)
-            setBehaviourReports(res.data)
-            setLoading(false)
-        }).catch((err) => {
-            console.log(err)
-        })
-
-        return () => {
-            setBehaviourReports([])
-            setLoading(true)
-            setFailed(false)
-        }
-
-    }, [])
 
     useEffect(() => {
+        setLoading(true)
         authAxios.get('api/v1/teacher_behaviour_reports', {params: {date: Object.keys(value).length === 0 ? new Date().toDateString() : value.date}}).then((res) => {
 
             console.log(res)
             setBehaviourReports(res.data)
             setLoading(false)
         }).catch((err) => {
-            console.log(err)
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setLoading(false)
             setFailed(true)
 

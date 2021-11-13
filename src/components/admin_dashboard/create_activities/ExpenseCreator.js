@@ -5,6 +5,8 @@ import { useContext, useState } from "react";
 import AdminContext from "../../../context/admin/AdminContext";
 import { LoadingButton } from "@mui/lab";
 import { FetchContext } from "../../../context/FetchContext";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
 
 const validationSchema = yup.object({
     title: yup
@@ -21,6 +23,8 @@ export default function ExpenseCreator() {
     const {setOpenSnack, snackInfo, setSnackInfo} = useContext(AdminContext)
     const [loading, setLoading] = useState(false)
     const {authAxios} = useContext(FetchContext)
+    const history = useHistory()
+    const {setAuthState} = useContext(AuthContext)
 
 
 
@@ -45,12 +49,19 @@ export default function ExpenseCreator() {
                 setLoading(false)
     
             }).catch((err) => {
+
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
+                   
                 const newSnackBarInfo = Object.assign(snackInfo, {})
                 newSnackBarInfo.message = `Failed to Create Expense`
                 newSnackBarInfo.severity = 'warning'
                 setSnackInfo(newSnackBarInfo)
                 setOpenSnack(true)
                 setLoading(false)
+
             })
         
         },

@@ -7,6 +7,7 @@ import Loader from '../../utilities/Loader'
 import FailedFetch from '../../utilities/FailedFetch'
 import Empty from '../../utilities/Empty'
 import ScoreReportDraft from './ScoreReportDraft'
+import { AuthContext } from '../../../context/AuthContext'
 
 export default function ScoreReportDraftContainer(){
 
@@ -14,7 +15,8 @@ export default function ScoreReportDraftContainer(){
     const [scoreReportDrafts, setScoreReportDrafts] = useState([])
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
-    
+    const {setAuthState} = useContext(AuthContext)
+
 
     useEffect(() => {
         authAxios.get('api/v1/score_report_drafts').then((res) => {
@@ -23,7 +25,10 @@ export default function ScoreReportDraftContainer(){
             setLoading(false)
 
         }).catch((err) => {
-            console.log(err)
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
         })
 
         return () => {

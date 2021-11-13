@@ -2,6 +2,7 @@
 
 import { Box, Chip, Grid, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import { FetchContext } from '../../../context/FetchContext'
 import Empty from '../../utilities/Empty'
 import FailedFetch from '../../utilities/FailedFetch'
@@ -17,15 +18,21 @@ export default function TeacherContainer(){
     const {authAxios} = useContext(FetchContext)
     const [teachers, setTeachers] = useState([])
     const [allTeachers, setAllTeachers] = useState([])
+    const {setAuthState} = useContext(AuthContext)
 
     useEffect(() => {
 
         authAxios.get('api/v1/teachers').then((res) => {
-            console.log(res)
+           
             setLoading(false)
             setTeachers(res.data)
             setAllTeachers(res.data)
         }).catch(err => {
+
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             
             setFailed(true)
             setLoading(false)

@@ -12,6 +12,7 @@ import EditStudentDraftContext from '../../../context/teacher/EditStudentDraftCo
 import { green } from '@mui/material/colors';
 import { FetchContext } from '../../../context/FetchContext';
 import { useHistory, useParams } from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthContext';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,6 +52,8 @@ export default function StudentScoreReportDrafts() {
   const [loading, setLoading] = React.useState(false)
   const {id} = useParams()
   const history = useHistory()
+  const {setAuthState} = React.useContext(AuthContext)
+
 
 
 
@@ -73,7 +76,10 @@ export default function StudentScoreReportDrafts() {
       history.push('/')
 
     }).catch((err) => {
-      console.log(err)
+      const {status} = err.response 
+      if (status === 401){
+          setAuthState({})
+      }
       setLoading(false)
     })
   }

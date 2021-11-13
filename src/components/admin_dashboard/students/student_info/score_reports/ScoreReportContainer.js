@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import AdminContext from '../../../../../context/admin/AdminContext'
 import { ScoreReportContextProvider } from '../../../../../context/admin/ScoreReportContext'
+import { AuthContext } from '../../../../../context/AuthContext'
 import { FetchContext } from '../../../../../context/FetchContext'
 import ScoreReports from '../../../../parent_dashboard/score_report/ScoreReports'
 import Empty from '../../../../utilities/Empty'
@@ -17,9 +18,9 @@ export default function ScoreReportContainer(){
 
     
     const {dashboardInfo} = useContext(AdminContext)
-    const [termDates, setTermDates] = useState([])
-    const [scoreTypes, setScoreTypes] = useState([].concat('All'))
-    const [term_id, setTermId] = useState(-1)
+    const {termDates} = dashboardInfo
+    const scoreTypes = dashboardInfo.scoreTypes.map((s) => s.name).concat('All')
+    const [term_id, setTermId] = useState( termDates[0].id)
     const [scoreType, setScoreType] = useState(scoreTypes[scoreTypes.length - 1])
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
@@ -27,70 +28,40 @@ export default function ScoreReportContainer(){
     const [filteredSubjectHeaders, setFilteredSubjectHeaders] = useState([])
     const {authAxios} = useContext(FetchContext)
     const {id} = useParams()
+    const {setAuthState} = useContext(AuthContext)
 
 
     useEffect(() => {
         
+        setLoading(true)
 
-        if (term_id == -1) {
-            setLoading(true)
-            authAxios.get('api/v1/admin_student_score_reports/', {params: {score_type: scoreType, student_id: id}})
-        
-            .then((res) => {
+        authAxios.get('api/v1/admin_student_score_reports/', {params: {term_id: term_id, score_type: scoreType, student_id: id}})
     
-
-                const {term_dates, score_reports, score_types} = res.data
-                setScoreTypes(score_types.map((score) => score.name).concat("All"))
-                setTermDates(term_dates)
-                setTermId(term_dates[0].id)
-                setScoreReports(score_reports)
-                const subjectHeaders = new Set(score_reports.map(sub => (sub.subject))) 
-                setFilteredSubjectHeaders([...subjectHeaders])
-                setLoading(false)
+        .then((res) => {
+    
+            const score_reports = res.data
+            
+            setScoreReports(score_reports)
+            const subjectHeaders = new Set(score_reports.map(sub => (sub.subject))) 
+            setFilteredSubjectHeaders([...subjectHeaders])
+            setLoading(false)
                 
     
-            }).catch(err => {
-                console.log(err)
-                setLoading(false)
-                setFailed(true)
-            })
+        }).catch(err => {
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             
+            setLoading(false)
+            setFailed(true)
+        })
 
-        }else {
-            setLoading(true)
-            authAxios.get('api/v1/admin_student_score_reports/', {params: {term_id: term_id, score_type: scoreType, student_id: id}})
-       
-            .then((res) => {
-     
-                const {score_reports} = res.data
-               
-                setScoreReports(score_reports)
-                const subjectHeaders = new Set(score_reports.map(sub => (sub.subject))) 
-                setFilteredSubjectHeaders([...subjectHeaders])
-                setLoading(false)
-                 
-     
-            }).catch(err => {
-                console.log(err)
-                setLoading(false)
-                setFailed(true)
-            })
-
-
-
-          
-        }
         
- 
+
  
      }, [term_id, scoreType])
 
-    useEffect(() => {
-
-       
-
-
-    }, [])
 
 
     return (

@@ -1,10 +1,8 @@
 import { Box, Typography } from '@mui/material'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext,  useState } from 'react'
 import AdminContext from '../../../context/admin/AdminContext'
 import { TransactionContextProvider } from '../../../context/admin/TransactionContext'
 import { FetchContext } from '../../../context/FetchContext'
-import FailedFetch from '../../utilities/FailedFetch'
-import Loader from '../../utilities/Loader'
 import FilterHeader from './FilterHeader'
 import Section from './Section'
 import TransactionDate from './TransactionDate'
@@ -12,67 +10,19 @@ import TransactionRange from './TransactionRange'
 import TransactionTerm from './TransactionTerm'
 
 export default function TransactionContainer(){
- 
-    const [termDates, setTermDates] = useState([])
+
 
     const [filterType, setFilterType] = useState('date')
-
-    console.log("my tem ",termDates)
+    const {dashboardInfo} = useContext(AdminContext)
+    const {termDates} = dashboardInfo
     const [filterInfo, setFilterInfo] = useState({
         date: new Date().toDateString(),
-        term_id: termDates.length === 0 ? -1 : termDates[0].id,
+        term_id: termDates[0].id,
         from: new Date().toDateString(),
         to: new Date().toDateString()
     })
 
-
-
-    const {authAxios} = useContext(FetchContext)
-    const {dashboardInfo, setDashboardInfo} = useContext(AdminContext)
     
-    const [loading, setLoading] = useState(true)
-    const [failed, setFailed] = useState(false)
-    
-
-    useEffect(() => {
-
-        authAxios.get('api/v1/admin_dashboards').then((res) => {
-
-            console.log(res)
-            const {classrooms, teachers, score_types, term_dates, total_students, total_classrooms, total_teachers, total_debts, debt_recovered_reports, total_recovered_reports} = res.data
-
-            
-
-            const newDashboardInfo = Object.assign({}, dashboardInfo)
-            newDashboardInfo.classrooms = classrooms
-            newDashboardInfo.teachers = teachers
-            newDashboardInfo.scoreTypes = score_types
-            newDashboardInfo.termDates = term_dates
-            setTermDates(term_dates)
-            const newFilterInfo = Object.assign({}, filterInfo)
-            newFilterInfo.term_id = term_dates[0].id 
-            setFilterInfo(newFilterInfo)
-            setLoading(false)
-
-            
-
-            setDashboardInfo(newDashboardInfo)
-        }).catch((err) => {
-            console.log(err)
-            setLoading(false)
-            setFailed(true)
-        })
-
-
-
-        return () => {
-          setLoading(true)
-          setFailed(false)
-         
-        }
-        
-    }, [])
-
 
     return (
         <TransactionContextProvider
@@ -89,12 +39,8 @@ export default function TransactionContainer(){
                     <Typography variant="h4"> Transactions</Typography>
                     <FilterHeader />
                  </Box>
-                 {
-                     loading ? 
-                     <Loader /> :
-                     failed ?
-                     <FailedFetch message="Failed To Load Transactions" height="calc(90vh - 200px)"/> : 
-                  <>
+                
+                   
                  <Box mt={2} display="flex" justifyContent="flex-end" >
                     {
                        filterType === 'date' ? <TransactionDate /> : 
@@ -104,9 +50,6 @@ export default function TransactionContainer(){
                     
                  </Box>
                   <Section />
-                  </>
-                }
-                
                 
             </Box>
         </TransactionContextProvider>

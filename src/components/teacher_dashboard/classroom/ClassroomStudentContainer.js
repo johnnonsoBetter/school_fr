@@ -11,6 +11,7 @@ import Empty from '../../utilities/Empty'
 import GroupedStudentFilterInput from './GroupStudentFilterInput'
 import Student from './Student'
 import TeacherContext from '../../../context/teacher/TeacherContext'
+import { AuthContext } from '../../../context/AuthContext'
 
 export default function ClassroomStudentContainer(){
 
@@ -21,11 +22,8 @@ export default function ClassroomStudentContainer(){
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const {dashboardInfo} = useContext(TeacherContext)
-    
+    const {setAuthState} = useContext(AuthContext)
 
-    // const className = dashboardInfo.subjects.find(student => student.id === id).name
-
-   
 
     useEffect(() => {
         // console.log(dashboardInfo.subjects.find((sub) => sub.id === id))
@@ -37,7 +35,11 @@ export default function ClassroomStudentContainer(){
             setLoading(false)
             
         }).catch(err => {
-         
+        
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setLoading(false)
             setFailed(true)
         })

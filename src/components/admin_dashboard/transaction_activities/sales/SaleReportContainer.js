@@ -9,6 +9,7 @@ import { FetchContext } from '../../../../context/FetchContext'
 import TransactionContext from '../../../../context/admin/TransactionContext'
 import SaleReportTable from './SaleReportTable'
 import AmountFormater from '../../../utilities/AmountFormatter'
+import { AuthContext } from '../../../../context/AuthContext'
 
 
 
@@ -20,18 +21,16 @@ export default function SaleReportContainer(){
     const [sales, setSales] = useState([])
     const {filterType, filterInfo} = useContext(TransactionContext)
     const [total, setTotal] = useState(0)
-    const reducer = (previousValue, currentValue) => previousValue + currentValue;
-
-    // const {date, term_id, }
 
     const numbers = sales.map((sale => sale.total));
     const sum = numbers.reduce(function(sum, number) {
-    const updatedSum = sum + number;
-    return updatedSum;
+        const updatedSum = sum + number;
+        return updatedSum;
     }, 0);
     
 
-    console.log(sum, "The total sales")
+    const {setAuthState} = useContext(AuthContext)
+
 
 
     
@@ -49,31 +48,9 @@ export default function SaleReportContainer(){
         return {}
     }
 
-    useEffect(() => {
-        
-        authAxios.get('api/v1/sale_reports',
-            {params: saleReportParam()}
-        ).then((res) => {
-            console.log(res)
-            setLoading(false)
-            setSales(res.data)
-            
-        }).catch(err => {
-            setFailed(true)
-            setLoading(false)
-            setTotal(0)
-        })
-
-        return () => {
-            setLoading(true)
-            setFailed(false)
-            setSales([])
-      
-        }
-    }, [])
 
     useEffect(() => {
-        
+        setLoading(true)
         authAxios.get('api/v1/sale_reports',
             {params: saleReportParam()}
         ).then((res) => {
@@ -84,6 +61,10 @@ export default function SaleReportContainer(){
             
             
         }).catch(err => {
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
             setTotal(0)

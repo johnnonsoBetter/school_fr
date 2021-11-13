@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import AdminContext from "../../../context/admin/AdminContext";
 import { LoadingButton } from "@mui/lab";
 import { FetchContext } from "../../../context/FetchContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const validationSchema = yup.object({
     name: yup
@@ -23,6 +24,7 @@ export default function ItemCreator() {
     const {setOpenSnack, snackInfo, setSnackInfo} = useContext(AdminContext)
     const [loading, setLoading] = useState(false)
     const {authAxios} = useContext(FetchContext)
+    const {setAuthState} = useContext(AuthContext)
 
 
 
@@ -53,6 +55,11 @@ export default function ItemCreator() {
                
     
             }).catch((err) => {
+
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 const newSnackBarInfo = Object.assign(snackInfo, {})
                 newSnackBarInfo.message = `Failed to Created Item`
                 newSnackBarInfo.severity = 'warning'

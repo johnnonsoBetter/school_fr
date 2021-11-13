@@ -8,6 +8,7 @@ import { LoadingButton } from '@mui/lab';
 import { styled, withStyles } from '@mui/styles';
 import { CancelRounded } from '@mui/icons-material';
 import AdminContext from '../../../context/admin/AdminContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 const validationSchema = yup.object({
     name: yup
@@ -24,6 +25,7 @@ export default function EditItem(props) {
     const [loading, setLoading] = useState(false)
     const {closeAll, id, name, selling_price} = props
     const {snackInfo, setOpenSnack, setSnackInfo} = useContext(AdminContext)
+    const {setAuthState} = useContext(AuthContext)
 
 
     const formik = useFormik({
@@ -70,6 +72,10 @@ export default function EditItem(props) {
                 closeAll()
     
             }).catch((err) => {
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 const newSnackBarInfo = Object.assign(snackInfo, {})
                 newSnackBarInfo.message = `Item Failed to Updated`
                 newSnackBarInfo.severity = 'warning'

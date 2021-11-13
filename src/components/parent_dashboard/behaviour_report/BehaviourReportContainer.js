@@ -12,6 +12,7 @@ import Empty from '../../utilities/Empty';
 import { useLocation } from 'react-router-dom';
 import { FetchContext } from '../../../context/FetchContext';
 import queryString from 'query-string'
+import { AuthContext } from '../../../context/AuthContext';
 
 
 
@@ -26,24 +27,8 @@ export default function BehaviourReportContainer(){
     const location = useLocation()
     const {authAxios} = useContext(FetchContext)
     const value = queryString.parse(location.search)
+    const {setAuthState} = useContext(AuthContext)
 
-
-
-    useEffect(() => {
-       
-        authAxios.get('api/v1/guidance_behaviour_reports', {params: {student_id: student_id, date: new Date().toDateString()}}).then((res) => {
-
-            
-            const {data} = res
-            setBehaviourReports(data)
-            setLoading(false)
-
-        }).catch(err => {
-            console.log(err)
-            setLoading(false)
-            setFailed(true)
-        })
-    }, [])
 
     useEffect(() => {
        setLoading(true)
@@ -55,7 +40,10 @@ export default function BehaviourReportContainer(){
             setLoading(false)
 
         }).catch(err => {
-            console.log(err)
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setLoading(false)
             setFailed(true)
         })

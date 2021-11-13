@@ -8,6 +8,7 @@ import Bill from './Bill'
 import Empty from '../../../../utilities/Empty'
 import FailedFetch from '../../../../utilities/FailedFetch'
 import Loader from '../../../../utilities/Loader'
+import { AuthContext } from '../../../../../context/AuthContext'
 
 
 
@@ -22,6 +23,8 @@ export default function BillContainer(){
     const [bills, setBills] = useState([])
     const {authAxios} = useContext(FetchContext)
     const {id} = useParams()
+    const {setAuthState} = useContext(AuthContext)
+
 
     useEffect(() => {
 
@@ -35,7 +38,10 @@ export default function BillContainer(){
             
 
        }).catch(err => {
-           console.log(err)
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
            setLoading(false)
            setFailed(true)
        })

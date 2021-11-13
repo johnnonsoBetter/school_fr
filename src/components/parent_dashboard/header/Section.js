@@ -30,6 +30,7 @@ export default function Section() {
   const {isAuthenticated} = React.useContext(AuthContext)
   const {authAxios} = React.useContext(FetchContext)
   const [displayNotificationNotice, setDisplayNotificationNotice] = React.useState(false)
+  const {setAuthState} = React.useContext(AuthContext)
 
 
 
@@ -73,6 +74,10 @@ const vapidPublicKey = urlBase64ToUint8Array(process.env.REACT_APP_VAPID_PUBLIC_
             {subscription: {endpoint: subParams.endpoint, expirationTime: subParams.expirationTime, keys: subParams.keys }}).then((res) => {
               console.log(res)
             }).catch(err => {
+              const {status} = err.response 
+              if (status === 401){
+                  setAuthState({})
+              }
               console.log(err)
             })
     

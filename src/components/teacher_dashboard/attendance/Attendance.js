@@ -5,6 +5,7 @@ import { CancelRounded, CheckCircleOutlineRounded, CheckOutlined, CloseOutlined 
 import { green, red } from '@mui/material/colors';
 import { FetchContext } from '../../../context/FetchContext';
 import AttendanceContext from '../../../context/teacher/AttendanceContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 export default function Attendance(props) {
 
@@ -15,6 +16,8 @@ export default function Attendance(props) {
     const {authAxios} = useContext(FetchContext)
     const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false) 
+    const {setAuthState} = useContext(AuthContext)
+
     const {updateAttendanceData,
         attendances,
         allAttendances,
@@ -55,7 +58,10 @@ export default function Attendance(props) {
                 setLoading(false)
                
             }).catch((err) => {
-                
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 console.log(err)
                 setLoading(false)
                 setFailed(true)

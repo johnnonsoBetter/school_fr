@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import { FetchContext } from '../../../context/FetchContext'
 import TeacherContext from '../../../context/teacher/TeacherContext'
 import FailedFetch from '../../utilities/FailedFetch'
@@ -12,12 +13,13 @@ export default function Home(){
     const {authAxios} = useContext(FetchContext)
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
+    const {setAuthState} = useContext(AuthContext)
 
 
   useEffect(() => {
 
      authAxios.get('api/v1/teacher_dashboards').then((res) => {
-      console.log(res)
+      
 
       const {score_report_drafts, score_types, subjects, term_dates, teacher} = res.data 
       const newDashboardInfo = Object.assign({}, dashboardInfo)
@@ -33,10 +35,10 @@ export default function Home(){
      
 
     }).catch((err) => {
-      console.log(err.response)
-      // if(err.response.status === 401){
-      //    history.push('/login')
-      // }
+      const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
 
     })
 

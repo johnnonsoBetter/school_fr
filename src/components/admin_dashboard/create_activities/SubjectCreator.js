@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import AdminContext from "../../../context/admin/AdminContext";
 import { LoadingButton } from "@mui/lab";
 import { FetchContext } from "../../../context/FetchContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const validationSchema = yup.object({
     name: yup
@@ -21,7 +22,7 @@ export default function SubjectCreator() {
     const [loading, setLoading] = useState(false)
     const {authAxios} = useContext(FetchContext)
     const {classrooms, teachers} = useContext(AdminContext).dashboardInfo
-    
+    const {setAuthState} = useContext(AuthContext)
 
     const formik = useFormik({
 
@@ -48,6 +49,11 @@ export default function SubjectCreator() {
                 setLoading(false)
     
             }).catch((err) => {
+
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 const newSnackBarInfo = Object.assign(snackInfo, {})
                 newSnackBarInfo.message = `Failed to Create Subject`
                 newSnackBarInfo.severity = 'warning'
@@ -84,7 +90,7 @@ export default function SubjectCreator() {
                   
                 </Grid>
 
-                <Grid xs={6}  >
+                <Grid xs={12} sm={6}   >
                     <Box width="100%" p={1} >
                         
                        
@@ -116,7 +122,7 @@ export default function SubjectCreator() {
                   
                 </Grid>
 
-                <Grid xs={6}  >
+                <Grid xs={12} sm={6}  >
                     <Box width="100%" p={1} >
                         
                        

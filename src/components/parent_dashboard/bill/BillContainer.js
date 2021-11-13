@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import { FetchContext } from '../../../context/FetchContext';
 import queryString from 'query-string'
 import Bill from './Bill'
+import { AuthContext } from '../../../context/AuthContext';
 
 
 export default function BillContainer(){
@@ -23,6 +24,8 @@ export default function BillContainer(){
     const location = useLocation()
     const {authAxios} = useContext(FetchContext)
     const value = queryString.parse(location.search)
+    const {setAuthState} = useContext(AuthContext)
+
 
 
     useEffect(() => {
@@ -36,7 +39,10 @@ export default function BillContainer(){
             setLoading(false)
 
         }).catch(err => {
-            console.log(err)
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setLoading(false)
             setFailed(true)
         })

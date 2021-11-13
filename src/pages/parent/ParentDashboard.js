@@ -17,8 +17,12 @@ function ParentDashboard(){
     const [student_id, setStudentId] = useState(null)
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
-    const history = useHistory()
-    const {isAuthenticated, authState} = useContext(AuthContext)
+    const [dashboardInfo, setDashboardInfo] = useState({
+        termDates: [],
+        students: [],
+        announcements: [],
+        
+      })
 
     
   
@@ -26,11 +30,18 @@ function ParentDashboard(){
     useEffect(() => {
         
         authAxios.get('api/v1/guidance_dashboards').then((res) => {
-            const {announcements, students} = res.data
+            const {students, announcements, term_dates} = res.data
             
     
             setChildren(students)
+            const newDashboardInfo = Object.assign({}, dashboardInfo)
+            newDashboardInfo.announcements = announcements
+            newDashboardInfo.students = students
+            newDashboardInfo.termDates = term_dates
+
+
             setStudentId(students[0].id)
+            setDashboardInfo(newDashboardInfo)
             setLoading(false)
           
 
@@ -39,6 +50,13 @@ function ParentDashboard(){
         })
 
         window.document.title = "Parent"
+
+
+        return () => {
+            setDashboardInfo({})
+            setLoading(false)
+            
+        }
 
  
     }, [])
@@ -52,17 +70,23 @@ function ParentDashboard(){
                         setStudentId: (id) => setStudentId(id),
                         student: () => children.find(child => child.id === student_id),
                         loading,
-                        setLoading: (loading) => setLoading(loading)
+                        setLoading: (loading) => setLoading(loading),
+                        dashboardInfo,
+                        setDashboardInfo,
                     }}
                 >
                     {
                         loading ?
                         <Backdrop
-                            sx={{ backgroundColor: "rgba(32, 38, 45, 0.2)", backdropFilter: "blur(2px)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                            open={loading}
-                           
-                     >
-                            <CircularProgress color="inherit" />
+                        sx={{ backgroundColor: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={loading}
+                        
+                        >
+                        
+                        <div class="loadingio-spinner-wedges-ms9m8n0rjb9"><div class="ldio-cmgfr111trf">
+                        <div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>
+                        </div></div>
+                    
                         </Backdrop>
                         :
                         <Container maxWidth="lg">

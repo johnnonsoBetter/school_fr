@@ -11,6 +11,7 @@ import { blue} from '@mui/material/colors';
 import { LoadingButton } from '@mui/lab';
 import { FetchContext } from '../../../context/FetchContext';
 import TeacherContext from '../../../context/teacher/TeacherContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 export default function CreateBehaviourReport({id, full_name}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -18,7 +19,7 @@ export default function CreateBehaviourReport({id, full_name}) {
     const [loading, setLoading] = useState(false)
     const {authAxios} = useContext(FetchContext)
     const {setOpenSnack, setSnackInfo, snackInfo} = useContext(TeacherContext)
-
+    const {setAuthState} = useContext(AuthContext)
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
@@ -70,6 +71,11 @@ export default function CreateBehaviourReport({id, full_name}) {
                 
 
             }).catch((err) => {
+
+              const {status} = err.response 
+              if (status === 401){
+                  setAuthState({})
+              }
                 setLoading(false)
                 // console.log(err)
                 

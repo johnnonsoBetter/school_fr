@@ -168,11 +168,15 @@ function TeacherDashboard(props) {
 
         loading ? 
         <Backdrop
-          sx={{ backgroundColor: "rgba(32, 38, 45, 0.2)", backdropFilter: "blur(2px)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          sx={{ backgroundColor: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={loading}
           
         >
-          <CircularProgress color="inherit" />
+          
+          <div class="loadingio-spinner-wedges-ms9m8n0rjb9"><div class="ldio-cmgfr111trf">
+          <div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>
+        </div></div>
+       
         </Backdrop>
       :
      

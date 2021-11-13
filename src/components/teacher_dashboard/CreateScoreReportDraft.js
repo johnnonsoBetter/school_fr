@@ -14,6 +14,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { useContext } from 'react';
 import { FetchContext } from '../../context/FetchContext';
+import { AuthContext } from '../../context/AuthContext';
 
 
 
@@ -40,6 +41,7 @@ export default function CreateScoreReportDraft() {
   const {authAxios} = useContext(FetchContext)
   const [redirectOnCreate, setRedirectOncreate] = React.useState(false)
   const [id, setId] = React.useState(null)
+  const {setAuthState} = useContext(AuthContext)
 
   React.useEffect(() => {
     if (open) {
@@ -74,7 +76,10 @@ export default function CreateScoreReportDraft() {
            
 
         }).catch((err) => {
-            console.log(err)
+          const {status} = err.response 
+          if (status === 401){
+              setAuthState({})
+          }
             setLoading(false)
         })
     

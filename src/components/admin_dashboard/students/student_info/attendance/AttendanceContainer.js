@@ -1,7 +1,9 @@
 import { Box } from "@mui/material"
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
+import AdminContext from "../../../../../context/admin/AdminContext"
 import { StudentAttendanceContextProvider } from "../../../../../context/admin/StudentAttendanceContext"
+import { AuthContext } from "../../../../../context/AuthContext"
 import { FetchContext } from "../../../../../context/FetchContext"
 import Empty from "../../../../utilities/Empty"
 import FailedFetch from "../../../../utilities/FailedFetch"
@@ -14,72 +16,41 @@ import MobileAttendanceList from "./MobileAttendanceLIst"
 
 export default function AttendanceContainer ( ){
 
-    const [termDates, setTermDates] = useState([])
-    const [term_id, setTermId] = useState(-1)
+
+    const {dashboardInfo} = useContext(AdminContext)
+    const {termDates} = dashboardInfo
+    const [term_id, setTermId] = useState( termDates[0].id)
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const [attendances, setAttendances] = useState([{created_at: "2021-9-05 15:04:49"}])
     const {authAxios} = useContext(FetchContext)
     const {id} = useParams()
+    const {setAuthState} = useContext(AuthContext)
 
-    
-  
 
-   
-
+     
     useEffect(() => {
         
+        setLoading(true)
 
-        if (term_id == -1) {
-            setLoading(true)
-            authAxios.get('api/v1/admin_student_attendances/', {params: {student_id: id}})
-       
-            .then((res) => {
-     
-            const {term_dates, attendances} = res.data
-          
-            
-            setTermId(term_dates[0].id)
-            setTermDates(term_dates)
-            setAttendances(attendances)
-        
-            setLoading(false)
-            
-
-            }).catch(err => {
-               
-                setLoading(false)
-                setFailed(true)
-            })
-            
-
-        }else {
-            setLoading(true)
-            authAxios.get('api/v1/admin_student_attendances/', {params: {term_id: term_id, student_id: id}})
-        
+        authAxios.get('api/v1/admin_student_attendances/', {params: {term_id: term_id, student_id: id}})
+    
         .then((res) => {
- 
-            const {term_dates, attendances} = res.data
-            console.log(attendances)
-            console.log(term_dates)
+    
+            const attendances = res.data
 
             setAttendances(attendances)
             setLoading(false)
-             
- 
+                
         }).catch(err => {
-         
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setLoading(false)
             setFailed(true)
         })
 
-
-
-          
-        }
-        
- 
- 
      }, [term_id])
 
 

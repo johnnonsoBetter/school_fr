@@ -7,6 +7,7 @@ import queryString from 'query-string'
 import Loader from '../../utilities/Loader'
 import FailedFetch from '../../utilities/FailedFetch'
 import ScoreReports from './ScoreReports'
+import { AuthContext } from '../../../context/AuthContext'
 
 function isEmpty(obj) {
     for(var key in obj) {
@@ -33,6 +34,7 @@ export default function ScoreReportContainer(){
     const [changed, setChanged] = useState(false)
     const search = queryString.parse(location.search)
     const [scoreReports, setScoreReports] = useState([])
+    const {setAuthState} = useContext(AuthContext)
 
     
     useEffect(() => {
@@ -51,7 +53,10 @@ export default function ScoreReportContainer(){
 
             
         }).catch(err => {
-            
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
         }) 

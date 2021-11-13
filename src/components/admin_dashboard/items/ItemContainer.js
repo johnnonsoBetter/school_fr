@@ -8,6 +8,7 @@ import Loader from '../../utilities/Loader'
 import GroupedStudentFilterInput from './GroupStudentFilterInput'
 import Item from './Item'
 import { ItemContextProvider } from '../../../context/admin/ItemContext'
+import { AuthContext } from '../../../context/AuthContext'
 
 
 export default function ItemContainer(){
@@ -17,6 +18,7 @@ export default function ItemContainer(){
     const {authAxios} = useContext(FetchContext)
     const [items, setItems] = useState([])
     const [allItems, setAllItems] = useState([])
+    const {setAuthState} = useContext(AuthContext)
 
     useEffect(() => {
 
@@ -26,6 +28,10 @@ export default function ItemContainer(){
             setItems(res.data)
             setAllItems(res.data)
         }).catch(err => {
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
         })

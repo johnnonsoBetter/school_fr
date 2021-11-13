@@ -2,6 +2,7 @@ import { EditRounded, PersonRounded } from '@mui/icons-material'
 import { Box, Button, Grid, Paper, Typography, Zoom } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { AuthContext } from '../../../../../context/AuthContext'
 import { FetchContext } from '../../../../../context/FetchContext'
 import FailedFetch from '../../../../utilities/FailedFetch'
 import Loader from '../../../../utilities/Loader'
@@ -16,6 +17,7 @@ export default function Profile() {
     const [failed, setFailed] = useState(false)
     const {authAxios} = useContext(FetchContext)
     const {id} = useParams()
+    const {setAuthState} = useContext(AuthContext)
 
     useEffect(() => {
 
@@ -25,7 +27,10 @@ export default function Profile() {
             setLoading(false)
             
         }).catch(err => {
-            
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setFailed(true)
             setLoading(false)
         })

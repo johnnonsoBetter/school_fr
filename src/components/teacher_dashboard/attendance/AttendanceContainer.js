@@ -16,6 +16,7 @@ import Attendance from './Attendance';
 import { AttendanceContextProvider } from '../../../context/teacher/AttendanceContext';
 import GroupedStudentFilterInput from './GroupStudentFilterInput';
 import TeacherContext from '../../../context/teacher/TeacherContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 
 export default function AttendanceContainer () {
@@ -32,6 +33,7 @@ export default function AttendanceContainer () {
         totalPresent: 0,
         totalAbsent: 0
     })
+    const {setAuthState} = useContext(AuthContext)
 
 
     const updateAttendanceData = (atts) => {
@@ -55,7 +57,10 @@ export default function AttendanceContainer () {
             setLoading(false)
 
         }).catch((err) => {
-            
+            const {status} = err.response 
+            if (status === 401){
+                setAuthState({})
+            }
             setLoading(false)
             setFailed(true)
 

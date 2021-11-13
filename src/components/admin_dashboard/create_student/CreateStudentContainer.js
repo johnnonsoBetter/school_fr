@@ -6,31 +6,24 @@ import { useFormik } from 'formik';
 import { FetchContext } from '../../../context/FetchContext';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import AdminContext from '../../../context/admin/AdminContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 export default function CreateStudentContainer(){
 
     const [image, setImage] = useState({})
-
+    const {classrooms} = useContext(AdminContext).dashboardInfo
     const {authAxios} = useContext(FetchContext)
     const [dateOfBirth, setDateOfBirth] = useState(new Date().toDateString())
     const [dateOfAdmission, setDateOfAdmission] = useState(new Date().toDateString())
-    const [classrooms, setClassrooms] = useState([{name: "nan/", id: -1}])
+    
     const [religions, setReligions] = useState(["Christainity", "Muslim"])
     const [btnLoading, setBtnLoading] = useState(false)
     const {setOpenSnack, snackInfo, setSnackInfo} = useContext(AdminContext)
     const [src, setSrc] = useState('/images/no-pictures.png')
     const genders = ["Male", "Female"]
+    const {setAuthState} = useContext(AuthContext)
 
     
-
-    useEffect(() => {
-        authAxios.get('api/v1/classrooms').then((res) => {
-            const {data} = res 
-            setClassrooms(data)
-        }).catch((err) => {
-            console.log(err)
-        })
-    }, [])
 
     const validationSchema = yup.object({
         first_name: yup
@@ -109,7 +102,12 @@ export default function CreateStudentContainer(){
         setBtnLoading(false)
 
     }).catch(err => {
-        console.log(err)
+
+        const {status} = err.response 
+        if (status === 401){
+            setAuthState({})
+        }
+    
         const newSnackBarInfo = Object.assign(snackInfo, {})
         newSnackBarInfo.message = `Failed to Create Student`
         newSnackBarInfo.severity = 'warning'

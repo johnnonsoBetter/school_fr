@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Backdrop, Button, Chip, CircularProgress, Container, Grid, Hidden } from '@mui/material';
+import { Backdrop, Button, Chip, CircularProgress, Container, Grid, Hidden, LinearProgress } from '@mui/material';
 
 
 import Home from '../../components/admin_dashboard/home/Home';
@@ -52,6 +52,7 @@ function AdminDashboard(props) {
   const [drawerChildType, setDrawerChildType] = useState('')
   const [loading, setLoading] = useState(true)
   const {authAxios} = useContext(FetchContext)
+  const [failed, setFailed] = useState(false)
   const history = useHistory()
   const location = useLocation()
   const routeMatch = useRouteMatch()
@@ -60,29 +61,69 @@ function AdminDashboard(props) {
     message: '',
     severity: ''
   })
-  
   const [dashboardInfo, setDashboardInfo] = useState({
-      teachers: [],
-      scoreTypes: [],
-      termDates: [],
-    // scoreTypes: [],
-       classrooms: [],
-    // fullName: null,
+    teachers: [],
+    scoreTypes: [],
+    termDates: [],
+    classrooms: [],
+    totalStudents: 0,
+    totalTeachers: 0,
+    totalClassrooms: 0,
+    totalDebtRecovered: 0,
+    totalDebts: 0,
+    debtRecoveredReports: [],
+    announcementImages: []
 
   })
+    
+
+    useEffect(() => {
+
+        authAxios.get('api/v1/admin_dashboards').then((res) => {
+
+            console.log(res)
+            const {classrooms, teachers, score_types, term_dates, total_students, announcement_images,  total_classrooms, total_teachers, total_debts, debt_recovered_reports, total_recovered_reports} = res.data
+ 
+            const newDashboardInfo = Object.assign({}, dashboardInfo)
+            newDashboardInfo.classrooms = classrooms
+            newDashboardInfo.teachers = teachers
+            newDashboardInfo.scoreTypes = score_types
+            newDashboardInfo.termDates = term_dates
+            newDashboardInfo.totalClassrooms = total_classrooms
+            newDashboardInfo.totalTeachers = total_teachers
+            newDashboardInfo.totalDebtRecovered = total_recovered_reports
+            newDashboardInfo.totalDebts = total_debts
+            newDashboardInfo.totalStudents = total_students
+            newDashboardInfo.debtRecoveredReports = debt_recovered_reports
+            newDashboardInfo.announcementImages = announcement_images
+            setDashboardInfo(newDashboardInfo)
+            setLoading(false)
+        }).catch((err) => {
+            const {status} = err.response 
+            
+
+            setLoading(false)
+            setFailed(true)
+            
+        })
+
+
+
+        return () => {
+          setLoading(false)
+          setFailed(false)
+          setDashboardInfo({})
+        }
+        
+    }, [])
+  
+ 
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleClickOpen = () => {
-    
-    history.push('#create')
-
-    setOpen(true);
-  
-   
-  };
+ 
 
   const handleClose = () => {
     setOpen(false);
@@ -92,12 +133,9 @@ function AdminDashboard(props) {
 
   useEffect(() => {
 
-    setLoading(false)
-
+    
     window.document.title = "Admin"
 
-  
-    
 
     return () => {
 
@@ -126,7 +164,6 @@ function AdminDashboard(props) {
      
       value={{
         dashboardInfo: dashboardInfo,
-        handleClickOpen,
         handleClose,
         open,
         openSnack,
@@ -153,11 +190,15 @@ function AdminDashboard(props) {
 
         loading ? 
         <Backdrop
-          sx={{ backgroundColor: "rgba(32, 38, 45, 0.2)", backdropFilter: "blur(2px)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          sx={{ backgroundColor: "white", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={loading}
           
         >
-          <CircularProgress color="inherit" />
+          
+          <div class="loadingio-spinner-wedges-ms9m8n0rjb9"><div class="ldio-cmgfr111trf">
+          <div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>
+        </div></div>
+       
         </Backdrop>
       :
      
@@ -198,7 +239,7 @@ function AdminDashboard(props) {
               </Grid>
             </Hidden>
             <Grid item xs={12} sm={12} lg={8} >
-                <Switch >
+                <Switch >P
                   
                    <Route path="/subjects/:id/" render={() => <SubjectInfoContainer />} />
                   <Route path="/classrooms/:id/" render={() => <ClassroomInfoContainer />} />

@@ -8,6 +8,7 @@ import { LoadingButton } from '@mui/lab';
 import { styled, withStyles } from '@mui/styles';
 import { CancelRounded } from '@mui/icons-material';
 import AdminContext from '../../../context/admin/AdminContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 
  
@@ -39,6 +40,7 @@ export default function ItemSaler(props) {
     const [loading, setLoading] = useState(false)
     const {closeAll, id, selling_price, quantity} = props
     const {snackInfo, setOpenSnack, setSnackInfo} = useContext(AdminContext)
+    const {setAuthState} = useContext(AuthContext)
 
     const validationSchema = yup.object({
         quantity: yup
@@ -90,6 +92,10 @@ export default function ItemSaler(props) {
                 setLoading(false)
     
             }).catch((err) => {
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 const newSnackBarInfo = Object.assign(snackInfo, {})
                 newSnackBarInfo.message = `Transaction Failed`
                 newSnackBarInfo.severity = 'warning'

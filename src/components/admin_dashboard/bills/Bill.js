@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { FetchContext } from '../../../context/FetchContext'
 import { LoadingButton } from '@mui/lab'
 import { Redirect } from 'react-router-dom'
+import { AuthContext } from '../../../context/AuthContext'
 
 
 export default function Bill(props){
@@ -18,7 +19,7 @@ export default function Bill(props){
     const [loading, setLoading] = useState(false)
     const {authAxios} = useContext(FetchContext)
     const [redirectOnLogin, setRedirectOnLogin] = useState(false)
-    
+    const {setAuthState} = useContext(AuthContext)
 
     const validationSchema = yup.object({
         amount: yup.number().required().moreThan(10).lessThan(bill.balance + 1)
@@ -44,7 +45,10 @@ export default function Bill(props){
                 
 
             }).catch((err) => {
-                console.log(err)
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
                 
                 setLoading(false)
             })

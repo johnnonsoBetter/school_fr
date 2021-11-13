@@ -1,19 +1,16 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useContext } from 'react';
-import ScoreReportContext from '../../../../../context/admin/ScoreReportContext';
-import AdminContext from '../../../../../context/admin/AdminContext';
+import StudentAttendanceContext from '../../../context/admin/StudentAttendanceContext';
 
-export default function ScoreReportTerm() {
-  const {term_id, setTermId} = React.useContext(ScoreReportContext)
-  const {dashboardInfo} = useContext(AdminContext)
-  const {termDates} = dashboardInfo
 
+
+
+export default function AttendanceTerm(props) {
+  const {termDates, term_id, setTermId} = React.useContext(StudentAttendanceContext)
 
 
   const handleChange = (event) => {

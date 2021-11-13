@@ -8,6 +8,7 @@ import { LoadingButton } from '@mui/lab';
 import { styled, withStyles } from '@mui/styles';
 import { CancelRounded } from '@mui/icons-material';
 import AdminContext from '../../../context/admin/AdminContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 const validationSchema = yup.object({
     quantity: yup
@@ -42,6 +43,7 @@ export default function ItemRestocker(props) {
     const [loading, setLoading] = useState(false)
     const {closeAll, id} = props
     const {snackInfo, setOpenSnack, setSnackInfo} = useContext(AdminContext)
+    const {setAuthState} = useContext(AuthContext)
 
 
     const formik = useFormik({
@@ -82,6 +84,12 @@ export default function ItemRestocker(props) {
                 setLoading(false)
     
             }).catch((err) => {
+
+                const {status} = err.response 
+                if (status === 401){
+                    setAuthState({})
+                }
+                
                 const newSnackBarInfo = Object.assign(snackInfo, {})
                 newSnackBarInfo.message = `Failed to Restocked`
                 newSnackBarInfo.severity = 'warning'
