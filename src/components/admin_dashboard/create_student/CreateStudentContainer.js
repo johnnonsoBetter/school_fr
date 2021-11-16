@@ -25,31 +25,64 @@ export default function CreateStudentContainer(){
 
     
 
+    // const validationSchema = yup.object({
+    //     first_name: yup
+    //         .string().required(),
+    //     middle_name: yup
+    //         .string().required(),
+    //     last_name: yup
+    //         .string().required(),
+    //     address: yup
+    //         .string().required(),
+    //     classroom_id: yup
+    //         .number().positive(),
+    //     religion: yup
+    //         .string().required(),
+    //     state: yup
+    //         .string().required(),
+    //     lga: yup
+    //         .string().required(),
+    //     middle_name: yup
+    //         .string().required(),
+    //     gender: yup
+    //         .string().required(),
+    //     admission_no: yup 
+    //         .string().required()
+            
+    // });
+
     const validationSchema = yup.object({
         first_name: yup
             .string().required(),
         middle_name: yup
-            .string().required(),
+            .string(),
         last_name: yup
-            .string().required(),
-        address: yup
             .string().required(),
         classroom_id: yup
             .number().positive(),
-        religion: yup
-            .string().required(),
-        state: yup
-            .string().required(),
-        lga: yup
-            .string().required(),
-        middle_name: yup
-            .string().required(),
         gender: yup
             .string().required(),
-        admission_no: yup 
-            .string().required()
+       
             
     });
+
+
+    // initialValues: {
+     
+    //     first_name: '',
+    //     middle_name: '',
+    //     last_name: '',
+    //     classroom_id: -1,
+    //     address: '',
+    //     gender: 'Male',
+    //     state: '',
+    //     lga: '',
+    //     religion: 'Christainity',
+    //     gender: '',
+    //     admission_no: ''
+  
+        
+    //   },
 
   const formik = useFormik({
     initialValues: {
@@ -58,14 +91,7 @@ export default function CreateStudentContainer(){
       middle_name: '',
       last_name: '',
       classroom_id: -1,
-      address: '',
-      gender: 'Male',
-      state: '',
-      lga: '',
-      religion: 'Christainity',
       gender: '',
-      admission_no: ''
-
       
     },
     validationSchema: validationSchema,
@@ -214,7 +240,7 @@ export default function CreateStudentContainer(){
 
             
     
-        <Grid item xs={12} sm={6} >
+        {/* <Grid item xs={12} sm={6} >
             <Box p={2} display="flex" justifyContent="space-around" >
                 <FormControl sx={{m: 1}} >
                     
@@ -251,7 +277,7 @@ export default function CreateStudentContainer(){
 
             </Box>
             
-        </Grid>
+        </Grid> */}
 
 
 
@@ -289,7 +315,7 @@ export default function CreateStudentContainer(){
             
         </Grid>
 
-        <Grid item xs={12} sm={6} >
+        {/* <Grid item xs={12} sm={6} >
             <Box p={2} >
             <FormControl fullWidth >
                 <InputLabel> Religion</InputLabel>
@@ -320,7 +346,7 @@ export default function CreateStudentContainer(){
             
             </Box>
             
-        </Grid>
+        </Grid> */}
 
 
         <Grid item xs={12} sm={3} >
@@ -352,7 +378,7 @@ export default function CreateStudentContainer(){
             </FormControl>
             </Box>
         </Grid>
-        <Grid item xs={12} sm={3} >
+        {/* <Grid item xs={12} sm={3} >
             <Box p={2} >
                 <TextField 
                     fullWidth label="Admission No" 
@@ -369,11 +395,11 @@ export default function CreateStudentContainer(){
 
             </Box>
             
-        </Grid>
+        </Grid> */}
 
 
 
-        <Grid item xs={12} sm={6} >
+        {/* <Grid item xs={12} sm={6} >
             <Box p={2} >
                 <TextField 
                     fullWidth label="ResidentialAddress" 
@@ -429,7 +455,7 @@ export default function CreateStudentContainer(){
 
             </Box>
             
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12} >
            

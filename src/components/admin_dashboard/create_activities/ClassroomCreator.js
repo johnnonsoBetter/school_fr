@@ -7,11 +7,16 @@ import { LoadingButton } from "@mui/lab";
 import { FetchContext } from "../../../context/FetchContext";
 import { AuthContext } from "../../../context/AuthContext";
 
+// const validationSchema = yup.object({
+//     name: yup
+//     .string().required(),
+//     class_teacher_id: yup
+//     .number().required().positive()
+// });
+
 const validationSchema = yup.object({
     name: yup
-    .string().required(),
-    class_teacher_id: yup
-    .number().required().positive()
+    .string().required()
 });
 
 export default function ClassroomCreator() {
@@ -25,8 +30,7 @@ export default function ClassroomCreator() {
     const formik = useFormik({
 
         initialValues: {
-          name: '',
-          class_teacher_id: -1
+          name: ''
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
