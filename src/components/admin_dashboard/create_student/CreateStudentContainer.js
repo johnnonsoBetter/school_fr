@@ -240,7 +240,7 @@ export default function CreateStudentContainer(){
 
             
     
-        {/* <Grid item xs={12} sm={6} >
+        <Grid item xs={12} sm={6} >
             <Box p={2} display="flex" justifyContent="space-around" >
                 <FormControl sx={{m: 1}} >
                     
@@ -258,7 +258,7 @@ export default function CreateStudentContainer(){
                     </LocalizationProvider>
                 </FormControl>
 
-                <FormControl sx={{m: 1}} >
+                {/* <FormControl sx={{m: 1}} >
                     
                     Date Of Adm
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -272,12 +272,12 @@ export default function CreateStudentContainer(){
                     />
 
                     </LocalizationProvider>
-                </FormControl>
+                </FormControl> */}
             
 
             </Box>
             
-        </Grid> */}
+        </Grid>
 
 
 
