@@ -14,7 +14,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import { AccessibleRounded, AddRounded, AssignmentRounded, ClassRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
+import { AccessibleRounded, AddRounded, AssignmentRounded, BookOnline, ClassRounded, HomeRounded, MenuBookRounded, SpellcheckRounded } from '@mui/icons-material';
 import { Box, Button, Divider, Grid, IconButton, Link, Typography } from '@mui/material';
 import {makeStyles} from '@mui/styles'
 import { NavLink } from 'react-router-dom';
@@ -205,6 +205,13 @@ export default function SideNav({handleDrawerToggle}) {
                 <img src="/images/education.png" alt="Subjects" />
             </ListItemIcon>
             <ListItemText  primary="Subjects" />
+          </Link>
+
+          <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/report_cards" >
+            <ListItemIcon>
+                <BookOnline />
+            </ListItemIcon>
+            <ListItemText  primary="Report Cards" />
           </Link>
 
     </List>

@@ -40,6 +40,7 @@ import StudentInfoContainer from '../../components/admin_dashboard/students/stud
 import CreateActivityDrawer from '../../components/admin_dashboard/CreateActivityDrawer';
 import AnnouncementContainer from '../../components/admin_dashboard/announcements/AnnouncementContainer';
 import CreateAnnouncementContainer from '../../components/admin_dashboard/announcements/CreateAnnouncementContainer';
+import ReportCardContainer from '../../components/admin_dashboard/report_cards/ReportCardContainer';
 
 
 const drawerWidth = 240;
@@ -242,6 +243,7 @@ function AdminDashboard(props) {
                 <Switch >P
                   
                    <Route path="/subjects/:id/" render={() => <SubjectInfoContainer />} />
+                   <Route path="/report_cards/" render={() => <ReportCardContainer />} />
                   <Route path="/classrooms/:id/" render={() => <ClassroomInfoContainer />} />
                   <Route path="/debtors/:id/bills" render={() => <DebtBillContainer />} />
                   <Route path="/students/:id" render={()=> (<StudentInfoContainer />)} /> 

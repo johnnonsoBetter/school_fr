@@ -13,6 +13,7 @@ import BehaviourReportContainer from './behaviour_report/BehaviourReportContaine
 import BillContainer from './bills/BillContainer';
 import Profile from './profile/Profile';
 import AttendanceContainer from './attendance/AttendanceContainer';
+import ReportCardContainer from '../../shared/ReportCardContainer';
 
 
 
@@ -69,6 +70,10 @@ export default function StudentInfoContainer() {
           <Route exact path={`${path}/attendances`} >
             <AttendanceContainer />
           </Route>
+          <Route exact path={`${path}/report_cards`} >
+            <ReportCardContainer />
+          </Route>
+
          
         </Switch>
         
