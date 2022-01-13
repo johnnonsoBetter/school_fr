@@ -8,17 +8,17 @@ This is the frontend part of the application, it consumes data from its backend 
 This application has three sub-domain. use these credentials to access any sub-domiain 
 
 ### Admin
-url: [https://admin.confamsch.com.ng/](https://admin.confamsch.com.ng/)]
+url [https://admin.confamsch.com.ng/](https://admin.confamsch.com.ng/)]
 email: johnnonso@gmail.com
 password: password
 
 ### Teacher
-url: [https://teacher.confamsch.com.ng/](https://teacher.confamsch.com.ng/)]
+url [https://teacher.confamsch.com.ng/](https://teacher.confamsch.com.ng/)]
 email: chima@gmail.com
 password: password
 
 ### Parent
-url: [https://parent.confamsch.com.ng/dashboard](https://parent.confamsch.com.ng/dashboard)]
+url [https://parent.confamsch.com.ng/dashboard](https://parent.confamsch.com.ng/dashboard)]
 email: isreal@gmail.com
 password: password
 
