@@ -25,6 +25,9 @@ This is the frontend part of the application, it consumes data from its backend 
 * Reliable Record Keeping.
 
 ## Screenshots
+
+![alt text](https://github.com/johnnonsoBetter/school_fr/blob/main/public/images/management.png?raw=true)
+
 ![alt text](https://github.com/johnnonsoBetter/school_fr/blob/main/public/images/dashb.png?raw=true)
 
 
