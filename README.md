@@ -1,4 +1,4 @@
-# PeopleFav
+# School_fr
 A morden school management software that takes away pains, by helping schools effectively manage their school curricular activities. [https://www.confamsch.com.ng/](https://www.confamsch.com.ng/)
 
 ## Note.
