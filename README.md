@@ -20,7 +20,6 @@ This is the frontend part of the application, it consumes data from its backend 
 * logins and signup.
 * Instant Grade And Behavior Report Notifications.
 * School Inventory Management.
-* Users can add their favourite things.
 * Automated Reported Cards Generation.
 * Reliable Record Keeping.
 
