@@ -9,7 +9,7 @@ This application has three sub-domain. use these credentials to access any sub-d
 
 ### Admin
 url: [https://admin.confamsch.com.ng/](https://admin.confamsch.com.ng/)
-email: johnnonso@gmail.com
+email: bobby@gmail.com
 password: password
 
 ### Teacher

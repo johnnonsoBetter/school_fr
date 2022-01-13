@@ -107,7 +107,7 @@ export default function SideNav({handleDrawerToggle}) {
              </Link>
            </Grid>
 
-            <Grid item xs={6}  >
+            <Grid item xs={12}  >
              
               <Link onClick={handleDrawerToggle} className={classes.link} activeClassName={classes.buttonActive} component={NavLink} to="/create_student" >
                 <Button fullWidth endIcon={<AddRounded />} size="small" variant="outlined">
@@ -116,7 +116,7 @@ export default function SideNav({handleDrawerToggle}) {
               </Link>
             </Grid>
 
-            <Grid item xs={6}  >
+            {/* <Grid item xs={6}  >
               
               <Link onClick={handleDrawerToggle} className={classes.link}  activeClassName={classes.buttonActive} component={NavLink} to="/create_teacher" >
               
@@ -125,7 +125,7 @@ export default function SideNav({handleDrawerToggle}) {
                 </Button>
               </Link>
       
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={6}  >
               <Button onClick={() => {setDrawerOpen(true); setDrawerChildType('expense')}} fullWidth endIcon={<AddRounded />} size="small" variant="outlined">
@@ -178,13 +178,13 @@ export default function SideNav({handleDrawerToggle}) {
         </Link>
           
 
-        <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/teachers" >
+        {/* <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/teachers" >
           <ListItemIcon>
             <img src="/images/presentation.png" alt="Teachers" />
           </ListItemIcon>
           <ListItemText primary="Teachers" />
         </Link>
-     
+      */}
 
         <Link onClick={handleDrawerToggle} className={classes.link} sx={{padding: "10px"}} activeClassName={classes.active} component={NavLink} to="/students" >
           <ListItemIcon>
