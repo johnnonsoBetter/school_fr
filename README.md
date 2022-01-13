@@ -1,5 +1,5 @@
 # PeopleFav
-A morden school management software that takes away pains, by helping schools effectively manage their school curricular activities. [https://confamsch.com.ng/](https://confamsch.com.ng/)
+A morden school management software that takes away pains, by helping schools effectively manage their school curricular activities. [https://www.confamsch.com.ng/](https://www.confamsch.com.ng/)
 
 ## Note.
 This is the frontend part of the application, it consumes data from its backend server application  [https://github.com/johnnonsoBetter/school_b](https://github.com/johnnonsoBetter/school_b)
@@ -25,17 +25,17 @@ This is the frontend part of the application, it consumes data from its backend 
 * Reliable Record Keeping.
 
 ## Screenshots
-![alt text](https://github.com/johnnonsoBetter/peoplefav/blob/main/public/images/homepage.png?raw=true)
+![alt text](https://github.com/johnnonsoBetter/school_fr/blob/main/public/images/dashb.png?raw=true)
 
 
 
-![alt text](https://github.com/johnnonsoBetter/peoplefav/blob/main/public/images/thing_type.png?raw=true)
+![alt text](https://github.com/johnnonsoBetter/school_fr/blob/main/public/images/teacher_d.png?raw=true)
 
 
-![alt text](https://github.com/johnnonsoBetter/peoplefav/blob/main/public/images/guess_part.png?raw=true)
+![alt text](https://github.com/johnnonsoBetter/school_fr/blob/main/public/images/parents_d.png?raw=true)
 
 
-![alt text](https://github.com/johnnonsoBetter/peoplefav/blob/main/public/images/users.png?raw=true)
+
 
 
 # Run on development environment
