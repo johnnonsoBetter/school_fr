@@ -13,15 +13,17 @@ This is the frontend part of the application, it consumes data from its backend 
 * yup (0.32.11)
 
 ## Features
-* Seperate domain for teachers, parents, admins.
-* Teachers dashboard.
-* School admin dashboard.
-* Parent dashboard.
-* logins and signup.
+
 * Instant Grade And Behavior Report Notifications.
 * School Inventory Management.
 * Automated Reported Cards Generation.
 * Reliable Record Keeping.
+* Seperate domain for teachers, parents, admins.
+* PWA support
+* Teachers dashboard.
+* School admin dashboard.
+* Parent dashboard.
+* logins and signup.
 
 ## Screenshots
 
