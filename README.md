@@ -4,6 +4,28 @@ A morden school management software that takes away pains, by helping schools ef
 ## Note.
 This is the frontend part of the application, it consumes data from its backend server application  [https://github.com/johnnonsoBetter/school_b](https://github.com/johnnonsoBetter/school_b)
 
+## Demo.
+This application has three sub-domain. use these credentials to access any sub-domiain 
+
+### Admin
+url: [https://admin.confamsch.com.ng/](https://admin.confamsch.com.ng/)]
+email: johnnonso@gmail.com
+password: password
+
+### Teacher
+url: [https://teacher.confamsch.com.ng/](https://teacher.confamsch.com.ng/)]
+email: chima@gmail.com
+password: password
+
+### Parent
+url: [https://parent.confamsch.com.ng/dashboard](https://parent.confamsch.com.ng/dashboard)]
+email: isreal@gmail.com
+password: password
+
+
+
+
+
 
 ## Important Technologies Utilized
 * React (17.0.2)
